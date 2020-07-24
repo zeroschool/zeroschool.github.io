@@ -358,7 +358,7 @@
             orderBy = 'orderBy: LIKES_BY_POST_ID__COUNT_DESC';
         }
         let response = await sdk.query(`query {
-				allPosts(filter: {bContent: {includes: "$osg"}}, first: 100, ${orderBy}) {
+				allPosts(filter: {bContent: {includes: "$100p"}}, first: 100, ${orderBy}) {
 					nodes {
 						bContent
                         transaction

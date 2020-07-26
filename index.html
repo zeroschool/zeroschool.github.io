@@ -226,7 +226,7 @@
     </div>
 </body>
 <script>
-    function populateHTML() {
+    function populateHTML(size) {
         for (let i = 0; i < 100; i++) {
             document.getElementById('message-container').innerHTML +=
                 `<div class="nes-container is-rounded with-title is-dark twetch">
@@ -375,7 +375,7 @@
 				}
             }`);
 
-        populateHTML();
+
         let posts = response.allPosts.nodes;
         let profiles = document.getElementsByClassName("nes-avatar"),
             userLinks = document.getElementsByClassName("userLink"),
@@ -398,6 +398,7 @@
             }
             txids[i].href = `https://search.matterpool.io/tx/${posts[i].transaction}`;
             hearts[i].addEventListener('click', like);
+            populateHTML(posts.length);
         }
     }
     postsQuery();

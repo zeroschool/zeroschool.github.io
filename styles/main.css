@@ -1,0 +1,129 @@
+body {
+    background-color: #000000;
+    color: #ccc;
+}
+
+.nes-dialog {
+    background-color: #000000;
+    color: #ccc;
+}
+
+select#order {
+    position: relative;
+    width: 100%;
+    padding: 8px;
+}
+
+.nes-icon.coin.is-large {
+    position: absolute;
+    right: -15px;
+    top: 25px;
+}
+
+.video-container {
+    position: relative;
+    padding-bottom: 56.25%;
+    padding-top: 30px;
+    height: 0;
+    overflow: hidden;
+}
+
+.video-container iframe,
+.video-container object,
+.video-container embed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.order {
+    width: 100%;
+    margin: auto;
+}
+
+.nes-btn.confirm {
+    background-color: #0021e8;
+}
+
+.nes-btn.confirm:hover {
+    background-color: #55ac49;
+}
+
+.container.dark {
+    border-color: #777;
+    background-color: #000000;
+}
+
+.flex-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.features {
+    padding: 10px;
+}
+
+#buybsv {
+    position: flexbox;
+    color: black;
+    justify-content: space-between;
+    z-index: 0;
+}
+
+#post-container {
+    width: 100%;
+    margin: auto;
+    color: #ccc;
+}
+
+#message-container {
+    width: 100%;
+    margin: auto;
+    color: #ccc;
+}
+
+#post {
+    background-color: #0f0f0f;
+    border-color: #777;
+    color: #0021e8;
+    font-family: 'fixedsys_excelsior_3.01Rg', monospace;
+    z-index: 0;
+    position: flexbox;
+    justify-content: space-between;
+}
+
+#postTitle {
+    background-color: #000000;
+}
+
+#dlg.terminal-card {
+    z-index: 0;
+}
+
+iframe {
+    z-index: 1000;
+}
+
+@media only screen and (min-width: 768px) {
+    .selection {
+        width: 70%;
+    }
+    .order {
+        width: 70%
+    }
+    #post-container {
+        width: 70%
+    }
+    #message-container {
+        width: 70%
+    }
+}
+
+@font-face {
+    font-family: 'fixedsys_excelsior_3.01Rg';
+    src: url('/css/fonts/fsex300-webfont.woff2') format('woff2'), url('/css/fonts/fsex300-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}

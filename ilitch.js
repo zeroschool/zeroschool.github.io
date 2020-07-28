@@ -71,7 +71,7 @@ function getPermissionForCurrentUser() {
 }
 var twetches = document.getElementById("message-container");
 const imb = new moneyButton.IMB({
-    clientIdentifier: "5c366b7e57459de26747d3d66d9b5c2c",
+    clientIdentifier: "ce4eb6ea41a4f43044dd7e71c08e50b2",
     permission: getPermissionForCurrentUser(),
     onNewPermissionGranted: (token) => savePermissionToken(token)
 });

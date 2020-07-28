@@ -1,6 +1,6 @@
 {
-    "name": "ZeroSchool",
-    "short_name": "zeroschool",
+    "name": "ZeroSchool - Ceci n'est pas une école.",
+    "short_name": "ZeroSchool",
     "start_url": "https://zeroshcool.org",
     "display": "standalone",
     "background_color": "#000",

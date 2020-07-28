@@ -39,7 +39,7 @@ function firstTime() {
     if (itoken === null) {
         showPopup(`<p class="title" style="color: #0021e8; font-family: fixedsys_excelsior_3.01Rg;">Welcome to ZeroSchool!</p><p style="font-family: fixedsys_excelsior_3.01Rg">ZeroSchool is a state of the art fren-2-fren Education System built for the 22nd Century.<br><br>
             Posts, likes, tipping, & Boost are currently supported along with Bitcoinfiles & Relay OTC integration.<br><br>
-            You'll need a <a href="https://twetch.app">Twetch</a> account to get you started, so grab an invite here: https://twet.ch/inv/zeroschool , or don't, whatever..<br><br>
+            You'll need a <a href="https://twetch.app">Twetch</a> account to get you started, so grab an invite here: <a href="https://twet.ch/inv/zeroschool">https://twet.ch/inv/zeroschool</a> , or don't, whatever..<br><br>
             Discuss the future of Education <br><br>
             ZeroSchool is about solving real world problem, so post your problems to our <a href="https://zeroschool.org">100p</a> problem list. <br><br>
             Come and discuss the future of Education in the <a href="https://zeroschool.org/lobby">Lobby</a>.<br><br>
@@ -211,7 +211,7 @@ async function postsQuery() {
         orderBy = 'orderBy: LIKES_BY_POST_ID__COUNT_DESC'
     };
     let response = await sdk.query(`{
-                allPosts(filter: {bContent: {includes: "$100p"}}, ${selOrder === '2' ? "" : "first: 100,"} ${orderBy}) {
+                allPosts(filter: {bContent: {includes: "$21e8"}}, ${selOrder === '2' ? "" : "first: 100,"} ${orderBy}) {
                     nodes {bContent transaction numLikes userId youLiked userByUserId {name icon}}
                 }
             }`);

@@ -10,7 +10,7 @@ var sdk = new twetchjs(options),
     cryptoOperations = [],
     loadingPost = false,
     selOrder = 0,
-    tipUNum, loadingText = "Generating magic number...";
+    tipUNum, loadingText = "Deschooling Society...";
 sdk.storage.setItem('tokenTwetchAuth',
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjUyIn0sImlhdCI6MTU5MjQwMTgxNH0.adZ_QsfshakYBNASIjMWQw46rh__8t8_f75n5I3w2jg'
 );
@@ -211,7 +211,7 @@ async function postsQuery() {
         orderBy = 'orderBy: LIKES_BY_POST_ID__COUNT_DESC'
     };
     let response = await sdk.query(`{
-                allPosts(filter: {bContent: {includes: "$21e8"}}, ${selOrder === '2' ? "" : "first: 100,"} ${orderBy}) {
+                allPosts(filter: {bContent: {includes: "$osg"}}, ${selOrder === '2' ? "" : "first: 100,"} ${orderBy}) {
                     nodes {bContent transaction numLikes userId youLiked userByUserId {name icon}}
                 }
             }`);

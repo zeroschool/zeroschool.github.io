@@ -44,7 +44,7 @@ select#order {
 }
 
 .nes-btn.confirm {
-    background-color: #0021e8;
+    background-color: #21e800;
 }
 
 .nes-btn.confirm:hover {
@@ -87,7 +87,7 @@ select#order {
 #post {
     background-color: #0f0f0f;
     border-color: #777;
-    color: #0021e8;
+    color: #21e800;
     font-family: 'fixedsys_excelsior_3.01Rg', monospace;
     z-index: 0;
     position: flexbox;

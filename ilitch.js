@@ -37,7 +37,7 @@ function firstTime() {
     sdk.authenticate();
     let itoken = localStorage.getItem('imbToken');
     if (itoken === null) {
-        showPopup(`<p class="title" style="color: #0021e8; font-family: fixedsys_excelsior_3.01Rg;">Welcome to ZeroSchool!</p><p style="font-family: fixedsys_excelsior_3.01Rg">ZeroSchool is a state of the art fren-2-fren Education System built for the 22nd Century.<br><br>
+        showPopup(`<p class="title" style="color: #21e800; font-family: fixedsys_excelsior_3.01Rg;">Welcome to ZeroSchool!</p><p style="font-family: fixedsys_excelsior_3.01Rg">ZeroSchool is a state of the art fren-2-fren Education System built for the 22nd Century.<br><br>
             Posts, likes, tipping, & Boost are currently supported along with Bitcoinfiles & Relay OTC integration.<br><br>
             You'll need a <a href="https://twetch.app">Twetch</a> account to get you started, so grab an invite here: <a href="https://twet.ch/inv/zeroschool">https://twet.ch/inv/zeroschool</a> , or don't, whatever..<br><br>
             Discuss the future of Education <br><br>

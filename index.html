@@ -114,6 +114,32 @@
         #iframe {
             z-index: 1000;
         }
+        
+        /* Add a black background color to the top navigation */
+.topnav {
+  overflow: hidden;
+}
+
+/* Style the links inside the navigation bar */
+.topnav a {
+  float: left;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+/* Change the color of links on hover */
+.topnav a:hover {
+  background-color: #21e800;
+  color: black;
+}
+
+/* Add a color to the active/current link */
+.topnav a.active {
+  background-color: #21e800;
+  color: black;
+}
+        
     </style>
 </head>
 
@@ -133,6 +159,13 @@
                 </div>
             </form>
         </div>
+    </div>
+    
+    <div class="topnav">
+        <a class="active" href="#home">Home</a>
+        <a href="/100p.html">100p</a>
+        <a href="/job.html">Job</a>
+        <a href="https://dimely.io/directory">ProfChain™</a>
     </div>
 
     <br>

@@ -1,6 +1,6 @@
 var options = {
         clientIdentifier: '9d27a879-ee0c-4653-8839-a4b2f6fa8023'
-    },
+    }, penny,
     posts = [];
 coinSound = new Audio();
 coinSound.src = './coin.wav';
@@ -15,7 +15,6 @@ sdk.storage.setItem('tokenTwetchAuth',
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjUyIn0sImlhdCI6MTU5MjQwMTgxNH0.adZ_QsfshakYBNASIjMWQw46rh__8t8_f75n5I3w2jg'
 );
 
-firstTime();
 
 function buybsv() {
     relayotc.buy('widget-container', {
@@ -33,10 +32,7 @@ if (localStorage.getItem('orderBy')) {
     document.getElementById("order").options[selOrder].selected = true;
 }
 
-function firstTime() {
-    sdk.authenticate();
-    let itoken = localStorage.getItem('imbToken');
-    if (itoken === null) {
+function info(){
         showPopup(`<p class="title" style="color: #21e800; font-family: fixedsys_excelsior_3.01Rg;">Welcome to ZeroSchool!</p><p style="font-family: fixedsys_excelsior_3.01Rg">ZeroSchool is a state of the art fren-2-fren Education System built for the 22nd Century.<br><br>
             Posts, likes, tipping, & Boost are currently supported along with Bitcoinfiles & Relay OTC integration.<br><br>
             You'll need a <a href="https://twetch.app">Twetch</a> account to get you started, so grab an invite here: <a href="https://twet.ch/inv/zeroschool">https://twet.ch/inv/zeroschool</a> , or don't, whatever..<br><br>
@@ -45,30 +41,43 @@ function firstTime() {
             Come and discuss the future of Education in the <a href="https://zeroschool.org/lobby">Lobby</a>.<br><br>
             Likes are 10 cents.<br><br>
             More to come, or not...</p>`, 'Enter', false)
-    }
+}
+
+async function firstTime() {
+ if (localStorage.getItem('token')){
+                if (sdk.storage.getItem('tokenTwetchAuth')){sdk.authenticated = true;postsQuery()}
+                else {
+                    let r = axios.post('https://auth.twetch.app/api/v1/authenticate', {
+                        address: localStorage.getItem('address'),message: localStorage.getItem('msg'),signature: localStorage.getItem('signature')
+                    }).then(async function (res){sdk.storage.setItem('tokenTwetchAuth', res.data.token);sdk.authenticated = true;await sdk.authenticate();postsQuery()})
+                }
+            } else {window.location.href = "https://zeroschool.org/login"}
 }
 
 document.getElementById("tPost").setAttribute("disabled", null);
 document.getElementById("post").addEventListener("keyup", function() { checkPost() })
 
-function checkPost() {
+function checkPost(){
     let input = document.getElementById("post").value;
     if (input != "") {
-        document.getElementById("tPost").removeAttribute("disabled")
-    } else {
-        document.getElementById("tPost").setAttribute("disabled", null)
-    }
+        document.getElementById("tPost").removeAttribute("disabled");
+        if (input.length >= 256){document.getElementById("tPost").setAttribute("disabled",null)}
+    } else {document.getElementById("tPost").setAttribute("disabled", null)}
+}
+
+async function setPennyAmt(){
+                let price = localStorage.getItem("price");
+                if (!price){price = await sdk.bsvPrice(); 
+                localStorage.setItem("price", price)};
+                penny = parseFloat((Math.ceil(1000000 / price) / 100000000).toFixed(8))
 }
 
 function savePermissionToken(token) {
     localStorage.setItem('imbToken', token)
 }
 
-function getPermissionForCurrentUser() {
-    if (localStorage.getItem('imbToken')) {
-        return localStorage.getItem('imbToken')
-    }
-}
+function getPermissionForCurrentUser() {if (localStorage.getItem('token')) {return localStorage.getItem('token')}}
+
 var twetches = document.getElementById("message-container");
 const imb = new moneyButton.IMB({
     clientIdentifier: "ce4eb6ea41a4f43044dd7e71c08e50b2",
@@ -76,50 +85,20 @@ const imb = new moneyButton.IMB({
     onNewPermissionGranted: (token) => savePermissionToken(token)
 });
 
-async function buildIMB(content, action) {
-    if (action === 'twetch/post@0.0.1') {
-        var obj = {
-            bContent: content
-        }
-    } else {
-        var obj = {
-            postTransaction: content
-        }
-    }
-    const {
-        abi,
-        payees
-    } = await sdk.build(action, obj);
-    outputs = [{
-            currency: 'BSV',
-            amount: 0,
-            script: bsv.Script.buildSafeDataOut(abi.toArray()).toASM()
-        },
-        {
-            to: 'zeroschool@moneybutton.com',
-            amount: '0.000021380',
-            currency: 'BSV'
-        }
-    ].concat(payees);
-    if (action === 'twetch/like@0.0.1') {
-        outputs.push({
-            to: mbId,
-            amount: "0.00020000", // custom like amount - additional 20,000 satoshis
-            currency: "BSV"
-        });
-    }
-    cryptoOperations = [{
-        name: 'myAddress',
-        method: 'address',
-        key: 'identity'
-    }, {
-        name: 'mySignature',
-        method: 'sign',
-        data: abi.contentHash(),
-        dataEncoding: 'utf8',
-        key: 'identity',
-        algorithm: 'bitcoin-signed-message'
-    }];
+async function build(content, action) {
+    if (action === 'twetch/post@0.0.1') {var obj = {bContent: content}} else {var obj = {postTransaction: content}}
+    const {abi, payees} = await sdk.build(action, obj);let twOutput = {};
+    if (localStorage.getItem('wallet') === 'moneybutton'){twOutput = {currency: 'BSV',amount: 0,script: bsv.Script.buildSafeDataOut(abi.toArray()).toASM()}} 
+    else if (localStorage.getItem('wallet') === 'relayx'){twOutput = {currency: 'BSV',amount: 0,signatures:['TWETCH-AIP'],script: bsv.Script.buildSafeDataOut(abi.args.slice(0, abi.args.length-5)).toASM()}}
+    outputs = [twOutput].concat(payees);
+    if (action === 'twetch/like@0.0.1'){
+        outputs[2].to = 'zeroschool@moneybutton.com';outputs[2].amount += penny;
+        if (outputs.length < 4){outputs[2].amount += (penny * 4)} else {outputs[3].amount += (penny * 4)}
+    } else if (action === 'twetch/post@0.0.1'){outputs[2].to = 'zeroschool@moneybutton.com'; outputs[2].amount += 0.00001000}
+    cryptoOperations = [
+        {name: 'myAddress',method: 'address',key: 'identity'},
+        {name: 'mySignature',method: 'sign',data: abi.contentHash(),dataEncoding: 'utf8',key: 'identity',algorithm: 'bitcoin-signed-message'}
+    ];
 }
 
 function loadingDlg() {
@@ -136,59 +115,34 @@ function loadingDlg() {
 }
 
 async function send(action, likeTx, tipped) {
-    if (tipped === true) {
-        loadingText = 'Tipping';
-        loadingDlg()
+    if (tipped === true) {loadingText = 'Tipping';loadingDlg()}
+    if (localStorage.getItem('wallet') === 'moneybutton'){
+        imb.swipe({outputs,type: "tip",cryptoOperations,
+        onPayment: async (payment) => {if (tipped === true) {coinSound.play(); loadingText = 'Loading'}
+            await sdk.publishRequest({signed_raw_tx: payment.rawtx, action: action});
+            if (action === 'twetch/post@0.0.1') {loadingPost = false; loadingText = 'Deschooling society..'; location.reload()}             
+        }, onError: err => {console.log(err)}}).then(({payment}) => console.log(payment), 
+        error => { console.log(error);
+            if (action === 'twetch/post@0.0.1') {loadingPost = false; location.reload()}
+            else {
+                let likeCount = parseInt(document.getElementById(`${likeTx}_count`).innerText);
+                document.getElementById(`${likeTx}_count`).innerText = likeCount - 1;
+                document.getElementById(likeTx).className = `nes-icon heart is-large is-empty`;
+            }
+        })
     }
-    imb.swipe({
-        outputs,
-        type: "tip",
-        cryptoOperations,
-        onPayment: async(payment) => {
-            if (tipped === true) {
-                coinSound.play();
-                loadingText = 'Loading'
-            }
-            await sdk.publishRequest({
-                signed_raw_tx: payment.rawtx,
-                action: action
-            });
-            if (action === 'twetch/post@0.0.1') {
-                loadingPost = false;
-                loadingText = 'Deschooling society...';
-                location.reload()
-            }
-        },
-
-        onError: err => {
-            console.log(err)
-        }
-    }).then(({
-        payment
-    }) => console.log(payment), error => {
-        console.log(error);
-        if (action === 'twetch/post@0.0.1') {
-            loadingPost = false;
-            location.reload()
-        } else {
-            let likeCount = parseInt(document.getElementById(`${likeTx}_count`).innerText);
-            document.getElementById(`${likeTx}_count`).innerText = likeCount - 1;
-            document.getElementById(likeTx).className = `nes-icon is-large heart is-empty`;
-        }
-    })
+    else if (localStorage.getItem('wallet') === 'relayx'){console.log('outputs', outputs)
+        let res = await relayone.send({outputs});
+        if (res.txid){console.log(res);sdk.publishRequest({signed_raw_tx: res.rawTx, action: action})}
+        if (tipped === true) {coinSound.play(); loadingText = 'Loading'}
+        if (action === 'twetch/post@0.0.1') {loadingPost = false; loadingText = 'Deschooling society..'; location.reload()}
+    }
 }
 
-async function getBoosts() {
-    let res = await axios.get('https://graph.boostpow.com/api/v1/main/boost/search?tag=$100p');
-    boosted = res.data.mined
-}
-
+async function getBoosts() {let res = await axios.get(`https://graph.boostpow.com/api/v1/main/boost/search?tag=${twetchSuffix}`);boosted = res.data.mined}
 function diffSum(content) {
     let boostedJobs = boosted.filter(boost => boost.boostData.content == content);
-    let totalDiff = boostedJobs.reduce(function(sum, obj) {
-        return sum + obj.boostJob.diff
-    }, 0);
-    return totalDiff;
+    let totalDiff = boostedJobs.reduce(function(sum, obj) {return sum + obj.boostJob.diff}, 0); return totalDiff;
 }
 
 function applyBoostSort(twPosts) {
@@ -211,7 +165,7 @@ async function postsQuery() {
         orderBy = 'orderBy: LIKES_BY_POST_ID__COUNT_DESC'
     };
     let response = await sdk.query(`{
-                allPosts(filter: {bContent: {includes: "$osg"}}, ${selOrder === '2' ? "" : "first: 100,"} ${orderBy}) {
+                allPosts(filter: {bContent: {includes: `${twetchSuffix}`}}, ${selOrder === '2' ? "" : "first: 100,"} ${orderBy}) {
                     nodes {bContent transaction numLikes userId youLiked userByUserId {name icon}}
                 }
             }`);
@@ -223,7 +177,7 @@ async function postsQuery() {
         posts.sort(compare)
     }
     for (let i = 0; i < posts.length; i++) {
-        let content = posts[i].bContent.replace('$100p', '');
+        let content = posts[i].bContent.replace(`${twetchSuffix}`, '');
         let boostValue = diffSum(posts[i].transaction);
         posts[i].boostValue = boostValue;
         let osTwetch = `<div class="nes-container with-title is-dark" style="position: relative; border-color: #777; background-color: #000000; margin-bottom: 20px;">
@@ -256,7 +210,7 @@ postsQuery();
 function boost() {
     boostPublish.open({
         content: this.getAttribute("name"),
-        tag: '$100p',
+        tag: `${twetchSuffix}`,
         outputs: [{
             to: "zeroschool@moneybutton.org",
             amount: "0.00002138",
@@ -290,16 +244,15 @@ function askTip() {
 }
 
 async function like() {
-    document.getElementById(this.id).className = `nes-icon is-large heart`;
+    document.getElementById(this.id).className = `nes-icon heart is-large`;
     let likeCount = parseInt(document.getElementById(`${this.id}_count`).innerText);
     document.getElementById(`${this.id}_count`).innerText = likeCount + 1;
-    await buildIMB(this.id, 'twetch/like@0.0.1');
-    send('twetch/like@0.0.1', this.id);
+    await build(this.id, 'twetch/like@0.0.1');send('twetch/like@0.0.1', this.id);
 }
 
-function tip() {
-    twetchPost(`/pay @${tipUNum} $0.25 from $zeroschool`);
-    window.scrollTo(0, 0)
+function tip(tipU) {
+    let amt = document.getElementById('tipAmt').value;if (amt.charAt(0) != '$'){amt = '$'+amt}
+    twetchPost(`/pay @${tipU} ${amt} from $zeroschool`); window.scrollTo(0,0)
 }
 
 async function twetchPost(text) {
@@ -309,7 +262,7 @@ async function twetchPost(text) {
         post = text;
         tipped = true
     } else {
-        post += " $100p";
+        post += ` ${twetchSuffix}`;
         loadingDlg()
     }
     document.getElementById("post").value = "";

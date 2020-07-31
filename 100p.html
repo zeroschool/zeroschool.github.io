@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>ZeroSchool</title>
+    <link rel="stylesheet" href="https://unpkg.com/terminal.css@0.7.1/dist/terminal.min.css" />
+    <link href="https://unpkg.com/nes.css@2.3.0/css/nes.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/dialog-polyfill@0.5.1/dist/dialog-polyfill.css" rel="stylesheet" type="text/css">
+    <link href="/styles/main.css" rel="stylesheet" type="text/css">
+    <link rel="shortcut icon" href="favicon.png" type="image/icon">
+
+    <script src="https://unpkg.com/dialog-polyfill@0.5.1/dist/dialog-polyfill.js"></script>
+    <script src="https://unpkg.com/@twetch/sdk@0.2.4/dist/twetch.min.js"></script>
+    <script src="https://unpkg.com/bsv@0.30.0/bsv.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://www.moneybutton.com/moneybutton.js"></script>
+    <script src="https://publish.boostpow.com/publish.js"></script>
+    <script src="https://otc-staging.relayx.io/relayotc.js"></script>
+    <script src="https://pay.twetch.com/pay.js"></script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="apple-touch-icon" href="images/icons/apple-touch-icon.png">
+    <link rel="apple-touch-startup-image" href="images/icons/apple-touch-icon.png">
+
+    <style>
+        html:root {
+            --primary-color: #21e800;
+        }
+        
+        var {
+            font-family: 'fixedsys_excelsior_3.01Rg';
+            font-style: normal;
+            font-size: 10px
+        }
+        
+        .urlFormat {
+            overflow: hidden;
+            text-overflow: ellipsis
+        }
+        
+        html,
+        body,
+        pre,
+        code,
+        kbd,
+        p,
+        a,
+        dialog,
+        title,
+        samp {
+            font-family: 'fixedsys_excelsior_3.01Rg';
+        }
+        
+        body {
+            background-color: black;
+        }
+        
+                
+        .btn {
+            z-index: 0;
+        }
+        
+        #flex-cont2 {
+            display: flex !important;
+            justify-content: space-between;
+        }
+        
+        #aux-wrapper {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin: 2vh;
+        }
+        
+        .selection {
+            align-self: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            width: 50%;
+            padding: 0;
+            margin: 0;
+            z-index: 0;
+        }
+        
+        #qselect {
+            align-self: center !important;
+            z-index: 0;
+        }
+        
+        select {
+            z-index: 0;
+        }
+        
+        #popup-widget-modal {
+            position: absolute;
+            z-index: 10000 !important;
+        }
+        
+        .btn.btn-primary {
+            z-index: 0;
+        }
+        
+        .btn.btn-primary.btn-ghost {
+            z-index: 0;
+        }
+        
+        .terminal-card {
+            z-index: 0;
+        }
+        
+        #iframe {
+            z-index: 1000;
+        }
+        
+        /* Add a black background color to the top navigation */
+.topnav {
+  overflow: hidden;
+  justify-content: space-between;
+}
+
+/* Style the links inside the navigation bar */
+.topnav a {
+  float: left;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  color: #21e800;
+}
+        .topnav a:hover{
+            color:black;
+        }
+        .topnav a.active:hover{
+            color:black;
+        }
+
+/* Add a color to the active/current link */
+.topnav a.active {
+  border-bottom: 3px solid #21e800;
+  color: #21e800;
+}
+
+        .nav-element {
+            display: flex !important;
+    justify-content: space-between;
+        }
+        
+    </style>
+</head>
+
+<body onload="firstTime()" class="terminal dark" style="padding-top: 15px; padding-left: 5px; padding-right: 5px; font-size: 13px;">
+
+    <div class="terminal-nav" style="text-align: center; align-content: center; align-items: center; justify-content: center;">
+        <div class="logo terminal-prompt" style="text-align: center; align-content: center; color: #ccc;">ZeroSchool - v0.1</div>
+    </div>
+    
+    <div class="topnav container">
+        <div class="nav-element">
+            <a href="/index.html">Home</a>
+            <a class="active" href="#">100p</a>
+            <a href="/jobs.html">Job List</a>
+            <a href="https://dimely.io/directory" target="_blank">ProfChain™</a>
+        </div>            
+    </div>
+    <hr/>
+
+    <div class="container with-title is-dark" id="post-container">
+        <div class="flex-container">
+            <form onsubmit="return false">
+                <textarea type="text" id="post" class="input is-dark" placeholder="Just solve it, bro..."></textarea>
+                <div id="flex-cont2">
+                    <input class="btn btn-primary btn-ghost" type="submit" id="tPost" value="Post" onclick="twetchPost()">
+                    <a class="btn btn-primary btn-ghost" style="color: #21e800;" id="buybsv" onclick="info()">Infos</a><a class="btn btn-primary btn-ghost" style="color: #21e800;" id="buybsv" onclick="buybsv()">Buy Bits</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <br>
+    <div id="aux-wrapper">
+        <div class="selection">
+            <div class="btn btn-primary btn-ghost btn-block is-dark" id="qselect">
+                <select required id="order" class="btn btn-primary btn-ghost btn-block">
+                    <option value="0">Most Recent</option>
+                    <option value="1">Likes</option>
+                    <option value="2">PoW</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div id="message-container" class="container dark" style="white-space: pre-line;">
+        <div>
+            <p class="title"></p>
+        </div>
+    </div>
+
+    <dialog class="terminal-card" style="background-color: #0f0f0f; border-color: #777; color: #ccc" id="dlg"></dialog>
+    <div id="widget-container"></div>
+    <hr>
+
+    <footer style="color: #21e800"><small><center>powered by <a href="https://twetch.app">Twetch</a></center></small></footer>
+
+</body>
+<script src="ilitch.js">const twetchSuffix ="$100p"</script>
+
+</html>

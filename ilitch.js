@@ -68,11 +68,6 @@ function savePermissionToken(token) {
 function getPermissionForCurrentUser() {if (localStorage.getItem('token')) {return localStorage.getItem('token')}}
 
 var twetches = document.getElementById("message-container");
-const imb = new moneyButton.IMB({
-    clientIdentifier: "ce4eb6ea41a4f43044dd7e71c08e50b2",
-    permission: getPermissionForCurrentUser(),
-    onNewPermissionGranted: (token) => savePermissionToken(token)
-});
 
 async function build(content, action) {
     if (action === 'twetch/post@0.0.1') {var obj = {bContent: content}} else {var obj = {postTransaction: content}}

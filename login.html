@@ -22,7 +22,7 @@
 <script src="https://unpkg.com/@twetch/sdk@0.2.4/dist/twetch.min.js"></script>
 <script src="ilitch.js"></script>     
 <script>
-    const zeroURL = "https://zeroschool.org/";
+    const zeroURL = "https://zeroschool.org";
     function logout(){localStorage.clear();alert("Logged out!");location.reload()}
     async function relayXLogin(){
         let token = await relayone.authBeta({withGrant:true}), res;

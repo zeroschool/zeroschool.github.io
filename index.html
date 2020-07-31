@@ -150,7 +150,7 @@
     </style>
 </head>
 
-<body class="terminal dark" style="padding-top: 15px; padding-left: 5px; padding-right: 5px; font-size: 13px;">
+<body onload="firstTime()" class="terminal dark" style="padding-top: 15px; padding-left: 5px; padding-right: 5px; font-size: 13px;">
 
     <div class="terminal-nav" style="text-align: center; align-content: center; align-items: center; justify-content: center;">
         <div class="logo terminal-prompt" style="text-align: center; align-content: center; color: #ccc;">ZeroSchool - 100p</div>
@@ -158,10 +158,10 @@
     
     <div class="topnav container">
         <div class="nav-element">
-            <a class="active" href="#home">Home</a>
+            <a class="active" href="#">Home</a>
             <a href="/100p.html">100p</a>
-            <a href="/job.html">Job</a>
-            <a href="https://dimely.io/directory">ProfChain™</a>
+            <a href="/job.html">Job List</a>
+            <a href="https://dimely.io/directory" target="_blank">ProfChain™</a>
         </div>            
     </div>
     <hr/>
@@ -172,7 +172,7 @@
                 <textarea type="text" id="post" class="input is-dark" placeholder="Just solve it, bro..."></textarea>
                 <div id="flex-cont2">
                     <input class="btn btn-primary btn-ghost" type="submit" id="tPost" value="Post" onclick="twetchPost()">
-                    <a class="btn btn-primary btn-ghost" style="color: #21e800;" id="buybsv" onclick="buybsv()">Buy Bits</a>
+                    <a class="btn btn-primary btn-ghost" style="color: #21e800;" id="buybsv" onclick="info()">Infos</a><a class="btn btn-primary btn-ghost" style="color: #21e800;" id="buybsv" onclick="buybsv()">Buy Bits</a>
                 </div>
             </form>
         </div>
@@ -184,8 +184,8 @@
             <div class="btn btn-primary btn-ghost btn-block is-dark" id="qselect">
                 <select required id="order" class="btn btn-primary btn-ghost btn-block">
                     <option value="0">Most Recent</option>
-                    <option value="1">PoW</option>
-                    <option value="2">Boost</option>
+                    <option value="1">Likes</option>
+                    <option value="2">PoW</option>
                 </select>
             </div>
         </div>

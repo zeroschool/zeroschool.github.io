@@ -1,5 +1,8 @@
 var CACHE_NAME = 'v0.024'
-var urlsToCache = ['/index.html']
+var urlsToCache = ['/index.html',
+                  '/login/index.html',
+                  '/100p.html',
+                  '/jobs.html']
 self.addEventListener('install', function (event) {
     event.waitUntil(
         caches.open(CACHE_NAME)

@@ -43,17 +43,6 @@ function info(){
             More to come, or not...</p>`, 'Enter', false)
 }
 
-async function firstTime() {
- if (localStorage.getItem('token')){
-                if (sdk.storage.getItem('tokenTwetchAuth')){sdk.authenticated = true;postsQuery()}
-                else {
-                    let r = axios.post('https://auth.twetch.app/api/v1/authenticate', {
-                        address: localStorage.getItem('address'),message: localStorage.getItem('msg'),signature: localStorage.getItem('signature')
-                    }).then(async function (res){sdk.storage.setItem('tokenTwetchAuth', res.data.token);sdk.authenticated = true;await sdk.authenticate();postsQuery()})
-                }
-            } else {window.location.href = "https://zeroschool.org/login"}
-}
-
 document.getElementById("tPost").setAttribute("disabled", null);
 document.getElementById("post").addEventListener("keyup", function() { checkPost() })
 

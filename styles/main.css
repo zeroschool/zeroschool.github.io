@@ -52,9 +52,9 @@ select#order {
 }
 
 .center {
-    position: absolute;
-    top: 35%;
-    left: 30%;
+    position: relative;
+    top: 50%;
+    left: 50%;
     margin: 10px;
     height: 220px;
     width: 300px;

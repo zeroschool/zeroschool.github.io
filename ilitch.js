@@ -123,7 +123,7 @@ async function send(action, likeTx, tipped) {
     }
 }
 
-async function getBoosts() {let res = await axios.get(`https://graph.boostpow.com/api/v1/main/boost/search?tag=${twetchSuffix}`);boosted = res.data.mined}
+async function getBoosts() {let res = await axios.get('https://graph.boostpow.com/api/v1/main/boost/search?tag=' + getTwetchSuffix());boosted = res.data.mined}
 function diffSum(content) {
     let boostedJobs = boosted.filter(boost => boost.boostData.content == content);
     let totalDiff = boostedJobs.reduce(function(sum, obj) {return sum + obj.boostJob.diff}, 0); return totalDiff;
@@ -149,7 +149,7 @@ async function postsQuery() {
         orderBy = 'orderBy: LIKES_BY_POST_ID__COUNT_DESC'
     };
     let response = await sdk.query(`{
-                allPosts(filter: {bContent: {includes: ${twetchSuffix}}}, ${selOrder === '2' ? "" : "first: 100,"} ${orderBy}) {
+                allPosts(filter: {bContent: {includes: getTwetchSuffix()}}, ${selOrder === '2' ? "" : "first: 100,"} ${orderBy}) {
                     nodes {bContent transaction numLikes userId youLiked userByUserId {name icon}}
                 }
             }`);
@@ -161,7 +161,7 @@ async function postsQuery() {
         posts.sort(compare)
     }
     for (let i = 0; i < posts.length; i++) {
-        let content = posts[i].bContent.replace(`${twetchSuffix}`, '');
+        let content = posts[i].bContent.replace(getTwetchSuffix(), '');
         let boostValue = diffSum(posts[i].transaction);
         posts[i].boostValue = boostValue;
         let osTwetch = `<div class="nes-container with-title is-dark" style="position: relative; border-color: #777; background-color: #000000; margin-bottom: 20px;">
@@ -194,7 +194,7 @@ postsQuery();
 function boost() {
     boostPublish.open({
         content: this.getAttribute("name"),
-        tag: `${twetchSuffix}`,
+        tag: getTwetchSuffix(),
         outputs: [{
             to: "zeroschool@moneybutton.org",
             amount: "0.00002138",
@@ -246,7 +246,7 @@ async function twetchPost(text) {
         post = text;
         tipped = true
     } else {
-        post += ` ${twetchSuffix}`;
+        post += ' '+ getTwetchSuffix();
         loadingDlg()
     }
     document.getElementById("post").value = "";
@@ -307,6 +307,11 @@ function showPopup(text, confirm, cancel, onClick) {
                 <button class="btn btn-primary btn-ghost confirm" onclick="${onClick}">${confirm}</button>
             </menu></form>`;
     dialog.showModal();
+}
+
+function getTwetchSuffix() {
+        let currentPage = window.location.href;
+        if (currentPage == "https://zeroschool.org/100p.html"){return "$100p"} else {return "$zeroschool"}
 }
 
 var dots = window.setInterval(function() {

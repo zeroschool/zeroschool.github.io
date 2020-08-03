@@ -252,7 +252,7 @@ async function twetchPost(text) {
         loadingDlg()
     }
     document.getElementById("post").value = "";
-    await buildIMB(post, 'twetch/post@0.0.1');
+    await build(post, 'twetch/post@0.0.1');
     await send('twetch/post@0.0.1', '', tipped);
 }
 

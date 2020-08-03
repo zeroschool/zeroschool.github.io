@@ -160,13 +160,26 @@
     <div class="topnav container">
         <div class="nav-element">
             <a href="/index.html">Home</a>
-            <a class="active" href="#">100p</a>
-            <a href="/jobs.html">Job List</a>
+            <a href="/100p">100p</a>
+            <a class="active" href="#">Job List</a>
             <a href="https://dimely.io/directory" target="_blank">ProfChain™</a>
         </div>            
     </div>
     <hr/>
 
+    <div class="container with-title is-dark" id="post-container">
+        <div class="flex-container">
+            <form onsubmit="return false">
+                <textarea type="text" id="post" class="input is-dark" placeholder="Learn by doing, bro..."></textarea>
+                <div id="flex-cont2">
+                    <input class="btn btn-primary btn-ghost" type="submit" id="tPost" value="Post" onclick="twetchPost()">
+                    <a class="btn btn-primary btn-ghost" style="color: #21e800;" id="buybsv" onclick="info()">Infos</a><a class="btn btn-primary btn-ghost" style="color: #21e800;" id="buybsv" onclick="buybsv()">Buy Bits</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <br>
     <div id="aux-wrapper">
         <div class="selection">
             <div class="btn btn-primary btn-ghost btn-block is-dark" id="qselect">
@@ -184,6 +197,11 @@
             <p class="title"></p>
         </div>
     </div>
+
+    <dialog class="terminal-card" style="background-color: #0f0f0f; border-color: #777; color: #ccc" id="dlg"></dialog>
+    <div id="widget-container"></div>
+    <hr>
+
 
 
     <footer style="color: #21e800"><small><center>powered by <a href="https://twetch.app">Twetch</a></center></small></footer>

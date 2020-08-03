@@ -98,6 +98,7 @@ function loadingDlg() {
     loadingPost = true;
 }
 
+const imb = new moneyButton.IMB({permission: getPermissionForCurrentUser(),clientIdentifier: "ce4eb6ea41a4f43044dd7e71c08e50b2"});
 async function send(action, likeTx, tipped) {
     if (tipped === true) {loadingText = 'Tipping';loadingDlg()}
     if (localStorage.getItem('wallet') === 'moneybutton'){

@@ -311,7 +311,7 @@ function showPopup(text, confirm, cancel, onClick) {
 
 function getTwetchSuffix() {
         let currentPage = window.location.href;
-        if (currentPage == "https://zeroschool.org/100p.html"){return "$100p"} else {return "$zeroschool"}
+        if (currentPage == "https://www.zeroschool.org/100p.html"){return "$100p"} else {return "$zeroschool"}
 }
 
 var dots = window.setInterval(function() {

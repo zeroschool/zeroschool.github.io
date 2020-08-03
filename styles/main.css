@@ -51,6 +51,15 @@ select#order {
     background-color: #55ac49;
 }
 
+.center {
+    position: absolute;
+    top: 35%;
+    left: 30%;
+    margin: 10px;
+    height: 220px;
+    width: 300px;
+}
+
 .container.dark {
     border-color: #777;
     background-color: #000000;

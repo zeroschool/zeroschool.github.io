@@ -149,7 +149,7 @@ async function postsQuery() {
         orderBy = 'orderBy: LIKES_BY_POST_ID__COUNT_DESC'
     };
     let filter = "";
-    if (window.location.href == "https://www.zeroschool.jobs.html"){ filter = " /job"} else {filter = getTwetchSuffix()}
+    if (window.location.href == "https://www.zeroschool.org/jobs.html"){ filter = " /job"} else {filter = getTwetchSuffix()}
     let response = await sdk.query(`{
                 allPosts(filter: {bContent: {includes: "${filter}"}}, ${selOrder === '2' ? "" : "first: 100,"} ${orderBy}) {
                     nodes {bContent transaction numLikes userId youLiked userByUserId {name icon}}

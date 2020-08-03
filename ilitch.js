@@ -123,7 +123,7 @@ async function send(action, likeTx, tipped) {
     }
 }
 
-async function getBoosts() {let res = await axios.get('https://graph.boostpow.com/api/v1/main/boost/search?tag=' + getTwetchSuffix());boosted = res.data.mined}
+async function getBoosts() {let res = await axios.get(`https://graph.boostpow.com/api/v1/main/boost/search?tag=${getTwetchSuffix()}`);boosted = res.data.mined}
 function diffSum(content) {
     let boostedJobs = boosted.filter(boost => boost.boostData.content == content);
     let totalDiff = boostedJobs.reduce(function(sum, obj) {return sum + obj.boostJob.diff}, 0); return totalDiff;
@@ -149,7 +149,7 @@ async function postsQuery() {
         orderBy = 'orderBy: LIKES_BY_POST_ID__COUNT_DESC'
     };
     let response = await sdk.query(`{
-                allPosts(filter: {bContent: {includes: getTwetchSuffix()}}, ${selOrder === '2' ? "" : "first: 100,"} ${orderBy}) {
+                allPosts(filter: {bContent: {includes: ${getTwetchSuffix()}}}, ${selOrder === '2' ? "" : "first: 100,"} ${orderBy}) {
                     nodes {bContent transaction numLikes userId youLiked userByUserId {name icon}}
                 }
             }`);
@@ -246,7 +246,7 @@ async function twetchPost(text) {
         post = text;
         tipped = true
     } else {
-        post += ' '+ getTwetchSuffix();
+        post += ` ${getTwetchSuffix()}`;
         loadingDlg()
     }
     document.getElementById("post").value = "";

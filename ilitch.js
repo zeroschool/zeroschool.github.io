@@ -149,7 +149,7 @@ async function postsQuery() {
         orderBy = 'orderBy: LIKES_BY_POST_ID__COUNT_DESC'
     };
     let response = await sdk.query(`{
-                allPosts(filter: {bContent: {includes: "${getTwetchSuffix()}"}}, ${selOrder === '2' ? "" : "first: 100,"} ${orderBy}) {
+                allPosts(filter: {bContent: {includes: ${getTwetchSuffix()}}}, ${selOrder === '2' ? "" : "first: 100,"} ${orderBy}) {
                     nodes {bContent transaction numLikes userId youLiked userByUserId {name icon}}
                 }
             }`);

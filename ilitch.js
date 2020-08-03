@@ -257,6 +257,8 @@ async function twetchPost(text) {
     await send('twetch/post@0.0.1', '', tipped);
 }
 
+setPennyAmt();
+
 function youtube(content) {
     let youRegex = /http(?:s?):\/\/(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-\_]*)(&(amp;)?‌​[\w\?‌​=]*)?/;
     return content.replace(youRegex, function(url) {

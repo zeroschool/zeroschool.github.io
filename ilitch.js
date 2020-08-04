@@ -221,7 +221,7 @@ async function like() {
 }
 
 function tip() {
-    twetchPost(`/pay @${tipUNum} $0.25 from $twetcharcade`);
+    twetchPost(`/pay @${tipUNum} $0.25 from $zeroschool`);
     window.scrollTo(0, 0)
 }
 

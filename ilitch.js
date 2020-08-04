@@ -16,12 +16,6 @@ sdk.storage.setItem('tokenTwetchAuth',
 );
 
 
-function buybsv() {
-    relayotc.buy('widget-container', {
-        referrer: "coin@relayx.io"
-    })
-}
-
 document.getElementById("order").onchange = () => {
     selOrder = document.getElementById("order").value;
     localStorage.setItem('orderBy', selOrder);
@@ -30,17 +24,6 @@ document.getElementById("order").onchange = () => {
 if (localStorage.getItem('orderBy')) {
     selOrder = localStorage.getItem('orderBy');
     document.getElementById("order").options[selOrder].selected = true;
-}
-
-function info(){
-        showPopup(`<p class="title" style="color: #21e800; font-family: fixedsys_excelsior_3.01Rg;">Welcome to ZeroSchool!</p><p style="font-family: fixedsys_excelsior_3.01Rg">ZeroSchool is a state of the art fren-2-fren Education System built for the 22nd Century.<br><br>
-            Posts, likes, tipping, & Boost are currently supported along with Bitcoinfiles & Relay OTC integration.<br><br>
-            You'll need a <a href="https://twetch.app">Twetch</a> account to get you started, so grab an invite here: <a href="https://twet.ch/inv/zeroschool">https://twet.ch/inv/zeroschool</a> , or don't, whatever..<br><br>
-            Discuss the future of Education <br><br>
-            ZeroSchool is about solving real world problem, so post your problems to our <a href="https://zeroschool.org">100p</a> problem list. <br><br>
-            Come and discuss the future of Education in the <a href="https://zeroschool.org/lobby">Lobby</a>.<br><br>
-            Likes are 10 cents.<br><br>
-            More to come, or not...</p>`, 'Enter', false)
 }
 
 document.getElementById("tPost").setAttribute("disabled", null);

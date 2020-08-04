@@ -1,7 +1,7 @@
 {
     "name": "ZeroSchool - Ceci n'est pas une école.",
     "short_name": "ZeroSchool",
-    "start_url": "https://zeroshcool.org",
+    "start_url": "https://www.zeroshcool.org",
     "display": "standalone",
     "background_color": "#000",
     "description": "ZeroSchool is a Twetch client to deschool society.",

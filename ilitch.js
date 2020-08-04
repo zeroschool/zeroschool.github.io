@@ -175,7 +175,6 @@ async function postsQuery() {
         stars[k].addEventListener('click', boost)
     }
 }
-postsQuery();
 
 function boost() {
     boostPublish.open({

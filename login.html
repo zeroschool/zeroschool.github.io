@@ -94,5 +94,16 @@ Most people learn by being "with it", yet school makes them identify their, cogn
     })
     }
     
+    function showPopup(text, confirm, cancel, onClick) {
+    let dialog = document.getElementById('dlg');
+    dialogPolyfill.registerDialog(dialog);
+    dialog.innerHTML = `<form method="dialog"><p>${text}</p>
+            <menu class="dialog-menu">
+                ${cancel === true ? "<button class='btn btn-error btn-ghost cancel'>Cancel</button>" : ""}
+                <button class="btn btn-primary btn-ghost confirm" onclick="${onClick}">${confirm}</button>
+            </menu></form>`;
+    dialog.showModal();
+}
+    
 </script>
 </html>

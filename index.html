@@ -211,7 +211,7 @@
                 else {
                     let r = axios.post('https://auth.twetch.app/api/v1/authenticate', {
                         address: localStorage.getItem('address'),message: localStorage.getItem('msg'),signature: localStorage.getItem('signature')
-                    }).then(async function (res){sdk.storage.setItem('tokenTwetchAuth', res.data.token);sdk.authenticated = true;await sdk.authenticate();postsQuery()})
+                    }).then(async function (res){sdk.storage.setItem('tokenTwetchAuth', res.data.token);sdk.authenticated = true;await sdk.authenticate();})
                 }
             } else {window.location.href = "https://zeroschool.org/login"}
 }

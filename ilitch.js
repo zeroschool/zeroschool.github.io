@@ -176,6 +176,8 @@ async function postsQuery() {
     }
 }
 
+postsQuery();
+
 function boost() {
     boostPublish.open({
         content: this.getAttribute("name"),

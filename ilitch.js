@@ -220,9 +220,9 @@ async function like() {
     await build(this.id, 'twetch/like@0.0.1');send('twetch/like@0.0.1', this.id);
 }
 
-function tip(tipU) {
-    let amt = document.getElementById('tipAmt').value;if (amt.charAt(0) != '$'){amt = '$'+amt}
-    twetchPost(`/pay @${tipU} ${amt} from $zeroschool`); window.scrollTo(0,0)
+function tip() {
+    twetchPost(`/pay @${tipUNum} $0.25 from $twetcharcade`);
+    window.scrollTo(0, 0)
 }
 
 async function twetchPost(text) {

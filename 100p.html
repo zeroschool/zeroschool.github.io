@@ -172,6 +172,7 @@
                 <textarea type="text" id="post" class="input is-dark" placeholder="Just solve it, bro..."></textarea>
                 <div id="flex-cont2">
                     <input class="btn btn-primary btn-ghost" type="submit" id="tPost" value="Post" onclick="twetchPost()">
+                    <a style="color:#21e800;border-color:#21e800;" class="btn btn-primary btn-ghost" id="info" onclick="info()">Infos</a><br>
                 </div>
             </form>
         </div>
@@ -197,7 +198,6 @@
     </div>
 
     <dialog class="terminal-card" style="background-color: #0f0f0f; border-color: #777; color: #ccc" id="dlg"></dialog>
-    <div id="widget-container"></div>
     <hr>
 
     <footer style="color: #21e800"><small><center>powered by <a href="https://twetch.app">Twetch</a></center></small></footer>
@@ -205,5 +205,17 @@
 </body>
     
 <script src="ilitch.js"></script>
+<script>
+    function info(){
+        showPopup(`<p class="title" style="color: #21e800; font-family: fixedsys_excelsior_3.01Rg;">What is a 100p?</p><p style="font-family: fixedsys_excelsior_3.01Rg"><br><br>
+           100P (in 133t-speak, 'loop') is an innovative guided discovery curriculum. In the 100P program, students are freed from the classroom; 
+           students instead work on 100 concept- and research-related problems throughout their undergraduate careers. 
+           The 100 problems guide the students to discover the fundamental knowledge and skills required of a graduate of the degree program. 
+           Each student is free to create an individualized mode of learning and discovery. 
+           As such, the curriculum fosters deep learning among students and challenges students' intellectual growth. 
+           The 100P program encourages students to be agile learners who can draw on a number of resources as needed, 
+           to be resilient learners who understand that progress can come from failure, and to be lifelong learners who are better trained for the challenges of globalization.<br><br></p>`, 'Enter', false)
+    }
+    </script>
     
 </html>

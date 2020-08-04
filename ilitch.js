@@ -199,7 +199,7 @@ function boost() {
         content: this.getAttribute("name"),
         tag: getTwetchSuffix(),
         outputs: [{
-            to: "zeroschool@moneybutton.org",
+            to: "zeroschool@moneybutton.com",
             amount: "0.00002138",
             currency: "BSV"
         }],

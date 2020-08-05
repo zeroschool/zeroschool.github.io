@@ -150,7 +150,7 @@ async function postsQuery() {
         let content = posts[i].bContent.replace(getTwetchSuffix(), '');
         let boostValue = diffSum(posts[i].transaction);
         posts[i].boostValue = boostValue;
-        let osTwetch = `<div onclick="window.location.href='https://twetch.app/t/'+${posts[i].transaction}" class="nes-container with-title is-dark" style="position: relative; border-color: #777; background-color: #000000; margin-bottom: 20px;">
+        let osTwetch = `<div class="nes-container with-title is-dark" style="position: relative; border-color: #777; background-color: #000000; margin-bottom: 20px;">
                         <p id="postTitle" class="title"><img class="nes-avatar is-rounded is-medium" src="${posts[i].userByUserId.icon}"> ${posts[i].userByUserId.name} <a href="https://twetch.app/u/${posts[i].userId}" target="_blank">u/${posts[i].userId}</a>
                         </p><p class="urlFormat">${applyURLs(content)}</p>`
         osTwetch += `<div class="item" style="position: relative; height: 110px;">
@@ -161,6 +161,7 @@ async function postsQuery() {
                         <var id=${posts[i].transaction}_diff style="position: absolute; left: 148px; top: 69px">${parseInt(boostValue)}</var>
                     </div>`;
         document.getElementById('message-container').innerHTML += osTwetch + '</div>';
+        document.getElementById('message-container').onclick = function(){window.location.href = "https://twetch.app/t/" + posts[i].transaction};
     }
     var hearts = document.getElementsByClassName("nes-icon is-large heart is-empty");
     for (let i = 0; i < hearts.length; i++) {

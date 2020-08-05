@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>ZeroSchool</title>
+    <link rel="stylesheet" href="https://unpkg.com/terminal.css@0.7.1/dist/terminal.min.css" />
+    <link href="https://unpkg.com/nes.css@2.3.0/css/nes.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/dialog-polyfill@0.5.1/dist/dialog-polyfill.css" rel="stylesheet" type="text/css">
+    <link href="/styles/main.css" rel="stylesheet" type="text/css">
+    <link rel="shortcut icon" href="favicon.png" type="image/png">
+
+    <script src="https://unpkg.com/dialog-polyfill@0.5.1/dist/dialog-polyfill.js"></script>
+    <script src="https://unpkg.com/@twetch/sdk@0.2.4/dist/twetch.min.js"></script>
+    <script src="https://unpkg.com/bsv@0.30.0/bsv.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://www.moneybutton.com/moneybutton.js"></script>
+    <script src="https://publish.boostpow.com/publish.js"></script>
+    <script src="https://pay.twetch.com/pay.js"></script>
+    
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="apple-touch-icon" href="images/icons/apple-touch-icon.png">
+    <link rel="apple-touch-startup-image" href="images/icons/apple-touch-icon.png">
+
+    <style>
+        html:root {
+            --primary-color: #21e800;
+        }
+        
+        var {
+            font-family: 'fixedsys_excelsior_3.01Rg';
+            font-style: normal;
+            font-size: 10px
+        }
+        
+        .urlFormat {
+            overflow: hidden;
+            text-overflow: ellipsis
+        }
+        
+        html,
+        body,
+        pre,
+        code,
+        kbd,
+        p,
+        a,
+        dialog,
+        title,
+        samp {
+            font-family: 'fixedsys_excelsior_3.01Rg';
+        }
+        
+        body {
+            background-color: black;
+        }
+        
+                
+        .btn {
+            z-index: 0;
+        }
+        
+        #flex-cont2 {
+            display: flex !important;
+            justify-content: space-between;
+        }
+        
+        #aux-wrapper {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin: 2vh;
+        }
+        
+        .selection {
+            align-self: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            width: 50%;
+            padding: 0;
+            margin: 0;
+            z-index: 0;
+        }
+        
+        #qselect {
+            align-self: center !important;
+            z-index: 0;
+        }
+        
+        select {
+            z-index: 0;
+        }
+        
+        #popup-widget-modal {
+            position: absolute;
+            z-index: 10000 !important;
+        }
+        
+        .btn.btn-primary {
+            z-index: 0;
+        }
+        
+        .btn.btn-primary.btn-ghost {
+            z-index: 0;
+        }
+        
+        .terminal-card {
+            z-index: 0;
+        }
+        
+        #iframe {
+            z-index: 1000;
+        }
+        
+        /* Add a black background color to the top navigation */
+.topnav {
+  overflow: hidden;
+  justify-content: space-between;
+}
+
+/* Style the links inside the navigation bar */
+.topnav a {
+  float: left;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  color: #21e800;
+}
+        .topnav a:hover{
+            color:black;
+        }
+        .topnav a.active:hover{
+            color:black;
+        }
+
+/* Add a color to the active/current link */
+.topnav a.active {
+  border-bottom: 3px solid #21e800;
+  color: #21e800;
+}
+
+        .nav-element {
+            display: flex !important;
+    justify-content: space-between;
+        }
+        
+    </style>
+</head>
+
+<body class="terminal dark" style="padding-top: 15px; padding-left: 5px; padding-right: 5px; font-size: 13px;">
+
+    <div class="terminal-nav" style="text-align: center; align-content: center; align-items: center; justify-content: center;">
+        <div class="logo terminal-prompt" style="text-align: center; align-content: center; color: #ccc;">ZeroSchool - v0.1</div>
+    </div>
+    
+    <div id="message-container" class="container dark" style="white-space: pre-line;">
+        <div>
+            <p class="title"></p>
+        </div>
+    </div>
+
+    
+
+    <footer style="color: #21e800"><small><center>powered by <a href="https://twetch.app">Twetch</a></center></small></footer>
+
+</body>
+    
+<script src="ilitch.js"></script>
+<script>
+    var txid = window.location.href.substring(64);
+    let response = await sdk.query{`
+  allPosts(condition: {transaction: "fdabad2160dd006068b72d3e2b08a59a2fa624bb2ec76e743f2b2f16a276e0cb"}) {
+    nodes {
+      bContent
+      transaction
+      numLikes
+      userId
+      youLiked
+      userByUserId {
+        name
+        icon
+      }
+      postsByReplyPostId {
+        nodes {
+          bContent
+      		transaction
+      		numLikes
+      		userId
+      		youLiked
+     			userByUserId {
+        		name
+        		icon
+      		}
+          replyCount
+        }
+      }
+    }
+  }
+}`);
+
+post = response.allPosts.nodes[0];
+let content = post[i].bContent;
+        let boostValue = diffSum(post.transaction);
+        post.boostValue = boostValue;
+        let osTwetch = `<div class="nes-container with-title is-dark" style="position: relative; border-color: #777; background-color: #000000; margin-bottom: 20px;">
+                        <p id="postTitle" class="title"><img class="nes-avatar is-rounded is-medium" src="${post.userByUserId.icon}"> ${post.userByUserId.name} <a href="https://twetch.app/u/${posts.userId}" target="_blank">u/${posts.userId}</a>
+                        </p><p class="urlFormat">${applyURLs(content)}</p>`
+        osTwetch += `<div class="item" style="position: relative; height: 110px;">
+                        <i id="${post.transaction}" class="nes-icon is-large heart ${post.youLiked === "0" ? "is-empty" : ""}"></i><var id=${post.transaction}_count style="position: absolute; left: 50px; top: 69px">${post.numLikes}</var>
+                        <a href="https://search.matterpool.io/tx/${posts[i].transaction}" target="_blank" text-decoration="none" class="txid">#txid</a>
+                        <i class="nes-icon coin is-large" name="${post.userId}" style="position: absolute; right: -15px; top: 25px"></i>
+                        <i class="nes-icon trophy is-large ${boostValue === 0 ? "is-empty" : ""}" name="${post.transaction}" style="position: absolute; left: 80px; top: 20px"></i>
+                        <var id=${post.transaction}_diff style="position: absolute; left: 148px; top: 69px">${parseInt(boostValue)}</var>
+                    </div>`;
+        document.getElementById('message-container').innerHTML += osTwetch + '</div>';
+        document.getElementById('message-container').onclick = function(){window.location.href = "https://zeroschool.org/t/" + post.transaction};
+
+
+</script>
+    
+</html>

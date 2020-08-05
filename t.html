@@ -173,7 +173,7 @@
 async function postDetails(){
     let txid = window.location.href.substring(64);
     let response = await sdk.query(`{
-  allPosts(condition: {transaction: "${txid}"}) {
+  allPosts(condition: {transaction: ${txid}}) {
     nodes {
       bContent
       transaction

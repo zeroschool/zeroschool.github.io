@@ -171,7 +171,7 @@
 <script src="ilitch.js"></script>
 <script>
 async function postDetails(){
-    let txid = window.location.href.substring(25);
+    let txid = window.location.href.substring(29);
     let response = await sdk.query(`{
   allPosts(condition: {transaction: ${txid}}) {
     nodes {

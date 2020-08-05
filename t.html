@@ -171,8 +171,8 @@
 <script src="ilitch.js"></script>
 <script>
     var txid = window.location.href.substring(64);
-    let response = await sdk.query{`
-  allPosts(condition: {transaction: "fdabad2160dd006068b72d3e2b08a59a2fa624bb2ec76e743f2b2f16a276e0cb"}) {
+    let response = sdk.query{`
+  allPosts(condition: {transaction: "${txid}"}) {
     nodes {
       bContent
       transaction

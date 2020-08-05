@@ -211,7 +211,7 @@ let content = post.bContent;
                         </p><p class="urlFormat">${applyURLs(content)}</p>`
         osTwetch += `<div class="item" style="position: relative; height: 110px;">
                         <i id="${post.transaction}" class="nes-icon is-large heart ${post.youLiked === "0" ? "is-empty" : ""}"></i><var id=${post.transaction}_count style="position: absolute; left: 50px; top: 69px">${post.numLikes}</var>
-                        <a href="https://search.matterpool.io/tx/${posts[i].transaction}" target="_blank" text-decoration="none" class="txid">#txid</a>
+                        <a href="https://search.matterpool.io/tx/${post.transaction}" target="_blank" text-decoration="none" class="txid">#txid</a>
                         <i class="nes-icon coin is-large" name="${post.userId}" style="position: absolute; right: -15px; top: 25px"></i>
                         <i class="nes-icon trophy is-large ${boostValue === 0 ? "is-empty" : ""}" name="${post.transaction}" style="position: absolute; left: 80px; top: 20px"></i>
                         <var id=${post.transaction}_diff style="position: absolute; left: 148px; top: 69px">${parseInt(boostValue)}</var>

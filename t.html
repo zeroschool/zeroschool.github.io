@@ -170,9 +170,9 @@
     
 <script src="ilitch.js"></script>
 <script>
-    var txid = window.location.href.substring(64);
-    let response = await async function(){
-        sdk.query(`{
+async function postDetails(){
+    let txid = window.location.href.substring(64);
+    let response = await sdk.query(`{
   allPosts(condition: {transaction: "${txid}"}) {
     nodes {
       bContent
@@ -201,7 +201,6 @@
     }
   }
 }`);
-    }
 
 post = response.allPosts.nodes[0];
 let content = post[i].bContent;
@@ -219,7 +218,8 @@ let content = post[i].bContent;
                     </div>`;
         document.getElementById('message-container').innerHTML += osTwetch + '</div>';
         document.getElementById('message-container').onclick = function(){window.location.href = "https://zeroschool.org/t/" + post.transaction};
-
+}
+    postDetails();
 
 </script>
     

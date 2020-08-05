@@ -203,7 +203,7 @@ async function postDetails(){
 }`);
 
 post = response.allPosts.nodes[0];
-let content = post[i].bContent;
+let content = post.bContent;
         let boostValue = diffSum(post.transaction);
         post.boostValue = boostValue;
         let osTwetch = `<div class="nes-container with-title is-dark" style="position: relative; border-color: #777; background-color: #000000; margin-bottom: 20px;">

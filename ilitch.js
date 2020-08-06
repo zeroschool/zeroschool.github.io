@@ -161,7 +161,7 @@ async function postsQuery() {
                         <var id=${posts[i].transaction}_diff style="position: absolute; left: 148px; top: 69px">${parseInt(boostValue)}</var>
                     </div>`;
         document.getElementById('message-container').innerHTML += osTwetch + '</div>';
-        document.getElementById('twetch-container').onclick = function(){window.location.href = "https://zeroschool.org/t?" + this.id};
+        document.getElementById('twetch-container').onclick = function(){window.location.href = "https://zeroschool.org/t?" + element.id};
         
     }
     var hearts = document.getElementsByClassName("nes-icon is-large heart is-empty");

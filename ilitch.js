@@ -161,8 +161,7 @@ async function postsQuery() {
                         <var id=${posts[i].transaction}_diff style="position: absolute; left: 148px; top: 69px">${parseInt(boostValue)}</var>
                     </div>`;
         document.getElementById('message-container').innerHTML += osTwetch + '</div>';
-        document.getElementById('twetch-container').onclick = function(){window.location.href = "https://zeroschool.org/t?" + element.id};
-        
+                
     }
     var hearts = document.getElementsByClassName("nes-icon is-large heart is-empty");
     for (let i = 0; i < hearts.length; i++) {
@@ -176,6 +175,9 @@ async function postsQuery() {
     for (let k = 0; k < stars.length; k++) {
         stars[k].addEventListener('click', boost)
     }
+    var details = document.getElementsByClassName("nes-container with-title is-dark"):
+    for (let m = 0; m < details.lenght; m++) {
+        details[m].addEventListener('click', goToDetails)    
 }
 
 postsQuery();
@@ -214,6 +216,10 @@ function askTip() {
         text = `Would you like to tip u/${uNum} 25 cents?`;
     showPopup(text, 'Confirm', true, "tip()");
 }
+        
+ function goToDetails(){
+         window.location.href = "https://zeroschool.org/t/" + this.id
+ }
 
 async function like() {
     document.getElementById(this.id).className = `nes-icon heart is-large`;

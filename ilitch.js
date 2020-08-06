@@ -176,7 +176,7 @@ async function postsQuery() {
         stars[k].addEventListener('click', boost)
     }
     var details = document.getElementsByClassName("nes-container with-title is-dark");
-    for (let m = 0; m < details.lenght; m++) {
+    for (let m = 0; m < details.length; m++) {
         details[m].addEventListener('click', goToDetails)
     }
 }

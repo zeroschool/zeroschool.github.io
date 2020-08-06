@@ -219,7 +219,7 @@ function askTip() {
 }
         
  function goToDetails(){
-         window.location.href = "https://zeroschool.org/t?" + this.id;
+         window.location.href = "https://zeroschool.org/t=" + this.id;
  }
 
 async function like() {

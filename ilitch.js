@@ -177,7 +177,8 @@ async function postsQuery() {
     }
     var details = document.getElementsByClassName("nes-container with-title is-dark");
     for (let m = 0; m < details.lenght; m++) {
-        details[m].addEventListener('click', goToDetails)    
+        details[m].addEventListener('click', goToDetails)
+    }
 }
 
 postsQuery();

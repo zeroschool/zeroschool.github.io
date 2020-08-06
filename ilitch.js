@@ -150,17 +150,18 @@ async function postsQuery() {
         let content = posts[i].bContent.replace(getTwetchSuffix(), '');
         let boostValue = diffSum(posts[i].transaction);
         posts[i].boostValue = boostValue;
-        let osTwetch = `<div id="twetch-container" class="nes-container with-title is-dark" style="position: relative; border-color: #777; background-color: #000000; margin-bottom: 20px;">
+        let osTwetch = `<div id="${posts[i].transaction}" class="nes-container with-title is-dark" style="position: relative; border-color: #777; background-color: #000000; margin-bottom: 20px;">
                         <p id="postTitle" class="title"><img class="nes-avatar is-rounded is-medium" src="${posts[i].userByUserId.icon}"> ${posts[i].userByUserId.name} <a href="https://twetch.app/u/${posts[i].userId}" target="_blank">u/${posts[i].userId}</a>
                         </p><p class="urlFormat">${applyURLs(content)}</p>`
         osTwetch += `<div class="item" style="position: relative; height: 110px;">
-                        <i id="${posts[i].transaction}" class="nes-icon is-large heart ${posts[i].youLiked === "0" ? "is-empty" : ""}"></i><var id=${posts[i].transaction}_count style="position: absolute; left: 50px; top: 69px">${posts[i].numLikes}</var>
+                        <i class="nes-icon is-large heart ${posts[i].youLiked === "0" ? "is-empty" : ""}"></i><var id=${posts[i].transaction}_count style="position: absolute; left: 50px; top: 69px">${posts[i].numLikes}</var>
                         <a href="https://search.matterpool.io/tx/${posts[i].transaction}" target="_blank" text-decoration="none" class="txid">#txid</a>
                         <i class="nes-icon coin is-large" name="${posts[i].userId}" style="position: absolute; right: -15px; top: 25px"></i>
                         <i class="nes-icon trophy is-large ${boostValue === 0 ? "is-empty" : ""}" name="${posts[i].transaction}" style="position: absolute; left: 80px; top: 20px"></i>
                         <var id=${posts[i].transaction}_diff style="position: absolute; left: 148px; top: 69px">${parseInt(boostValue)}</var>
                     </div>`;
         document.getElementById('message-container').innerHTML += osTwetch + '</div>';
+        document.getElementById('twetch-container').onclick = function(){window.location.href = "https://zeroschool.org/t?" + this.id};
         
     }
     var hearts = document.getElementsByClassName("nes-icon is-large heart is-empty");
@@ -178,7 +179,6 @@ async function postsQuery() {
 }
 
 postsQuery();
-document.getElementById('twetch-container').onclick = function(){window.location.href = "https://zeroschool.org/t?" + this.transaction};
 function boost() {
     boostPublish.open({
         content: this.getAttribute("name"),

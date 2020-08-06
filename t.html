@@ -207,7 +207,7 @@ let content = post.bContent;
         let boostValue = diffSum(post.transaction);
         post.boostValue = boostValue;
         let osTwetch = `<div id="${post.transaction}" class="nes-container with-title is-dark" style="position: relative; border-color: #777; background-color: #000000; margin-bottom: 20px;">
-                        <p id="postTitle" class="title"><img class="nes-avatar is-rounded is-medium" src="${post.userByUserId.icon}"> ${post.userByUserId.name} <a href="https://twetch.app/u/${posts.userId}" target="_blank">u/${posts.userId}</a>
+                        <p id="postTitle" class="title"><img class="nes-avatar is-rounded is-medium" src="${post.userByUserId.icon}"> ${post.userByUserId.name} <a href="https://twetch.app/u/${post.userId}" target="_blank">u/${posts.userId}</a>
                         </p><p class="urlFormat">${applyURLs(content)}</p>`
         osTwetch += `<div class="item" style="position: relative; height: 110px;">
                         <i class="nes-icon is-large heart ${post.youLiked === "0" ? "is-empty" : ""}"></i><var id=${post.transaction}_count style="position: absolute; left: 50px; top: 69px">${post.numLikes}</var>

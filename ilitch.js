@@ -42,7 +42,11 @@ async function twgin(){
                 await sdk.authenticate()})   
         }
     }
-    if (sdk.authenticated){document.getElementById("login").style.visibility = "hidden"} else {document.getElementById("login").style.visibility = "visible"}
+    if (sdk.authenticated){
+        document.getElementById("login").style.visibility = "hidden";
+        document.getElementById("logout").style.visibility = "visible";} else {
+        document.getElementById("login").style.visibility = "visible";
+        document.getElementById("logout").style.visibility = "hidden"}
 }
 
 function login(){

@@ -63,6 +63,7 @@ async function relayXLogin(){
     let publicKey = bsv.PublicKey.fromHex(data.pubkey);
     let signAddr = bsv.Address.fromPublicKey(publicKey);
     if (res){saveWallet(data.paymail, data.pubkey, res.value, signAddr.toString(), 'relayx')}
+    location.reload()
     //if (localStorage.getItem('paymail')){window.location.href = zeroURL}
 }
 function saveWallet(paymail, pubkey, signature, address, wallet){
@@ -91,6 +92,7 @@ async function imbLogin(){
             //if (localStorage.getItem('paymail')){window.location.href = zeroURL}
         }
     });
+    location.reload()
 }
 
 document.getElementById("order").onchange = () => {selOrder = document.getElementById("order").value;localStorage.setItem('orderBy', selOrder);postsQuery()}

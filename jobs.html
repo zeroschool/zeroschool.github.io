@@ -1,51 +1,86 @@
+<!DOCTYPE html>
 <html>
-    <head>
-        <title>ZeroSchool - Ceci n'est pas une école.</title>
-        <link rel="stylesheet" href="https://unpkg.com/nes.css@2.3.0/css/nes.min.css">
-        <link rel="stylesheet" href="https://unpkg.com/dialog-polyfill@0.5.1/dist/dialog-polyfill.css" type="text/css">
-        <link rel="stylesheet" href="/styles/main.css" type="text/css">
-        <link rel="shortcut icon" href="favicon.png" type="image/png">
 
-        <script src="https://unpkg.com/dialog-polyfill@0.5.1/dist/dialog-polyfill.js"></script>
-        <script src="https://unpkg.com/@twetch/sdk@0.2.4/dist/twetch.min.js"></script>
-        <script src="https://unpkg.com/bsv@0.30.0/bsv.min.js"></script>
-        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-        <script src="https://www.moneybutton.com/moneybutton.js"></script>
-        <script src="https://publish.boostpow.com/publish.js"></script>
-        <script src="https://pay.twetch.com/pay.js"></script>
-        <script src="https://one.relayx.io/relayone.js"></script>
-    </head>
-    <header>
-        <a href="https://zeroschool.org"><h1>Zeroschool -v0.2</h1></a><a class="nes-btn is-success" id="login" onclick="login()">Login</a>
-        <div class="topnav container">
-            <div class="nav-element">
-                <a href="/index">Discuss</a>
-                <a href="/100p">100p</a>
-                <a class="active" href="">Job List</a>
-                <a href="https://dimely.io/directory" target="_blank">Talk</a>
-            </div>            
+<head>
+    <title>ZeroSchool</title>
+    <link rel="stylesheet" href="https://unpkg.com/terminal.css@0.7.1/dist/terminal.min.css" />
+    <link href="https://unpkg.com/nes.css@2.3.0/css/nes.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/dialog-polyfill@0.5.1/dist/dialog-polyfill.css" rel="stylesheet" type="text/css">
+    <link href="/styles/main.css" rel="stylesheet" type="text/css">
+    <link rel="shortcut icon" href="favicon.png" type="image/png">
+
+    <script src="https://unpkg.com/dialog-polyfill@0.5.1/dist/dialog-polyfill.js"></script>
+    <script src="https://unpkg.com/@twetch/sdk@0.2.4/dist/twetch.min.js"></script>
+    <script src="https://unpkg.com/bsv@0.30.0/bsv.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://www.moneybutton.com/moneybutton.js"></script>
+    <script src="https://publish.boostpow.com/publish.js"></script>
+    <script src="https://pay.twetch.com/pay.js"></script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="apple-touch-icon" href="images/icons/apple-touch-icon.png">
+    <link rel="apple-touch-startup-image" href="images/icons/apple-touch-icon.png">
+</head>
+<header>
+    <div class="terminal-nav topnav container">
+        <div class="nav-elements">
+            <ul>
+                <li><div class="logo terminal-prompt" style="color: #ccc;"><a href="https://zeroschool.org">ZeroSchool - v0.1</a></div></li>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="/100p">100p</a></li>
+                <li><a class="active" href="">Job List</a></li>
+                <li><a href="https://dimely.io/directory" target="_blank">Talk</a></li>
+                <li><a class="btn btn-primary btn-ghost" id="login" onclick="login()">Login</a></li>
+            </ul>
         </div>
-    </header>
-    <body onload="twgin()">
-        <form onsubmit="return false" id="post-container">
-            <textarea type="text" id="post" class="nes-input is-dark post-container" placeholder="Use the following syntax to submit a new job : 
+    </div>
+</header>
+<body onload="twgin()" class="terminal dark" style="padding-top: 15px; padding-left: 5px; padding-right: 5px; font-size: 13px;">
+    <div class="container with-title is-dark" id="post-container">
+        <div class="flex-container">
+            <form onsubmit="return false">
+                <textarea type="text" id="post" class="input is-dark" placeholder="Use the following syntax to submit a new job : 
             [job description] /job [reward] [currency]"></textarea>
-            <input type="submit" id="tPost" value="Post" onclick="twetchPost()">
-        </form>
-        <div class="selection"><div class="nes-select is-dark" id="qselect">
-            <select required id="order"><option value="0">Most recent</option><option value="1">Likes</option><option value="2">PoW</option></select></div>
+                <div id="flex-cont2">
+                    <input class="btn btn-primary btn-ghost" type="submit" id="tPost" value="Post" onclick="twetchPost()">
+                </div>
+            </form>
         </div>
-        <div id="message-container" class=""></div>
-        <dialog class="nes-dialog" id="loginDlg">
-            <form method="dialog"><menu class="dialog-menu">
-                <p>Login with:</p>
-                <a class="nes-btn is-primary" id="relayX" onclick="relayXLogin()">RelayX</a>
-                <a class="nes-btn is-success" id="MB" onclick="imbLogin()">MoneyButton</a>
-                <a class="nes-btn is-error" id="logout" onclick="logout()">Logout</a>
-            </menu></form>
-        </dialog>
-        <dialog class="nes-dialog" id="loadingDlg"></dialog>
-    </body>
-    <script src="ilitch.js"></script>
+    </div>
 
+    <br>
+    <div id="aux-wrapper">
+        <div class="selection">
+            <div class="btn btn-primary btn-ghost btn-block is-dark" id="qselect">
+                <select required id="order" class="btn btn-primary btn-ghost btn-block">
+                    <option value="0">Most Recent</option>
+                    <option value="1">Likes</option>
+                    <option value="2">PoW</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div id="message-container" class="container dark" style="white-space: pre-line;"></div>
+
+    <dialog class="terminal-card" id="loginDlg">
+        <form method="dialog"><menu class="dialog-menu">
+            <p>Login with:</p>
+            <a style="color:#0021e8;border-color:#0021e8;" class="btn btn-primary btn-ghost" id="relayX" onclick="relayXLogin()">RelayX</a><br>
+            <a style="color:#21e800;border-color:#21e800;" class="btn btn-primary btn-ghost" id="MB" onclick="imbLogin()">MoneyButton</a><br>
+            <a style="color:#e80021;border-color:#e80021;" class="btn btn-primary btn-ghost" id="logout" onclick="logout()">Logout</a><br>
+        </menu></form>
+    </dialog>
+
+    <dialog class="terminal-card" style="background-color: #0f0f0f; border-color: #777; color: #ccc" id="loadingDlg"></dialog>
+    <hr>
+
+    <footer style="color: #21e800"><small><center>powered by <a href="https://twetch.app">Twetch</a></center></small></footer>
+
+</body>
+    
+<script src="ilitch.js"></script>
+  
 </html>

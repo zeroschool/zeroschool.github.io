@@ -42,9 +42,8 @@ async function twgin(){
                 await sdk.authenticate()})   
         }
     } 
+    if (sdk.authenticated){document.getElementById("login").style.visibility = "hidden"} else {document.getElementById("login").style.visibility = "visible"}
 }
-
-if (sdk.authenticated){document.getElementById("login").style.visibility = "hidden"} else {document.getElementById("login").style.visibility = "visible"}
 
 function login(){
     dialog = document.getElementById("loginDlg");

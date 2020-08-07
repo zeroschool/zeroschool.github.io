@@ -54,50 +54,48 @@ function login(){
     dialogPolyfill.registerDialog(dialog);dialog.showModal();
 }
 
-//const zeroURL = "https://zeroschool.org";
-function logout(){localStorage.clear();alert("Logged out!");location.reload()}
-async function relayXLogin(){
-    let token = await relayone.authBeta({withGrant:true}), res;
-    localStorage.setItem('token', token);
-    let [payload, signature] = token.split(".");
-    const data = JSON.parse(atob(payload));
-    let content = await axios.get('https://auth.twetch.app/api/v1/challenge');
-    localStorage.setItem('msg', content.data.message);
-    try {res = await relayone.sign(content.data.message)}catch(e){alert(e)}
-    let publicKey = bsv.PublicKey.fromHex(data.pubkey);
-    let signAddr = bsv.Address.fromPublicKey(publicKey);
-    if (res){saveWallet(data.paymail, data.pubkey, res.value, signAddr.toString(), 'relayx')}
-    location.reload()
-    //if (localStorage.getItem('paymail')){window.location.href = zeroURL}
-}
-function saveWallet(paymail, pubkey, signature, address, wallet){
-    localStorage.setItem('paymail', paymail);
-    localStorage.setItem('pubkey', pubkey);
-    localStorage.setItem('signature', signature);
-    localStorage.setItem('address', address);
-    localStorage.setItem('wallet', wallet);
-}
-function savePermissionToken(token) {localStorage.setItem('token', token)}
-function getPermissionForCurrentUser() {if (localStorage.getItem('token')) {return localStorage.getItem('token')}}
-const imb = new moneyButton.IMB({
-    clientIdentifier: "ce4eb6ea41a4f43044dd7e71c08e50b2",
-    permission: getPermissionForCurrentUser(), onNewPermissionGranted: (token) => savePermissionToken(token)
-});
-async function imbLogin(){
-    let content = await axios.get('https://auth.twetch.app/api/v1/challenge');
-    localStorage.setItem('msg', content.data.message);
-    var cryptoOperations = [
-        {name:'mySignature',method:'sign',data:localStorage.getItem('msg'),dataEncoding:'utf8',key:'identity',algorithm:'bitcoin-signed-message'},
-        {name:'myPublicKey',method:'public-key',key:'identity'},{name: 'myAddress',method: 'address',key: 'identity'}
-    ];
-    imb.swipe({cryptoOperations: cryptoOperations,
-        onCryptoOperations: (ops) => {
-            saveWallet(ops[1].paymail, ops[1].value, ops[0].value, ops[2].value, 'moneybutton');
-            //if (localStorage.getItem('paymail')){window.location.href = zeroURL}
-        }
+    const zeroURL = "https://zeroschool.org";
+    function logout(){localStorage.clear();alert("Logged out!");location.reload()}
+    async function relayXLogin(){
+        let token = await relayone.authBeta({withGrant:true}), res;
+        localStorage.setItem('token', token);
+        let [payload, signature] = token.split(".");
+        const data = JSON.parse(atob(payload));
+        let content = await axios.get('https://auth.twetch.app/api/v1/challenge');
+        localStorage.setItem('msg', content.data.message);
+        try {res = await relayone.sign(content.data.message)}catch(e){alert(e)}
+        let publicKey = bsv.PublicKey.fromHex(data.pubkey);
+        let signAddr = bsv.Address.fromPublicKey(publicKey);
+        if (res){saveWallet(data.paymail, data.pubkey, res.value, signAddr.toString(), 'relayx')}
+        if (localStorage.getItem('paymail')){window.location.href = zeroURL}
+    }
+    function saveWallet(paymail, pubkey, signature, address, wallet){
+        localStorage.setItem('paymail', paymail);
+        localStorage.setItem('pubkey', pubkey);
+        localStorage.setItem('signature', signature);
+        localStorage.setItem('address', address);
+        localStorage.setItem('wallet', wallet);
+    }
+    function savePermissionToken(token) {localStorage.setItem('token', token)}
+    function getPermissionForCurrentUser() {if (localStorage.getItem('token')) {return localStorage.getItem('token')}}
+    const imb = new moneyButton.IMB({
+        clientIdentifier: "ce4eb6ea41a4f43044dd7e71c08e50b2",
+        permission: getPermissionForCurrentUser(), onNewPermissionGranted: (token) => savePermissionToken(token)
     });
-    location.reload()
-}
+    async function imbLogin(){
+        let content = await axios.get('https://auth.twetch.app/api/v1/challenge');
+        localStorage.setItem('msg', content.data.message);
+        var cryptoOperations = [
+            {name:'mySignature',method:'sign',data:localStorage.getItem('msg'),dataEncoding:'utf8',key:'identity',algorithm:'bitcoin-signed-message'},
+            {name:'myPublicKey',method:'public-key',key:'identity'},{name: 'myAddress',method: 'address',key: 'identity'}
+        ];
+        imb.swipe({cryptoOperations: cryptoOperations,
+            onCryptoOperations: (ops) => {
+                saveWallet(ops[1].paymail, ops[1].value, ops[0].value, ops[2].value, 'moneybutton');
+                if (localStorage.getItem('paymail')){window.location.href = zeroURL}
+            }
+        });
+    }
 
 document.getElementById("order").onchange = () => {selOrder = document.getElementById("order").value;localStorage.setItem('orderBy', selOrder);postsQuery()}
 if (localStorage.getItem('orderBy')) {selOrder = localStorage.getItem('orderBy');document.getElementById("order").options[selOrder].selected = true}

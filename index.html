@@ -38,9 +38,9 @@
         <dialog class="nes-dialog" id="loginDlg">
             <form method="dialog"><menu class="dialog-menu">
                 <p>Login with:</p>
-                <a class="nes-btn is-primary" id="relayX" onclick="relayXLogin()">RelayX</a>
-                <a class="nes-btn is-success" id="MB" onclick="imbLogin()">MoneyButton</a>
-                <a class="nes-btn is-error" id="logout" onclick="logout()">Logout</a>
+                <a class="nes-btn is-primary" id="relayX" onclick="relayXLogin();dialog.close()">RelayX</a>
+                <a class="nes-btn is-success" id="MB" onclick="imbLogin();dialog.close()">MoneyButton</a>
+                <a class="nes-btn is-error" id="logout" onclick="logout();dialog.close()">Logout</a>
             </menu></form>
         </dialog>
         <dialog class="nes-dialog" id="loadingDlg"></dialog>

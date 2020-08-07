@@ -7,6 +7,10 @@ h1{
     color: #0021e8;
 }
 
+header {
+	position: fixed;
+}
+
 #login{
 	position:absolute;
    top:2;

@@ -32,6 +32,7 @@ sdk.storage.setItem('tokenTwetchAuth',
 );
 
 async function twgin(){
+    if (sdk.authenticated){document.getElementById("login").style.visibility = "hidden"} else {document.getElementById("login").style.visibility = "visible"}
     if (localStorage.getItem('token')){
         if (sdk.storage.getItem('tokenTwetchAuth')){sdk.authenticated = true}
         else {
@@ -42,7 +43,6 @@ async function twgin(){
                 await sdk.authenticate()})   
         }
     } 
-    if (sdk.authenticated){document.getElementById("login").style.visibility = "hidden"} else {document.getElementById("login").style.visibility = "visible"}
 }
 
 function login(){

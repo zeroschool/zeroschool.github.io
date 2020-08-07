@@ -7,16 +7,11 @@ h1{
     color: #0021e8;
 }
 
-header {
-	position: fixed;
-	top: 0;
-	width:100%;
-}
 
 #login{
 	position:absolute;
-   top:2;
-   right:2;
+   top:0;
+   right:0;
 }
 
 .twetch{

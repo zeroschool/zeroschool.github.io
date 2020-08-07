@@ -43,10 +43,10 @@ async function twgin(){
         }
     }
     if (sdk.authenticated){
-        document.getElementById("login").style.visibility = "hidden";
-        document.getElementById("logout").style.visibility = "visible";} else {
-        document.getElementById("login").style.visibility = "visible";
-        document.getElementById("logout").style.visibility = "hidden"}
+        document.getElementById("login").style.display = "none";
+        document.getElementById("logout").style.visibility = "inline";} else {
+        document.getElementById("login").style.visibility = "inline";
+        document.getElementById("logout").style.visibility = "none"}
 }
 
 function login(){

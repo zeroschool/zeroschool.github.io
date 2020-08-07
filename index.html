@@ -29,13 +29,13 @@
     <div class="terminal-nav" style="text-align: center; align-content: center; align-items: center; justify-content: center;">
         <div class="logo terminal-prompt" style="text-align: center; align-content: center; color: #ccc;">ZeroSchool - v0.1</div>
     </div>
+    <a class="btn btn-primary btn-ghost" id="login" onclick="login()">Login</a>
     <div class="topnav container">   
         <div class="nav-elements">
             <a class="active" href="">Home</a>
             <a href="/100p">100p</a>
             <a href="/jobs">Job List</a>
             <a href="https://dimely.io/directory" target="_blank">Talk</a>
-            <a class="btn btn-primary btn-ghost" id="login" onclick="login()">Login</a>
         </div>
         </div></hr>
 </header>
@@ -65,7 +65,7 @@
 
     <div id="message-container" class="container dark" style="white-space: pre-line;"></div>
 
-    <dialog class="terminal-card" id="loginDlg">
+    <dialog class="terminal-card" id="loginDlg" style="background-color:black;">
         <form method="dialog"><menu class="dialog-menu">
             <p>Login with:</p>
             <a style="color:#0021e8;border-color:#0021e8;" class="btn btn-primary btn-ghost" id="relayX" onclick="relayXLogin()">RelayX</a><br>

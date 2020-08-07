@@ -7,18 +7,12 @@ h1{
     color: #0021e8;
 }
 
-ul {
-	  list-style-type: none;
-  margin: 0;
-  padding: 0;
+.login{
+	position:absolute;
+   top:0;
+   right:0;
 }
 
-li{
-	display: inline;
-}
-.loading{
-    width: 230px; height:30px
-}
 .twetch{
     position: relative;
     width: 101%;

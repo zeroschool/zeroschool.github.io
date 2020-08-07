@@ -6,6 +6,10 @@ body {
 h1{
     text-align: center;
 }
+
+li{
+	display: inline;
+}
 .loading{
     width: 230px; height:30px
 }

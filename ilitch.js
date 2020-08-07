@@ -47,7 +47,7 @@ async function twgin(){
 
 function login(){
     dialog = document.getElementById("loginDlg");
-    dialogPolyfill.registerDialog(dialog);dialog.showModal();
+    dialogPolyfill.registerDialog(dialog);//dialog.showModal();
 }
 
 //const zeroURL = "https://zeroschool.org";

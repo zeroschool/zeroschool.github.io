@@ -154,3 +154,125 @@ var {font-style: normal; font-size: 10px}
     #post-container{width: 60%}
     #message-container{width: 60%}
 }
+
+html:root {
+            --primary-color: #21e800;
+        }
+        
+        var {
+            font-family: 'fixedsys_excelsior_3.01Rg';
+            font-style: normal;
+            font-size: 10px
+        }
+        
+        .urlFormat {
+            overflow: hidden;
+            text-overflow: ellipsis
+        }
+        
+        html,
+        body,
+        pre,
+        code,
+        kbd,
+        p,
+        a,
+        dialog,
+        title,
+        samp {
+            font-family: 'fixedsys_excelsior_3.01Rg';
+        }
+        
+        body {
+            background-color: black;
+        }
+        
+                
+        .btn {
+            z-index: 0;
+        }
+        
+        #flex-cont2 {
+            display: flex !important;
+            justify-content: space-between;
+        }
+        
+        #aux-wrapper {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin: 2vh;
+        }
+        
+        .selection {
+            align-self: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            width: 50%;
+            padding: 0;
+            margin: 0;
+            z-index: 0;
+        }
+        
+        #qselect {
+            align-self: center !important;
+            z-index: 0;
+        }
+        
+        select {
+            z-index: 0;
+        }
+        
+        #popup-widget-modal {
+            position: absolute;
+            z-index: 10000 !important;
+        }
+        
+        .btn.btn-primary {
+            z-index: 0;
+        }
+        
+        .btn.btn-primary.btn-ghost {
+            z-index: 0;
+        }
+        
+        .terminal-card {
+            z-index: 0;
+        }
+        
+        #iframe {
+            z-index: 1000;
+        }
+        
+        /* Add a black background color to the top navigation */
+.topnav {
+  overflow: hidden;
+  justify-content: space-between;
+}
+
+/* Style the links inside the navigation bar */
+.topnav a {
+  float: left;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  color: #21e800;
+}
+        .topnav a:hover{
+            color:black;
+        }
+        .topnav a.active:hover{
+            color:black;
+        }
+
+/* Add a color to the active/current link */
+.topnav a.active {
+  border-bottom: 3px solid #21e800;
+  color: #21e800;
+}
+
+        .nav-element {
+            display: flex !important;
+    justify-content: space-between;
+        }

@@ -134,7 +134,7 @@ async function build(content, action) {
 }
 
 function loadingDlg(){
-    let dialog = document.getElementById('dlg');
+    let dialog = document.getElementById('loadingDlg');
     dialogPolyfill.registerDialog(dialog);
     dialog.innerHTML = `<form method="dialog" class="loading"><p id="loading">Deschooling society...</p><menu class="dialog-menu"></menu></form>`;
     dialog.showModal(); loadingPost = true;

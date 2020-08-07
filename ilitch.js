@@ -44,9 +44,9 @@ async function twgin(){
     }
     if (sdk.authenticated){
         document.getElementById("login").style.display = "none";
-        document.getElementById("logout").style.visibility = "inline";} else {
-        document.getElementById("login").style.visibility = "inline";
-        document.getElementById("logout").style.visibility = "none"}
+        document.getElementById("logout").style.display = "inline";} else {
+        document.getElementById("login").style.display = "inline";
+        document.getElementById("logout").style.display = "none"}
 }
 
 function login(){

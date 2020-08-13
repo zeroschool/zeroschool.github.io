@@ -1,7 +1,7 @@
-function populateHTML(){
-    for (let i = 0; i<100; i++){
+function populateHTML(nPosts){
+    for (let i = 0; nPosts; i++){
         document.getElementById('message-container').innerHTML +=
-        `<div class="nes-container is-rounded with-title is-dark twetch" style="position: relative; border-color: #777; background-color: #000000; margin-bottom: 20px;">
+        `<div class="nes-container is-rounded with-title is-dark twetch" style="position: relative; border-color: #777; background-color: #000000; margin-bottom: 10px;">
         <p class="profile"><img class="nes-avatar is-rounded is-medium"></p>
         <p class="username"><a class="userLink" href="" target="_blank"></a></p>
         <p class="postContent urlFormat"></p>
@@ -190,7 +190,7 @@ async function postsQuery(){
                 }
             }`);
     posts = response.allPosts.nodes;
-    if (selOrder === '2') {applyBoostSort(posts);posts.sort(compare)}populateHTML();
+    if (selOrder === '2') {applyBoostSort(posts);posts.sort(compare)}populateHTML(posts.length);
     let profiles = document.getElementsByClassName("nes-avatar"),userLinks = document.getElementsByClassName("userLink"),postTitles = document.getElementsByClassName("title profile");
     let contents = document.getElementsByClassName("postContent"),hearts = document.getElementsByClassName("heart"),likes = document.getElementsByClassName("numLikes");    
     let txids = document.getElementsByClassName("txid"), stars = document.getElementsByClassName("nes-icon star is-large"), boostValues = document.getElementsByClassName("boostValue");

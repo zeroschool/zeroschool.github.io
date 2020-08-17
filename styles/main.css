@@ -17,7 +17,7 @@ h1{
 .twetch{
     position: relative;
     width: 101%;
-    height: 100%;
+    height: auto;
     left: -6px;
 }
 .bitcoinfiles{

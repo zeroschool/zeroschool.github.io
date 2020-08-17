@@ -41,7 +41,6 @@ h1{
 select#order{
     position: relative;
     width: 100%;
-    padding: 8px;
 }
 .nes-icon.coin.is-large{
     position: absolute; 

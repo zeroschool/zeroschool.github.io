@@ -1,5 +1,5 @@
 function populateHTML(nPosts){
-    for (let i = 0; nPosts; i++){
+    for (let i = 0; i<nPosts; i++){
         document.getElementById('message-container').innerHTML +=
         `<div class="nes-container is-rounded with-title is-dark twetch" style="position: relative; border-color: #777; background-color: #000000; margin-bottom: 10px;">
         <p class="profile"><img class="nes-avatar is-rounded is-medium"></p>

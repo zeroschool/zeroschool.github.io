@@ -225,7 +225,7 @@ async function postsQuery(){
         stars[i].setAttribute("name", posts[i].transaction);
         if (boostValue > 0){stars[i].className = 'nes-icon star is-large'};boostValues[i].innerHTML = parseInt(boostValue);
         stars[i].addEventListener('click', boost);
-        document.getElementById('message-container').onclick = function(){window.open("https://twetch.app/t/" + posts[i].transaction};
+        document.getElementById('message-container').onclick = function(){window.open("https://twetch.app/t/" + posts[i].transaction)};
     }
 }
 

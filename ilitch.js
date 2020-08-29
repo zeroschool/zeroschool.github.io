@@ -1,7 +1,7 @@
 function populateHTML(nPosts){
     for (let i = 0; i<nPosts; i++){
         document.getElementById('message-container').innerHTML +=
-        `<div onclick="goToTwetch()" class="nes-container with-title is-dark twetch" style="height:auto;"position: relative; border-color: #777; background-color: #000000; margin-bottom: 20px;">
+        `<div class="nes-container with-title is-dark twetch" style="height:auto;"position: relative; border-color: #777; background-color: #000000; margin-bottom: 20px;">
         <p class="profile"><img class="nes-avatar is-rounded is-medium"></p>
         <p text-decoration="none" class="username"><a class="userLink" href="" target="_blank"></a></p>
         <p class="postContent urlFormat"></p>

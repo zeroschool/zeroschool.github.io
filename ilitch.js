@@ -1,7 +1,7 @@
 function populateHTML(nPosts){
     for (let i = 0; i<nPosts; i++){
         document.getElementById('message-container').innerHTML +=
-        `<div id="" class="nes-container with-title is-dark twetch" style="height:auto;"position: relative; border-color: #777; background-color: #000000; margin-bottom: 20px;">
+        `<div onclick="goToTwetch()" class="nes-container with-title is-dark twetch" style="height:auto;"position: relative; border-color: #777; background-color: #000000; margin-bottom: 20px;">
         <p class="profile"><img class="nes-avatar is-rounded is-medium"></p>
         <p text-decoration="none" class="username"><a class="userLink" href="" target="_blank"></a></p>
         <p class="postContent urlFormat"></p>
@@ -24,6 +24,10 @@ Most people learn by being "with it", yet school makes them identify their, cogn
             Post, Discuss, Rate real world problems, Learn by doing, and get paid. What are you waiting for?<br><br>
             More to come, or not...</p>`, 'Enter', false)
     }
+function goToTwetch(){
+    window.open("https://twetch.app/t" + this.transaction)
+}
+
 function showPopup(text, confirm, cancel, onClick) {
     let dialog = document.getElementById('infoDlg');
     dialogPolyfill.registerDialog(dialog);

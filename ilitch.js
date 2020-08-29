@@ -8,7 +8,6 @@ function populateHTML(nPosts){
             <div class="item">
                 <i class="nes-icon heart is-large is-empty"></i><var class="numLikes"></var>
                 <a target="_blank" class="txid">#tx</a>
-                <i class="nes-icon coin is-large"></i>
                 <i class="nes-icon star is-large is-empty"></i><var class="boostValue"></var>                 
             </div>
         </div>`

@@ -25,7 +25,7 @@ Most people learn by being "with it", yet school makes them identify their, cogn
             More to come, or not...</p>`, 'Enter', false)
     }
 function showPopup(text, confirm, cancel, onClick) {
-    let dialog = document.getElementById('dlg');
+    let dialog = document.getElementById('infoDlg');
     dialogPolyfill.registerDialog(dialog);
     dialog.innerHTML = `<form method="dialog"><p>${text}</p>
             <menu class="dialog-menu">

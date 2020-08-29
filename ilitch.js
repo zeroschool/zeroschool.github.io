@@ -1,14 +1,15 @@
 function populateHTML(nPosts){
     for (let i = 0; i<nPosts; i++){
         document.getElementById('message-container').innerHTML +=
-        `<div class="nes-container is-rounded with-title is-dark twetch" style="position: relative; border-color: #777; background-color: #000000; margin-bottom: 5px;">
+        `<div class="nes-container is-rounded with-title is-dark twetch" style="height:auto;"position: relative; border-color: #777; background-color: #000000; margin-bottom: 5px;">
         <p class="profile"><img class="nes-avatar is-rounded is-medium"></p>
         <p class="username"><a class="userLink" href="" target="_blank"></a></p>
         <p class="postContent urlFormat"></p>
             <div class="item">
-                <i class="nes-icon heart is-small is-empty"></i><var class="numLikes"></var>
+                <i class="nes-icon heart is-large is-empty"></i><var class="numLikes"></var>
                 <a target="_blank" class="txid">#tx</a>
-                <i class="nes-icon star is-small is-empty"></i><var class="boostValue"></var>                 
+                <i class="nes-icon coin is-large"></i>
+                <i class="nes-icon star is-large is-empty"></i><var class="boostValue"></var>                 
             </div>
         </div>`
     }
@@ -172,7 +173,7 @@ async function send(action, likeTx, tipped) {
             else {
                 let likeCount = parseInt(document.getElementById(`${likeTx}_count`).innerText);
                 document.getElementById(`${likeTx}_count`).innerText = likeCount - 1;
-                document.getElementById(likeTx).className = `nes-icon heart is-small is-empty`;
+                document.getElementById(likeTx).className = `nes-icon heart is-large is-empty`;
             }
         })
     }
@@ -214,16 +215,16 @@ async function postsQuery(){
     if (selOrder === '2') {applyBoostSort(posts);posts.sort(compare)}populateHTML(posts.length);
     let profiles = document.getElementsByClassName("nes-avatar"),userLinks = document.getElementsByClassName("userLink"),postTitles = document.getElementsByClassName("title profile");
     let contents = document.getElementsByClassName("postContent"),hearts = document.getElementsByClassName("heart"),likes = document.getElementsByClassName("numLikes");    
-    let txids = document.getElementsByClassName("txid"), stars = document.getElementsByClassName("nes-icon star is-small"), boostValues = document.getElementsByClassName("boostValue");
+    let txids = document.getElementsByClassName("txid"), stars = document.getElementsByClassName("nes-icon star is-large"), boostValues = document.getElementsByClassName("boostValue");
     for (let i=0; i<posts.length;i++){
         let content = posts[i].bContent.replace(getTwetchSuffix(), ''), boostValue = diffSum(posts[i].transaction); posts[i].boostValue = boostValue;
         profiles[i].src = posts[i].userByUserId.icon;userLinks[i].innerHTML = ` ${posts[i].userByUserId.name} u/${posts[i].userId}`;userLinks[i].href = `https://twetch.app/u/${posts[i].userId}`;
         contents[i].innerHTML = applyURLs(content);likes[i].innerHTML = posts[i].numLikes;likes[i].id = `${posts[i].transaction}_count`;
         hearts[i].id = posts[i].transaction;
-        if (posts[i].youLiked === "1"){hearts[i].className = 'nes-icon heart is-small'}
+        if (posts[i].youLiked === "1"){hearts[i].className = 'nes-icon heart is-large'}
         txids[i].href = `https://search.matterpool.io/tx/${posts[i].transaction}`;
         stars[i].setAttribute("name", posts[i].transaction);
-        if (boostValue > 0){stars[i].className = 'nes-icon star is-small'};boostValues[i].innerHTML = parseInt(boostValue);
+        if (boostValue > 0){stars[i].className = 'nes-icon star is-large'};boostValues[i].innerHTML = parseInt(boostValue);
         stars[i].addEventListener('click', boost);
     }
 }
@@ -263,7 +264,7 @@ function compare(a, b) {
 }
 
 async function like() {
-    document.getElementById(this.id).className = `nes-icon heart is-small`;
+    document.getElementById(this.id).className = `nes-icon heart is-large`;
     let likeCount = parseInt(document.getElementById(`${this.id}_count`).innerText);
     document.getElementById(`${this.id}_count`).innerText = likeCount + 1;
     await build(this.id, 'twetch/like@0.0.1');send('twetch/like@0.0.1', this.id);

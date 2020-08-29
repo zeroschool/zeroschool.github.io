@@ -1,7 +1,7 @@
 function populateHTML(nPosts){
     for (let i = 0; i<nPosts; i++){
         document.getElementById('message-container').innerHTML +=
-        `<div class="nes-container with-title is-dark twetch" style="height:auto;"position: relative; border-color: #777; background-color: #000000; margin-bottom: 20px;">
+        `<div id="" class="nes-container with-title is-dark twetch" style="height:auto;"position: relative; border-color: #777; background-color: #000000; margin-bottom: 20px;">
         <p class="profile"><img class="nes-avatar is-rounded is-medium"></p>
         <p text-decoration="none" class="username"><a class="userLink" href="" target="_blank"></a></p>
         <p class="postContent urlFormat"></p>
@@ -225,6 +225,7 @@ async function postsQuery(){
         stars[i].setAttribute("name", posts[i].transaction);
         if (boostValue > 0){stars[i].className = 'nes-icon star is-large'};boostValues[i].innerHTML = parseInt(boostValue);
         stars[i].addEventListener('click', boost);
+        document.getElementById('message-container').onclick = function(){window.location.href = "https://twetch.app/t/" + posts[i].transaction};
     }
 }
 

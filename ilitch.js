@@ -19,7 +19,7 @@ function info(){
             Likes are 10 cents.<br><br>
             You'll need a <a href="https://twetch.app">Twetch</a> account to get you started, so grab an invite here: <a href="https://twet.ch/inv/zeroschool">https://twet.ch/inv/zeroschool</a> , or don't, whatever..<br><br>
                <blockquote style="color:#21e800">"Most learning is not the result of instruction. It is rather the result of unhampered participation in a <b>meaningful setting</b>.
-Most people learn by being "with it", yet school makes them identify their, cognitive growth with elaborate planning and manipulation." - <i>Ivan Ilitch, Deschooling society</i></blockquote>
+Most people learn by being "with it", yet school makes them identify their, cognitive growth with elaborate planning and manipulation." - <i>Ivan Ilitch, <u>Deschooling society</u></i></blockquote>
             <br>
             Post, Discuss, Rate real world problems, Learn by doing, and get paid. What are you waiting for?<br><br>
             More to come, or not...</p>`, 'Enter', false)

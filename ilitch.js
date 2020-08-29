@@ -24,6 +24,16 @@ Most people learn by being "with it", yet school makes them identify their, cogn
             Post, Discuss, Rate real world problems, Learn by doing so, and get paid. What are you waiting for?<br><br>
             More to come, or not...</p>`, 'Enter', false)
     }
+function showPopup(text, confirm, cancel, onClick) {
+    let dialog = document.getElementById('dlg');
+    dialogPolyfill.registerDialog(dialog);
+    dialog.innerHTML = `<form method="dialog"><p>${text}</p>
+            <menu class="dialog-menu">
+                ${cancel === true ? "<button class='btn btn-error btn-ghost cancel'>Cancel</button>" : ""}
+                <button class="btn btn-primary btn-ghost confirm" onclick="${onClick}">${confirm}</button>
+            </menu></form>`;
+    dialog.showModal();
+}
 
 var options = {
     clientIdentifier: '9d27a879-ee0c-4653-8839-a4b2f6fa8023'

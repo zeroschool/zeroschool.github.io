@@ -1,14 +1,14 @@
 function populateHTML(nPosts){
     for (let i = 0; i<nPosts; i++){
         document.getElementById('message-container').innerHTML +=
-        `<div class="nes-container is-rounded with-title is-dark twetch" style="position: relative; border-color: #777; background-color: #000000; margin-bottom: 5px;">
+        `<div class="nes-container is-rounded with-title is-dark twetch" style="position: relative; border-color: #777; background-color: #000000; margin-bottom: 20px;">
         <p class="profile"><img class="nes-avatar is-rounded is-medium"></p>
         <p class="username"><a class="userLink" href="" target="_blank"></a></p>
         <p class="postContent urlFormat"></p>
-            <div class="item">
-                <i class="nes-icon heart is-large is-empty"></i><var class="numLikes"></var>
-                <a target="_blank" class="txid">#tx</a>
-                <i class="nes-icon star is-large is-empty"></i><var class="boostValue"></var>                
+            <div class="item" style:"position: relative; height: 110px;">
+                <i class="nes-icon heart is-large is-empty"></i><var class="numLikes" style="position: absolute; left: 50px; top: 69px></var>
+                <a target="_blank" text-decoration="none" class="txid">#tx</a>
+                <i class="nes-icon star is-large is-empty" style="position: absolute; left: 80px; top:20px;"></i><var style="position:absolute; left:148px; top:69px;"class="boostValue"></var>                
             </div>
         </div>`
     }

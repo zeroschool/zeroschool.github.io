@@ -208,12 +208,11 @@ html:root {
             justify-content: space-between;
         }
         
-        #aux-wrapper {
-	    width: 101%;	
+        #aux-wrapper {	
             display: flex;
             flex-direction: column;
             justify-content: center;
-            margin: 2vh;
+            margin: 0.5vh;
         }
         
         .selection {

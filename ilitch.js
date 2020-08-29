@@ -13,6 +13,17 @@ function populateHTML(nPosts){
         </div>`
     }
 }
+function info(){
+        showPopup(`<p class="title" style="color: #21e800; font-family: fixedsys_excelsior_3.01Rg;">Welcome to ZeroSchool!</p><p style="font-family: fixedsys_excelsior_3.01Rg">ZeroSchool is a state of the art fren-2-fren Education System built for the 22nd Century.<br><br>
+            Posts, likes, tipping, & Boost are currently supported along with Bitcoinfiles.<br><br>
+            Likes are 10 cents.<br><br>
+            You'll need a <a href="https://twetch.app">Twetch</a> account to get you started, so grab an invite here: <a href="https://twet.ch/inv/zeroschool">https://twet.ch/inv/zeroschool</a> , or don't, whatever..<br><br>
+               <blockquote>"Most learning is not the result of instruction. It is rather the result of unhampered participation in a <b>meaningful setting</b>.
+Most people learn by being "with it", yet school makes them identify their, cognitive growth with elaborate planning and manipulation." - <i>Ivan Ilitch, Deschooling society</i></blockquote>
+            <br>
+            Post, Discuss, Rate real world problems, Learn by doing so, and get paid. What are you waiting for?<br><br>
+            More to come, or not...</p>`, 'Enter', false)
+    }
 
 var options = {
     clientIdentifier: '9d27a879-ee0c-4653-8839-a4b2f6fa8023'

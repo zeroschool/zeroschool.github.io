@@ -209,6 +209,7 @@ html:root {
         }
         
         #aux-wrapper {
+	    width: 101%;	
             display: flex;
             flex-direction: column;
             justify-content: center;

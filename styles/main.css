@@ -48,22 +48,8 @@ select#order{
     position: relative;
     width: 100%;
 }
-.nes-icon.coin.is-large{
-    position: absolute; 
-    left: 80px; top: 95px;
-}
 .nes-icon.star.is-large{
     position: absolute; left: 80px; top: 20px
-}
-.bookmark{
-    position: absolute; left: 0px; top: 95px
-}
-.bookmarkValue{
-    position: absolute; left: 62px; top: 139px;
-}
-.nes-btn.share{
-    position: absolute; padding: 5px;
-    right: -5px; top: 95px;
 }
 .video-container {
 	position:relative;
@@ -220,7 +206,7 @@ html:root {
             display: flex;
             flex-direction: column;
             justify-content: center;
-            width: 50%;
+            width: 100%;
             padding: 0;
             margin: 0;
             z-index: 0;

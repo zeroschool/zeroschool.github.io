@@ -230,7 +230,8 @@ async function postsQuery(){
         if (boostValue > 0){stars[i].className = 'nes-icon star is-large'};boostValues[i].innerHTML = parseInt(boostValue);
         hearts[i].addEventListener('click', like);
         stars[i].addEventListener('click', boost);
-        document.getElementsByClassName('twetch').addEventListener('click',function(){window.open("https://twetch.app/t/" + posts[i].transaction)});
+        twetches = document.getElementsByClassName('twetch');
+        twetches.addEventListener('click',function(){window.open("https://twetch.app/t/" + posts[i].transaction)});
     }
 }
 

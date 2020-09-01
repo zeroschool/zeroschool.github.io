@@ -1,7 +1,7 @@
 function populateHTML(nPosts){
     for (let i = 0; i<nPosts; i++){
         document.getElementById('message-container').innerHTML +=
-        `<div id="twetch-container" class="nes-container with-title is-dark twetch" style="height:auto;"position: relative; border-color: #777; background-color: #000000; margin-bottom: 20px;">
+        `<div class="nes-container with-title is-dark twetch" style="height:auto;"position: relative; border-color: #777; background-color: #000000; margin-bottom: 20px;">
         <p class="profile"><img class="nes-avatar is-rounded is-medium"></p>
         <p text-decoration="none" class="username"><a class="userLink" href="" target="_blank"></a></p>
         <p class="postContent urlFormat"></p>
@@ -219,18 +219,20 @@ async function postsQuery(){
     let profiles = document.getElementsByClassName("nes-avatar"),userLinks = document.getElementsByClassName("userLink"),postTitles = document.getElementsByClassName("title profile");
     let contents = document.getElementsByClassName("postContent"),hearts = document.getElementsByClassName("heart"),likes = document.getElementsByClassName("numLikes");    
     let txids = document.getElementsByClassName("txid"), stars = document.getElementsByClassName("nes-icon star is-large"), boostValues = document.getElementsByClassName("boostValue");
+    let twetches = document.getElementsByClassName("twetch");
     for (let i=0; i<posts.length;i++){
         let content = posts[i].bContent.replace(getTwetchSuffix(), ''), boostValue = diffSum(posts[i].transaction); posts[i].boostValue = boostValue;
         profiles[i].src = posts[i].userByUserId.icon;userLinks[i].innerHTML = ` ${posts[i].userByUserId.name} u/${posts[i].userId}`;userLinks[i].href = `https://twetch.app/u/${posts[i].userId}`;
         contents[i].innerHTML = applyURLs(content);likes[i].innerHTML = posts[i].numLikes;likes[i].id = `${posts[i].transaction}_count`;
-        hearts[i].id = posts[i].transaction;
+        hearts[i].id = `${posts[i].transaction};
+        twetches[i].id = posts[i].transaction;
         if (posts[i].youLiked === "1"){hearts[i].className = 'nes-icon heart is-large'}
         txids[i].href = `https://search.matterpool.io/tx/${posts[i].transaction}`;
         stars[i].setAttribute("name", posts[i].transaction);
         if (boostValue > 0){stars[i].className = 'nes-icon star is-large'};boostValues[i].innerHTML = parseInt(boostValue);
+        twetches[i].addEventListener('click', window.open("https://twetch.app/t/"+ posts[i].transaction);
         hearts[i].addEventListener('click', like);
         stars[i].addEventListener('click', boost);
-        document.getElementById('twetch-container').onclick = function(){window.location.href = "https://twetch.app/t/" + posts[i].transaction};
     }
 }
 

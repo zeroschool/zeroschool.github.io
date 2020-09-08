@@ -318,7 +318,8 @@ function twetchBranch(content) {
     return content.replace(twetchRegex,function(url){
         let id = url.slice(-64)
         //let response = await sdk.query(`{postByTransaction(transaction: "${txid}") {bContent transaction numLikes userId youLiked userByUserId {icon name}}}`);
-        return `<div class="twetch-container" align="center"><iframe title="Branched Twetch" src="https://twetch.app/t/${id}" frameborder="0"></iframe></div>`;
+        return `<div class="twetch-container" align="center"><iframe title="Branched Twetch" src="https://twetch.app/t/${id}" frameborder="0"></iframe></div>`
+    })
         //`<p>${response.bContent}</p>`
 }
 

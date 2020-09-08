@@ -313,6 +313,15 @@ function streamanity(content) {
     })
 }
 
+function twetchBranch(content) {
+    let twetchRegex = /http(s)?:\/\/(.*\.)?twetch\.app\/t\/([A-z0-9_/?=]+)/;
+    return content.replace(twetchRegex,function(url){
+        let id = url.slice(-64)
+        //let response = await sdk.query(`{postByTransaction(transaction: "${txid}") {bContent transaction numLikes userId youLiked userByUserId {icon name}}}`);
+        return `<div class="twetch-container" align="center"><iframe title="Branched Twetch" src="https://twetch.app/t/${id}" frameborder="0"></iframe></div>`;
+        //`<p>${response.bContent}</p>`
+}
+
 function applyURLs(content) {
     if (content.indexOf("https://media.bitcoinfiles.org/") >= 0) {
         let index = content.indexOf("https://media.bitcoinfiles.org/")
@@ -324,6 +333,8 @@ function applyURLs(content) {
         return youtube(content)
     } else if (content.indexOf("streamanity.com") >= 0) {
         return streamanity(content)
+    } else if (content.indexOf("twetch") >= 0){
+        return twetchBranch(content)
     } else {
         var urlRegex = /(https?:\/\/[^\s]+)/g;
         return content.replace(urlRegex, function(url) {

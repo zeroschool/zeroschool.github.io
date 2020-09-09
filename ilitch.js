@@ -222,13 +222,40 @@ async function postsQuery(){
     let twetches = document.getElementsByClassName("twetch");
     for (let i=0; i<posts.length;i++){
         let content = posts[i].bContent.replace(getTwetchSuffix(), ''), boostValue = diffSum(posts[i].transaction); posts[i].boostValue = boostValue;
-        profiles[i].src = posts[i].userByUserId.icon;userLinks[i].innerHTML = ` ${posts[i].userByUserId.name} u/${posts[i].userId}`;userLinks[i].href = `https://twetch.app/u/${posts[i].userId}`;
-        contents[i].innerHTML = applyURLs(content);likes[i].innerHTML = posts[i].numLikes;likes[i].id = `${posts[i].transaction}_count`;
-        hearts[i].id = posts[i].transaction;
-        twetches[i].id = posts[i].transaction;
-        if (posts[i].youLiked === "1"){hearts[i].className = 'nes-icon heart is-large'}
-        txids[i].href = "https://search.matterpool.io/tx/" + posts[i].transaction;
-        stars[i].setAttribute("name", posts[i].transaction);
+        if (content.indexOf("twetch") >= 0){
+            let twetchRegex = /http(s)?:\/\/(.*\.)?twetch\.app\/t\/([A-z0-9_/?=]+)/;
+            let branchURL = content.match(twetchRegex)[0];
+            let branchTxID = branchURL.slice(-64);
+            let response = await sdk.query(`{
+              postByTransaction(transaction: "${branchTxID}") {
+                bContent
+                numLikes
+                transaction
+                userId
+                youLiked
+                userByUserId {
+                  icon
+                  name
+                }
+              }
+            }`);
+            let branch = response.postByTransaction;
+            let content = branch.bContent.replace(getTwetchSuffix(),''), boostValue = diffSum(branch.transaction); branch.boostValue = boostValue;
+            profiles[i].src = branch.userByUserId.icon;userLinks[i].innerHTML = ` ${branch.userByUserId.name} u/${branch.userId}`;userLinks[i].href = `https://twetch.app/u/${branch.userId}`;
+            contents[i].innerHTML = applyURLs(content);likes[i].innerHTML = posts[i].numLikes;likes[i].id = `${posts[i].transaction}_count`;
+            hearts[i].id = branch.transaction;
+            twetches[i].id = branch.transaction;
+            if (branch.youLiked === "1"){hearts[i].className = 'nes-icon heart is-large'}
+            txids[i].href = "https://search.matterpool.io/tx/" + branch.transaction;
+            stars[i].setAttribute("name", branch.transaction);}
+        else {
+            profiles[i].src = posts[i].userByUserId.icon;userLinks[i].innerHTML = ` ${posts[i].userByUserId.name} u/${posts[i].userId}`;userLinks[i].href = `https://twetch.app/u/${posts[i].userId}`;
+            contents[i].innerHTML = applyURLs(content);likes[i].innerHTML = posts[i].numLikes;likes[i].id = `${posts[i].transaction}_count`;
+            hearts[i].id = posts[i].transaction;
+            twetches[i].id = posts[i].transaction;
+            if (posts[i].youLiked === "1"){hearts[i].className = 'nes-icon heart is-large'}
+            txids[i].href = "https://search.matterpool.io/tx/" + posts[i].transaction;
+            stars[i].setAttribute("name", posts[i].transaction);}
         if (boostValue > 0){stars[i].className = 'nes-icon star is-large'};boostValues[i].innerHTML = parseInt(boostValue);
         twetches[i].addEventListener('click', goToTwetch);
         hearts[i].addEventListener('click', like);
@@ -313,16 +340,6 @@ function streamanity(content) {
     })
 }
 
-function twetchBranch(content) {
-    let twetchRegex = /http(s)?:\/\/(.*\.)?twetch\.app\/t\/([A-z0-9_/?=]+)/;
-    return content.replace(twetchRegex,function(url){
-        let id = url.slice(-64)
-        //let response = await sdk.query(`{postByTransaction(transaction: "${txid}") {bContent transaction numLikes userId youLiked userByUserId {icon name}}}`);
-        return `<div class="twetch-container" align="center"><iframe title="Branched Twetch" src="https://twetch.app/t/${id}" frameborder="0"></iframe></div>`
-    })
-        //`<p>${response.bContent}</p>`
-}
-
 function applyURLs(content) {
     if (content.indexOf("https://media.bitcoinfiles.org/") >= 0) {
         let index = content.indexOf("https://media.bitcoinfiles.org/")
@@ -334,8 +351,6 @@ function applyURLs(content) {
         return youtube(content)
     } else if (content.indexOf("streamanity.com") >= 0) {
         return streamanity(content)
-    } else if (content.indexOf("twetch") >= 0){
-        return twetchBranch(content)
     } else {
         var urlRegex = /(https?:\/\/[^\s]+)/g;
         return content.replace(urlRegex, function(url) {

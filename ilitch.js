@@ -221,7 +221,7 @@ async function postsQuery(){
     let txids = document.getElementsByClassName("txid"), stars = document.getElementsByClassName("nes-icon star is-large"), boostValues = document.getElementsByClassName("boostValue");
     let twetches = document.getElementsByClassName("twetch");
     for (let i=0; i<posts.length;i++){
-        let content = posts[i].bContent.replace(getTwetchSuffix(), ''), boostValue = diffSum(posts[i].transaction); posts[i].boostValue = boostValue;
+        content = posts[i].bContent.replace(getTwetchSuffix(), ''), boostValue = diffSum(posts[i].transaction); posts[i].boostValue = boostValue;
         if (content.indexOf("twetch") >= 0){
             let twetchRegex = /http(s)?:\/\/(.*\.)?twetch\.app\/t\/([A-z0-9_/?=]+)/;
             let branchURL = content.match(twetchRegex)[0];
@@ -240,7 +240,7 @@ async function postsQuery(){
               }
             }`);
             let branch = response.postByTransaction;
-            let content = branch.bContent.replace(getTwetchSuffix(),''), boostValue = diffSum(branch.transaction); branch.boostValue = boostValue;
+            content = branch.bContent.replace(getTwetchSuffix(),''), boostValue = diffSum(branch.transaction); branch.boostValue = boostValue;
             profiles[i].src = branch.userByUserId.icon;userLinks[i].innerHTML = ` ${branch.userByUserId.name} u/${branch.userId}`;userLinks[i].href = `https://twetch.app/u/${branch.userId}`;
             contents[i].innerHTML = applyURLs(content);likes[i].innerHTML = posts[i].numLikes;likes[i].id = `${posts[i].transaction}_count`;
             hearts[i].id = branch.transaction;

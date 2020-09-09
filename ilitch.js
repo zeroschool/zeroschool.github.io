@@ -244,7 +244,7 @@ async function postsQuery(){
             content = branch.bContent.replace(getTwetchSuffix(),''), boostValue = diffSum(branch.transaction); branch.boostValue = boostValue;
             profiles[i].src = branch.userByUserId.icon;userLinks[i].innerHTML = ` ${branch.userByUserId.name} u/${branch.userId}`;userLinks[i].href = `https://twetch.app/u/${branch.userId}`;
             contents[i].innerHTML = applyURLs(content);likes[i].innerHTML = branch.numLikes;likes[i].id = `${branch.transaction}_count`;
-            hearts[i].id = branch.transaction;
+            hearts[i].id = `${branch.transaction}_heart`;
             twetches[i].id = branch.transaction;
             if (branch.youLiked === "1"){hearts[i].className = 'nes-icon heart is-large'}
             txids[i].href = "https://search.matterpool.io/tx/" + branch.transaction;
@@ -252,7 +252,7 @@ async function postsQuery(){
         else {
             profiles[i].src = posts[i].userByUserId.icon;userLinks[i].innerHTML = ` ${posts[i].userByUserId.name} u/${posts[i].userId}`;userLinks[i].href = `https://twetch.app/u/${posts[i].userId}`;
             contents[i].innerHTML = applyURLs(content);likes[i].innerHTML = posts[i].numLikes;likes[i].id = `${posts[i].transaction}_count`;
-            hearts[i].id = posts[i].transaction;
+            hearts[i].id = `${posts[i].transaction}_heart`;
             twetches[i].id = posts[i].transaction;
             if (posts[i].youLiked === "1"){hearts[i].className = 'nes-icon heart is-large'}
             txids[i].href = "https://search.matterpool.io/tx/" + posts[i].transaction;

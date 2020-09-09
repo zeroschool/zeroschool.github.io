@@ -222,7 +222,7 @@ async function postsQuery(){
     let twetches = document.getElementsByClassName("twetch");
     for (let i=0; i<posts.length;i++){
         content = posts[i].bContent.replace(getTwetchSuffix(), ''), boostValue = diffSum(posts[i].transaction); posts[i].boostValue = boostValue;
-        if (content.indexOf("twetch") >= 0){
+        if (content.indexOf("twetch.app/t") >= 0){
             let twetchRegex = /http(s)?:\/\/(.*\.)?twetch\.app\/t\/([A-z0-9_/?=]+)/;
             let branchURL = content.match(twetchRegex)[0];
             let branchTxID = branchURL.slice(-64);

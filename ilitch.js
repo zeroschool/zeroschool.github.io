@@ -306,8 +306,8 @@ async function like() {
     document.getElementById(this.id).className = `nes-icon heart is-large`;
     let txID = this.id.slice(0,-6);
     let likeCount = parseInt(document.getElementById(`${txID}_count`).innerText);
-    document.getElementById(`${this.id}_count`).innerText = likeCount + 1;
-    await build(this.id, 'twetch/like@0.0.1');send('twetch/like@0.0.1', this.id);
+    document.getElementById(`${txID}_count`).innerText = likeCount + 1;
+    await build(txID, 'twetch/like@0.0.1');send('twetch/like@0.0.1', txID);
 }
 
 async function twetchPost(text) {

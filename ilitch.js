@@ -231,7 +231,7 @@ async function postsQuery(){
     if (selOrder === '1') {orderBy = 'orderBy: LIKES_BY_POST_ID__COUNT_DESC'}
     let filter = "";
     if (window.location.href.includes("zeroschool.org/jobs")){ filter = "/job "} 
-    else if (window.location.href.includes("zeroschool.org/book/")){
+    else if (window.location.href.includes("zeroschool.org/book=")){
         filter = window.location.href.split('/')[-1]
     }
     else {filter = getTwetchSuffix()}
@@ -295,7 +295,7 @@ async function postsQuery(){
 
 function getDetails() {
     if (this.id == "1fc35da044f890551b384e0774fd9576ab92f377385c1d7eb18dfba41d167482"){
-        window.open("https://zeroschool.org/book/" + "Xanadu");}
+        window.open("https://zeroschool.org/book=" + "Xanadu");}
     else {
         window.open("https://twetch.app/t/" + this.id);}
 }

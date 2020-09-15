@@ -230,9 +230,11 @@ async function postsQuery(){
     let orderBy = 'orderBy: CREATED_AT_DESC';
     if (selOrder === '1') {orderBy = 'orderBy: LIKES_BY_POST_ID__COUNT_DESC'}
     let filter = "";
-    if (window.location.href.includes("zeroschool.org/jobs")){ filter = "/job "} 
-    else if (window.location.href.includes("zeroschool.org/book=")){
-        filter = window.location.href.split('/')[-1]
+    let url = window.location.href;
+    if (url.includes("zeroschool.org/jobs")){ filter = "/job "} 
+    else if (url.includes("zeroschool.org/book=")){
+        let arrURL = url.split('/');
+        filter = arrURL[arrURL.length -1];
     }
     else {filter = getTwetchSuffix()}
     

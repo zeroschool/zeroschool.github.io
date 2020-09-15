@@ -295,7 +295,7 @@ async function postsQuery(){
 
 function getDetails() {
     if (this.id == "1fc35da044f890551b384e0774fd9576ab92f377385c1d7eb18dfba41d167482"){
-        window.open("https://zeroschool.org/book=" + "Xanadu");}
+        window.location.href = "https://zeroschool.org/book=" + "Xanadu";}
     else {
         window.open("https://twetch.app/t/" + this.id);}
 }

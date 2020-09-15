@@ -14,7 +14,7 @@ function populateHTML(nPosts){
         </div>`
     }
 }
-async function postDetails(){
+async function getBook(){
     let book = window.location.href.split('/')[-1];
     let response = await sdk.query(`{
                 allPosts(filter: {bContent: {includes: "${book}"}}, ${selOrder === '2' ? "" : "first: 100,"} ${orderBy}) {
@@ -36,7 +36,7 @@ async function postDetails(){
                     <var id=${post.transaction}_diff style="position: absolute; left: 148px; top: 69px">${parseInt(boostValue)}</var>
                 </div>`;
     document.getElementById('message-container').innerHTML += osTwetch + '</div>';
-    document.getElementById('twetch-container').onclick = function(){window.location.href = "https://zeroschool.org/t/" + element.id};
+    document.getElementById('twetch-container').onclick = function{getDetails()};
         
 }
 function info(){
@@ -87,8 +87,7 @@ async function twgin(){
                 address: localStorage.getItem('address'),message: localStorage.getItem('msg'),signature: localStorage.getItem('signature')
                 }).then(async function (res){sdk.storage.setItem('tokenTwetchAuth', res.data.token);
                 sdk.authenticated = true;
-                
-                                             sdk.authenticate()})   
+                await sdk.authenticate()})   
         }
     }
     if (sdk.authenticated){
@@ -96,8 +95,13 @@ async function twgin(){
         document.getElementById("btnLogout").style.display = "inline";} else {
         document.getElementById("btnLogin").style.display = "inline";
         document.getElementById("btnLogout").style.display = "none"}
-    if postsQuery();
     setPennyAmt();
+    if (window.location.href.includes("zeroschool.org/book/"){
+        getBook();
+        }
+    else {
+        postsQuery();
+        }
 }
 
 function login(){
@@ -148,7 +152,13 @@ function login(){
         });
     }
 
-document.getElementById("order").onchange = () => {selOrder = document.getElementById("order").value;localStorage.setItem('orderBy', selOrder);postsQuery()}
+document.getElementById("order").onchange = () => {selOrder = document.getElementById("order").value;localStorage.setItem('orderBy', selOrder);
+                                                   if (window.location.href.includes("zeroschool.org/book/"){
+        getBook();
+        }
+    else {
+        postsQuery();
+        }}
 if (localStorage.getItem('orderBy')) {selOrder = localStorage.getItem('orderBy');document.getElementById("order").options[selOrder].selected = true}
 document.getElementById("tPost").setAttribute("disabled", null);document.getElementById("post").addEventListener("keyup", function() {checkPost()})
 
@@ -280,14 +290,14 @@ async function postsQuery(){
             txids[i].href = "https://search.matterpool.io/tx/" + posts[i].transaction;
             stars[i].setAttribute("name", posts[i].transaction);}
         if (boostValue > 0){stars[i].className = 'nes-icon star is-large'};boostValues[i].innerHTML = parseInt(boostValue);
-        twetches[i].addEventListener('click', goToBook);
+        twetches[i].addEventListener('click', getDetails);
         hearts[i].addEventListener('click', like);
         stars[i].addEventListener('click', boost);
     }
 }
 
 
-function goToBook() {
+function getDetails() {
     if (this.id == "1fc35da044f890551b384e0774fd9576ab92f377385c1d7eb18dfba41d167482"){
         window.open("https://zeroschool.org/book/" + "Xanadu");}
     else {

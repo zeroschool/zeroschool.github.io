@@ -14,6 +14,31 @@ function populateHTML(nPosts){
         </div>`
     }
 }
+async function postDetails(){
+    let book = window.location.href.split('/')[-1];
+    let response = await sdk.query(`{
+                allPosts(filter: {bContent: {includes: "${book}"}}, ${selOrder === '2' ? "" : "first: 100,"} ${orderBy}) {
+                    nodes {bContent numLikes replyCount transaction youLiked userId userByUserId {name icon}}
+                }
+            }`);
+    post = response.allPosts.nodes[0];
+    let content = post.bContent;
+    let boostValue = diffSum(post.transaction);
+    post.boostValue = boostValue;
+    let osTwetch = `<div id="${post.transaction}" class="nes-container with-title is-dark" style="position: relative; border-color: #777; background-color: #000000; margin-bottom: 20px;">
+                    <p id="postTitle" class="title"><img class="nes-avatar is-rounded is-medium" src="${post.userByUserId.icon}"> ${post.userByUserId.name} <a href="https://twetch.app/u/${post.userId}" target="_blank">u/${posts.userId}</a>
+                    </p><p class="urlFormat">${applyURLs(content)}</p>`
+    osTwetch += `<div class="item" style="position: relative; height: 110px;">
+                    <i class="nes-icon is-large heart ${post.youLiked === "0" ? "is-empty" : ""}"></i><var id=${post.transaction}_count style="position: absolute; left: 50px; top: 69px">${post.numLikes}</var>
+                    <a href="https://search.matterpool.io/tx/${post.transaction}" target="_blank" text-decoration="none" class="txid">#txid</a>
+                    <i class="nes-icon coin is-large" name="${post.userId}" style="position: absolute; right: -15px; top: 25px"></i>
+                    <i class="nes-icon trophy is-large ${boostValue === 0 ? "is-empty" : ""}" name="${post.transaction}" style="position: absolute; left: 80px; top: 20px"></i>
+                    <var id=${post.transaction}_diff style="position: absolute; left: 148px; top: 69px">${parseInt(boostValue)}</var>
+                </div>`;
+    document.getElementById('message-container').innerHTML += osTwetch + '</div>';
+    document.getElementById('twetch-container').onclick = function(){window.location.href = "https://zeroschool.org/t/" + element.id};
+        
+}
 function info(){
         showPopup(`<p class="title" style="color: #21e800; font-family: fixedsys_excelsior_3.01Rg;">Welcome to ZeroSchool!</p><p style="font-family: fixedsys_excelsior_3.01Rg">ZeroSchool is a state of the art fren-2-fren Education System built for the 22nd Century.<br><br>
             Posts, likes, tipping, & Boost are currently supported along with Bitcoinfiles.<br><br>
@@ -25,9 +50,6 @@ Most people learn by being "with it", yet school makes them identify their, cogn
             Post, Discuss, Rate real world problems, Learn by doing, and get paid. What are you waiting for?<br><br>
             More to come, or not...</p>`, 'Enter', false)
     }
-function goToTwetch(){
-    window.open("https://twetch.app/t" + this.transaction)
-}
 
 function showPopup(text, confirm, cancel, onClick) {
     let dialog = document.getElementById('infoDlg');
@@ -65,7 +87,8 @@ async function twgin(){
                 address: localStorage.getItem('address'),message: localStorage.getItem('msg'),signature: localStorage.getItem('signature')
                 }).then(async function (res){sdk.storage.setItem('tokenTwetchAuth', res.data.token);
                 sdk.authenticated = true;
-                await sdk.authenticate()})   
+                
+                                             sdk.authenticate()})   
         }
     }
     if (sdk.authenticated){
@@ -73,6 +96,8 @@ async function twgin(){
         document.getElementById("btnLogout").style.display = "inline";} else {
         document.getElementById("btnLogin").style.display = "inline";
         document.getElementById("btnLogout").style.display = "none"}
+    if postsQuery();
+    setPennyAmt();
 }
 
 function login(){
@@ -126,9 +151,6 @@ function login(){
 document.getElementById("order").onchange = () => {selOrder = document.getElementById("order").value;localStorage.setItem('orderBy', selOrder);postsQuery()}
 if (localStorage.getItem('orderBy')) {selOrder = localStorage.getItem('orderBy');document.getElementById("order").options[selOrder].selected = true}
 document.getElementById("tPost").setAttribute("disabled", null);document.getElementById("post").addEventListener("keyup", function() {checkPost()})
-
-postsQuery();
-setPennyAmt();
 
 function checkPost(){
     let input = document.getElementById("post").value;

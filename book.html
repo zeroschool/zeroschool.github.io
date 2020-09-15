@@ -58,8 +58,9 @@
             <div class="btn btn-primary btn-ghost btn-block is-dark" id="qselect">
                 <select required id="order" class="btn btn-primary btn-ghost btn-block">
                     <option style="background-color:black;" value="0">Most Recent</option>
-                    <option style="background-color:black;" value="1">Likes</option>
-                    <option style="background-color:black;" value="2">PoW</option>
+                    <option style="background-color:black;" value="1">Chronological</option>
+                    <option style="background-color:black;" value="2">Likes</option>
+                    <option style="background-color:black;" value="3">PoW</option>
                 </select>
             </div>
         </div>
@@ -85,33 +86,5 @@
 </body>
     
 <script src="ilitch.js"></script>
-<script>
- /*async function getBook(){
-    let book = window.location.href.split('/')[-1];
-    let response = await sdk.query(`{
-                allPosts(filter: {bContent: {includes: "${book}"}}, ${selOrder === '2' ? "" : "first: 100,"} ${orderBy}) {
-                    nodes {bContent numLikes replyCount transaction youLiked userId userByUserId {name icon}}
-                }
-            }`);
-    post = response.allPosts.nodes[0];
-    let content = post.bContent;
-    let boostValue = diffSum(post.transaction);
-    post.boostValue = boostValue;
-    let osTwetch = `<div id="${post.transaction}" class="nes-container with-title is-dark" style="position: relative; border-color: #777; background-color: #000000; margin-bottom: 20px;">
-                    <p id="postTitle" class="title"><img class="nes-avatar is-rounded is-medium" src="${post.userByUserId.icon}"> ${post.userByUserId.name} <a href="https://twetch.app/u/${post.userId}" target="_blank">u/${posts.userId}</a>
-                    </p><p class="urlFormat">${applyURLs(content)}</p>`
-    osTwetch += `<div class="item" style="position: relative; height: 110px;">
-                    <i class="nes-icon is-large heart ${post.youLiked === "0" ? "is-empty" : ""}"></i><var id=${post.transaction}_count style="position: absolute; left: 50px; top: 69px">${post.numLikes}</var>
-                    <a href="https://search.matterpool.io/tx/${post.transaction}" target="_blank" text-decoration="none" class="txid">#txid</a>
-                    <i class="nes-icon coin is-large" name="${post.userId}" style="position: absolute; right: -15px; top: 25px"></i>
-                    <i class="nes-icon trophy is-large ${boostValue === 0 ? "is-empty" : ""}" name="${post.transaction}" style="position: absolute; left: 80px; top: 20px"></i>
-                    <var id=${post.transaction}_diff style="position: absolute; left: 148px; top: 69px">${parseInt(boostValue)}</var>
-                </div>`;
-    document.getElementById('message-container').innerHTML += osTwetch + '</div>';
-    //document.getElementById('twetch-container').onclick = function{getDetails()};
-        
-}
-getBook();*/
-</script>
   
 </html>

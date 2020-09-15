@@ -248,7 +248,8 @@ async function postsQuery(){
               }
             }`);
             let branch = response.postByTransaction;
-            content = branch.bContent.replace(getTwetchSuffix(),''), boostValue = diffSum(branch.transaction); branch.boostValue = boostValue;
+            if (url.includes("zeroschool.org/jobs")){content = branch.bContent} else {content = branch.bContent.replace(getTwetchSuffix(),'');} 
+            boostValue = diffSum(branch.transaction); branch.boostValue = boostValue;
             profiles[i].src = branch.userByUserId.icon;userLinks[i].innerHTML = ` ${branch.userByUserId.name} u/${branch.userId}`;userLinks[i].href = `https://twetch.app/u/${branch.userId}`;
             contents[i].innerHTML = applyURLs(content);likes[i].innerHTML = branch.numLikes;likes[i].id = `${branch.transaction}_count`;
             hearts[i].id = `${branch.transaction}_heart`;

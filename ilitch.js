@@ -258,14 +258,18 @@ async function postsQuery(){
             txids[i].href = "https://search.matterpool.io/tx/" + posts[i].transaction;
             stars[i].setAttribute("name", posts[i].transaction);}
         if (boostValue > 0){stars[i].className = 'nes-icon star is-large'};boostValues[i].innerHTML = parseInt(boostValue);
-        twetches[i].addEventListener('click', goToTwetch);
+        twetches[i].addEventListener('click', goToBook);
         hearts[i].addEventListener('click', like);
         stars[i].addEventListener('click', boost);
     }
 }
 
-function goToTwetch() {
-    window.open("https://twetch.app/t/" + this.id);
+
+function goToBook() {
+    if (this.id == "1fc35da044f890551b384e0774fd9576ab92f377385c1d7eb18dfba41d167482"){
+        window.open("https://zeroschool.org/book/" + "Xanadu");}
+    else {
+        window.open("https://twetch.app/t/" + this.id);}
 }
 
 function getTwetchSuffix() {

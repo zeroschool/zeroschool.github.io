@@ -230,8 +230,8 @@ async function postsQuery(){
     let twetches = document.getElementsByClassName("twetch-container");
     for (let i=0; i<posts.length;i++){
         content = posts[i].bContent.replace(getTwetchSuffix(), ''), boostValue = diffSum(posts[i].transaction); posts[i].boostValue = boostValue;
-        if (content.indexOf("twetch.app/t") >= 0){
-            let twetchRegex = /http(s)?:\/\/(.*\.)?twetch\.app\/t\/([A-z0-9_/?=]+)/;
+        let twetchRegex = /http(s)?:\/\/(.*\.)?twetch\.app\/t\/([A-z0-9_/?=]+)/;
+        if (content.match(twetchRegex)[0] === content){
             let branchURL = content.match(twetchRegex)[0];
             let branchTxID = branchURL.slice(-64);
             let response = await sdk.query(`{

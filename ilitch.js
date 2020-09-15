@@ -96,12 +96,7 @@ async function twgin(){
         document.getElementById("btnLogin").style.display = "inline";
         document.getElementById("btnLogout").style.display = "none"}
     setPennyAmt();
-    if (window.location.href.includes("zeroschool.org/book/"){
-        getBook();
-        }
-    else {
-        postsQuery();
-        }
+    postsQuery();
 }
 
 function login(){
@@ -152,13 +147,7 @@ function login(){
         });
     }
 
-document.getElementById("order").onchange = () => {selOrder = document.getElementById("order").value;localStorage.setItem('orderBy', selOrder);
-                                                   if (window.location.href.includes("zeroschool.org/book/"){
-        getBook();
-        }
-    else {
-        postsQuery();
-        }}
+document.getElementById("order").onchange = () => {selOrder = document.getElementById("order").value;localStorage.setItem('orderBy', selOrder);postsQuery()}
 if (localStorage.getItem('orderBy')) {selOrder = localStorage.getItem('orderBy');document.getElementById("order").options[selOrder].selected = true}
 document.getElementById("tPost").setAttribute("disabled", null);document.getElementById("post").addEventListener("keyup", function() {checkPost()})
 
@@ -241,12 +230,19 @@ async function postsQuery(){
     let orderBy = 'orderBy: CREATED_AT_DESC';
     if (selOrder === '1') {orderBy = 'orderBy: LIKES_BY_POST_ID__COUNT_DESC'}
     let filter = "";
-    if (window.location.href.includes("zeroschool.org/jobs")){ filter = "/job "} else {filter = getTwetchSuffix()}
+    if (window.location.href.includes("zeroschool.org/jobs")){ filter = "/job "} 
+    else if (window.location.href.includes("zeroschool.org/book/"){
+        filter = window.location.href.split('/')[-1];
+    }
+    else {filter = getTwetchSuffix()}
+    
     let response = await sdk.query(`{
                 allPosts(filter: {bContent: {includes: "${filter}"}}, ${selOrder === '2' ? "" : "first: 100,"} ${orderBy}) {
                     nodes {bContent transaction numLikes userId youLiked userByUserId {name icon}}
                 }
             }`);
+    
+    
     posts = response.allPosts.nodes;
     if (selOrder === '2') {applyBoostSort(posts);posts.sort(compare)}populateHTML(posts.length);
     let profiles = document.getElementsByClassName("nes-avatar"),userLinks = document.getElementsByClassName("userLink"),postTitles = document.getElementsByClassName("title profile");

@@ -231,7 +231,7 @@ async function postsQuery(){
     if (selOrder === '1') {orderBy = 'orderBy: LIKES_BY_POST_ID__COUNT_DESC'}
     let filter = "";
     if (window.location.href.includes("zeroschool.org/jobs")){ filter = "/job "} 
-    else if (window.location.href.includes("zeroschool.org/book/"){
+    else if (window.location.href.includes("zeroschool.org/book/")){
         filter = window.location.href.split('/')[-1]
     }
     else {filter = getTwetchSuffix()}

@@ -14,7 +14,7 @@ function populateHTML(nPosts){
         </div>`
     }
 }
-async function getBook(){
+/*async function getBook(){
     let book = window.location.href.split('/')[-1];
     let response = await sdk.query(`{
                 allPosts(filter: {bContent: {includes: "${book}"}}, ${selOrder === '2' ? "" : "first: 100,"} ${orderBy}) {
@@ -38,7 +38,7 @@ async function getBook(){
     document.getElementById('message-container').innerHTML += osTwetch + '</div>';
     document.getElementById('twetch-container').onclick = function{getDetails()};
         
-}
+}*/
 function info(){
         showPopup(`<p class="title" style="color: #21e800; font-family: fixedsys_excelsior_3.01Rg;">Welcome to ZeroSchool!</p><p style="font-family: fixedsys_excelsior_3.01Rg">ZeroSchool is a state of the art fren-2-fren Education System built for the 22nd Century.<br><br>
             Posts, likes, tipping, & Boost are currently supported along with Bitcoinfiles.<br><br>

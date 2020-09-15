@@ -204,8 +204,8 @@ async function postsQuery(){
     try{await getBoosts()} catch(e){console.log(e)};
     document.getElementById('message-container').innerHTML = "";
     let orderBy = 'orderBy: CREATED_AT_DESC';
-    if (selOrder === '1') {orderBy = 'orderBy: LIKES_BY_POST_ID__COUNT_DESC'}
-    else if (selOrder === '2') {orderBy = 'orderBy: LIKES_BY_POST_ID__COUNT_ASC'}
+    if (selOrder === '1') {orderBy = 'orderBy: CREATED_AT_ASC'}
+    else if (selOrder === '2') {orderBy = 'orderBy: LIKES_BY_POST_ID__COUNT_DESC'}
     let filter = "";
     let url = window.location.href;
     if (url.includes("zeroschool.org/jobs")){ filter = "/job "} 

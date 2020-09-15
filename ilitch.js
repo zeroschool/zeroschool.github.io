@@ -232,7 +232,7 @@ async function postsQuery(){
     let filter = "";
     if (window.location.href.includes("zeroschool.org/jobs")){ filter = "/job "} 
     else if (window.location.href.includes("zeroschool.org/book/"){
-        filter = window.location.href.split('/')[-1];
+        filter = window.location.href.split('/')[-1]
     }
     else {filter = getTwetchSuffix()}
     

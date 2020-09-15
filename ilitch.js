@@ -14,31 +14,7 @@ function populateHTML(nPosts){
         </div>`
     }
 }
-/*async function getBook(){
-    let book = window.location.href.split('/')[-1];
-    let response = await sdk.query(`{
-                allPosts(filter: {bContent: {includes: "${book}"}}, ${selOrder === '2' ? "" : "first: 100,"} ${orderBy}) {
-                    nodes {bContent numLikes replyCount transaction youLiked userId userByUserId {name icon}}
-                }
-            }`);
-    post = response.allPosts.nodes[0];
-    let content = post.bContent;
-    let boostValue = diffSum(post.transaction);
-    post.boostValue = boostValue;
-    let osTwetch = `<div id="${post.transaction}" class="nes-container with-title is-dark" style="position: relative; border-color: #777; background-color: #000000; margin-bottom: 20px;">
-                    <p id="postTitle" class="title"><img class="nes-avatar is-rounded is-medium" src="${post.userByUserId.icon}"> ${post.userByUserId.name} <a href="https://twetch.app/u/${post.userId}" target="_blank">u/${posts.userId}</a>
-                    </p><p class="urlFormat">${applyURLs(content)}</p>`
-    osTwetch += `<div class="item" style="position: relative; height: 110px;">
-                    <i class="nes-icon is-large heart ${post.youLiked === "0" ? "is-empty" : ""}"></i><var id=${post.transaction}_count style="position: absolute; left: 50px; top: 69px">${post.numLikes}</var>
-                    <a href="https://search.matterpool.io/tx/${post.transaction}" target="_blank" text-decoration="none" class="txid">#txid</a>
-                    <i class="nes-icon coin is-large" name="${post.userId}" style="position: absolute; right: -15px; top: 25px"></i>
-                    <i class="nes-icon trophy is-large ${boostValue === 0 ? "is-empty" : ""}" name="${post.transaction}" style="position: absolute; left: 80px; top: 20px"></i>
-                    <var id=${post.transaction}_diff style="position: absolute; left: 148px; top: 69px">${parseInt(boostValue)}</var>
-                </div>`;
-    document.getElementById('message-container').innerHTML += osTwetch + '</div>';
-    document.getElementById('twetch-container').onclick = function{getDetails()};
-        
-}*/
+
 function info(){
         showPopup(`<p class="title" style="color: #21e800; font-family: fixedsys_excelsior_3.01Rg;">Welcome to ZeroSchool!</p><p style="font-family: fixedsys_excelsior_3.01Rg">ZeroSchool is a state of the art fren-2-fren Education System built for the 22nd Century.<br><br>
             Posts, likes, tipping, & Boost are currently supported along with Bitcoinfiles.<br><br>
@@ -229,6 +205,7 @@ async function postsQuery(){
     document.getElementById('message-container').innerHTML = "";
     let orderBy = 'orderBy: CREATED_AT_DESC';
     if (selOrder === '1') {orderBy = 'orderBy: LIKES_BY_POST_ID__COUNT_DESC'}
+    else if (selOrder === '2') {orderBy = 'orderBy: LIKES_BY_POST_ID__COUNT_ASC'}
     let filter = "";
     let url = window.location.href;
     if (url.includes("zeroschool.org/jobs")){ filter = "/job "} 
@@ -239,14 +216,14 @@ async function postsQuery(){
     else {filter = getTwetchSuffix()}
     
     let response = await sdk.query(`{
-                allPosts(filter: {bContent: {includes: "${filter}"}}, ${selOrder === '2' ? "" : "first: 100,"} ${orderBy}) {
+                allPosts(filter: {bContent: {includes: "${filter}"}}, ${selOrder === '3' ? "" : "first: 100,"} ${orderBy}) {
                     nodes {bContent transaction numLikes userId youLiked userByUserId {name icon}}
                 }
             }`);
     
     
     posts = response.allPosts.nodes;
-    if (selOrder === '2') {applyBoostSort(posts);posts.sort(compare)}populateHTML(posts.length);
+    if (selOrder === '3') {applyBoostSort(posts);posts.sort(compare)}populateHTML(posts.length);
     let profiles = document.getElementsByClassName("nes-avatar"),userLinks = document.getElementsByClassName("userLink"),postTitles = document.getElementsByClassName("title profile");
     let contents = document.getElementsByClassName("postContent"),hearts = document.getElementsByClassName("heart"),likes = document.getElementsByClassName("numLikes");    
     let txids = document.getElementsByClassName("txid"), stars = document.getElementsByClassName("nes-icon star is-large"), boostValues = document.getElementsByClassName("boostValue");

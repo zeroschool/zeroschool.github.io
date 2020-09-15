@@ -232,7 +232,7 @@ async function postsQuery(){
     let filter = "";
     let url = window.location.href;
     if (url.includes("zeroschool.org/jobs")){ filter = "/job "} 
-    else if (url.includes("zeroschool.org/book=")){
+    else if (url.includes("zeroschool.org/book?")){
         let arrURL = url.split('/');
         filter = arrURL[arrURL.length -1];
     }
@@ -297,7 +297,7 @@ async function postsQuery(){
 
 function getDetails() {
     if (this.id == "1fc35da044f890551b384e0774fd9576ab92f377385c1d7eb18dfba41d167482"){
-        window.location.href = "https://zeroschool.org/book=" + "Xanadu";}
+        window.location.href = "https://zeroschool.org/book?" + "Xanadu";}
     else {
         window.open("https://twetch.app/t/" + this.id);}
 }

@@ -231,7 +231,7 @@ async function postsQuery(){
     for (let i=0; i<posts.length;i++){
         content = posts[i].bContent.replace(getTwetchSuffix(), ''), boostValue = diffSum(posts[i].transaction); posts[i].boostValue = boostValue;
         let twetchRegex = /http(s)?:\/\/(.*\.)?twetch\.app\/t\/([A-z0-9_/?=]+)/;
-        if (content.match(twetchRegex)[0] === content){
+        if ((content.indexOf("twetch.app/t") >= 0) and (content.match(twetchRegex)[0] === content)){
             let branchURL = content.match(twetchRegex)[0];
             let branchTxID = branchURL.slice(-64);
             let response = await sdk.query(`{

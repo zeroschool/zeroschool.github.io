@@ -54,7 +54,7 @@ tipUNum, loadingText = "Deschooling Society...";
 sdk.storage.setItem('tokenTwetchAuth',
 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjUyIn0sImlhdCI6MTU5MjQwMTgxNH0.adZ_QsfshakYBNASIjMWQw46rh__8t8_f75n5I3w2jg'
 );
-#var dict = ["Xanadu", "Water", "Information"];
+//var dict = ["Xanadu", "Water", "Information"];
 var dict =["Xanadu"];
 
 async function twgin(){

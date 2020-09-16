@@ -397,7 +397,8 @@ var dots = window.setInterval(function() {
 
 window.addEventListener('DOMContentLoaded', () => {
     const parsedUrl = new URL(window.location);
-    document.getElementById("post").value = parsedUrl.searchParams.get('text');
-    checkPost();
+    if (!(window.location.href.indexOf("zeroschool.org/word?"))){
+        document.getElementById("post").value = parsedUrl.searchParams.get('text');
+        checkPost()}
 });
 

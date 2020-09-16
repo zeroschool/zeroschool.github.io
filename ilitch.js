@@ -369,9 +369,9 @@ function applyURLs(content) {
     } else {
         for (word of dict) {
                 let pos = content.indexOf(word);
-                let tWord = content.substring(pos, pos + word.length);
-                if (pos){ 
-                    return content.replace(word,`<a href="https://zeroschool.org/word?${word}">${tWord}</a>`)}
+                if (pos){
+                    let tWord = content.substring(pos, pos + word.length);
+                    return content.replace(tWord,`<a href="https://zeroschool.org/word?${word}">${tWord}</a>`)}
                 else {
                     var urlRegex = /(https?:\/\/[^\s]+)/g;
                     return content.replace(urlRegex, function(url) {

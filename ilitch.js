@@ -278,7 +278,7 @@ async function postsQuery(){
 }
 
 function goToTwetch() {
-    if (event.target.className != "insideLink"){
+    if (!(event.target.className.contains("Link"))){
         window.open("https://twetch.app/t/" + this.id)}
 }
 

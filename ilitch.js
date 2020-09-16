@@ -372,12 +372,14 @@ function applyURLs(content) {
             return '<a href="' + url + '"target="_blank">' + url + '</a>'})
         }
         for (word of dict) {
-            let pos = content.indexOf(word);
-            if (pos){
-                let tWord = content.substring(pos, pos + word.length);
-                if (!(content.match(urlRegex)){
+            if (!(window.location.href.indexOf("zeroschool.org/word?"))){
+                let pos = content.indexOf(word);
+                if (pos){
+                    let tWord = content.substring(pos, pos + word.length);
+                    if (!(content.match(urlRegex)){
                     content = content.replace(tWord,`<a href="https://zeroschool.org/word?${word}">${tWord}</a>`)}
             }
+        }
         return content
     }
 }

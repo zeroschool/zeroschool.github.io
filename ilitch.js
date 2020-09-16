@@ -271,7 +271,7 @@ async function postsQuery(){
             txids[i].href = "https://search.matterpool.io/tx/" + posts[i].transaction;
             stars[i].setAttribute("name", posts[i].transaction);}
         if (boostValue > 0){stars[i].className = 'nes-icon star is-large'};boostValues[i].innerHTML = parseInt(boostValue);
-        if (!(document.getElementsByClassName("insideLink").onClick())){twetches[i].addEventListener('click', goToTwetch)};
+        twetches[i].addEventListener('click', goToTwetch);
         hearts[i].addEventListener('click', like);
         stars[i].addEventListener('click', boost);
     }

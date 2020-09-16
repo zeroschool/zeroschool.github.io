@@ -371,11 +371,12 @@ function applyURLs(content) {
             let pos = content.indexOf(word);
             if (pos){
                 let tWord = content.substring(pos, pos + word.length);
-                return content.replace(tWord,`<a href="https://zeroschool.org/word?${word}">${tWord}</a>`)}
+                content = content.replace(tWord,`<a href="https://zeroschool.org/word?${word}">${tWord}</a>`)}
         var urlRegex = /(https?:\/\/[^\s]+)/g;
-        return content.replace(urlRegex, function(url) {
+        content = content.replace(urlRegex, function(url) {
             return '<a href="' + url + '"target="_blank">' + url + '</a>'})
         }
+        return content
     }
 }
 

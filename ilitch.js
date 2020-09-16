@@ -373,7 +373,7 @@ function applyURLs(content) {
         for (word of dict) {
             if (!(window.location.href.indexOf(`zeroschool.org/word?${word}`)>= 0)){
                 let pos = content.indexOf(word);
-                if (pos){
+                if (pos > 0){
                     let tWord = content.substring(pos, pos + word.length);
                     if (!(content.match(urlRegex))){
                     content = content.replace(tWord,`<a href="https://zeroschool.org/word?${word}">${tWord}</a>`)}

@@ -271,14 +271,15 @@ async function postsQuery(){
             txids[i].href = "https://search.matterpool.io/tx/" + posts[i].transaction;
             stars[i].setAttribute("name", posts[i].transaction);}
         if (boostValue > 0){stars[i].className = 'nes-icon star is-large'};boostValues[i].innerHTML = parseInt(boostValue);
-        if(!(event.target.className == "insideLink")){twetches[i].addEventListener('click', goToTwetch)}
+        twetches[i].addEventListener('click', goToTwetch);
         hearts[i].addEventListener('click', like);
         stars[i].addEventListener('click', boost);
     }
 }
 
 function goToTwetch() {
-     window.open("https://twetch.app/t/" + this.id);
+    if (event.target.className != "insideLink"){
+        window.open("https://twetch.app/t/" + this.id)}
 }
 
 function getTwetchSuffix() {

@@ -54,6 +54,8 @@ tipUNum, loadingText = "Deschooling Society...";
 sdk.storage.setItem('tokenTwetchAuth',
 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjUyIn0sImlhdCI6MTU5MjQwMTgxNH0.adZ_QsfshakYBNASIjMWQw46rh__8t8_f75n5I3w2jg'
 );
+#var dict = ["Xanadu", "Water", "Information"];
+var dict =["Xanadu"];
 
 async function twgin(){
     if (localStorage.getItem('token')){
@@ -356,15 +358,22 @@ function applyURLs(content) {
     } else if (content.indexOf("youtu") >= 0) {
         return youtube(content)
     } else if (content.indexOf("streamanity.com") >= 0) {
-        return streamanity(content)
+        return streamanity(content) 
     } else {
         var urlRegex = /(https?:\/\/[^\s]+)/g;
         return content.replace(urlRegex, function(url) {
             return '<a href="' + url + '"target="_blank">' + url + '</a>'
         })
+    } else {
+        for (word in dict) {
+                let pos = content.indexOf(word);
+                if (pos){content.replace(word,`<a href="https://zeroschool.org/word?${word}">${word}</a>`)}
+        }
     }
 }
-
+function addWordLink(word){
+    
+}
 if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/serviceworker.js').then(function(registration) {
         console.log('Registration successful, scope is:', registration.scope)

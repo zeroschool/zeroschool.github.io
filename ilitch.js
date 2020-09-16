@@ -213,8 +213,12 @@ async function postsQuery(){
     else if (selOrder === '2') {orderBy = 'orderBy: LIKES_BY_POST_ID__COUNT_DESC'}
     let filter = "";
     let url = window.location.href;
-    if (url.includes("zeroschool.org/jobs")){ filter = "/job "} 
-    else {filter = getTwetchSuffix()}
+    if (url.includes("zeroschool.org/jobs")){ filter = "/job "}
+    else if (url.includes("zeroschool.org/word")){ 
+        let arrURL = url.split("?");
+        let word = arrURL[arrURL.length -1];
+        filter = word;
+    } else {filter = getTwetchSuffix()}
     
     let response = await sdk.query(`{
                 allPosts(filter: {bContent: {includes: "${filter}"}}, ${selOrder === '3' ? "" : "first: 100,"} ${orderBy}) {

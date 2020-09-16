@@ -127,7 +127,7 @@ function login(){
 
 document.getElementById("order").onchange = () => {selOrder = document.getElementById("order").value;localStorage.setItem('orderBy', selOrder);postsQuery()}
 if (localStorage.getItem('orderBy')) {selOrder = localStorage.getItem('orderBy');document.getElementById("order").options[selOrder].selected = true}
-if (not window.location.href.indexOf("zeroschool.org/word?")){
+if (!(window.location.href.indexOf("zeroschool.org/word?"))){
     document.getElementById("tPost").setAttribute("disabled", null);
     document.getElementById("post").addEventListener("keyup", function() {checkPost()})
 }

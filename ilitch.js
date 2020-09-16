@@ -359,7 +359,7 @@ function applyURLs(content) {
         return youtube(content)
     } else if (content.indexOf("streamanity.com") >= 0) {
         return streamanity(content) 
-    } else {
+    } else if {
         var urlRegex = /(https?:\/\/[^\s]+)/g;
         return content.replace(urlRegex, function(url) {
             return '<a href="' + url + '"target="_blank">' + url + '</a>'
@@ -367,7 +367,7 @@ function applyURLs(content) {
     } else {
         for (word in dict) {
                 let pos = content.indexOf(word);
-                if (pos){content.replace(word,`<a href="https://zeroschool.org/word?${word}">${word}</a>`)}
+                if (pos){ return content.replace(word,`<a href="https://zeroschool.org/word?${word}">${word}</a>`)}
         }
     }
 }

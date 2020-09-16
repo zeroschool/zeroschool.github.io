@@ -375,7 +375,7 @@ function applyURLs(content) {
             let pos = content.indexOf(word);
             if (pos){
                 let tWord = content.substring(pos, pos + word.length);
-                if !(content.match(urlRegex){
+                if (!(content.match(urlRegex)){
                     content = content.replace(tWord,`<a href="https://zeroschool.org/word?${word}">${tWord}</a>`)}
             }
         return content

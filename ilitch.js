@@ -359,8 +359,6 @@ function applyURLs(content) {
         return youtube(content)
     } else if (content.indexOf("streamanity.com") >= 0) {
         return streamanity(content) 
-    } else if ( {
-        
     } else {
         for (word in dict) {
                 let pos = content.indexOf(word);
@@ -374,9 +372,7 @@ function applyURLs(content) {
         }
     }
 }
-function addWordLink(word){
-    
-}
+
 if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/serviceworker.js').then(function(registration) {
         console.log('Registration successful, scope is:', registration.scope)

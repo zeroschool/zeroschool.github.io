@@ -370,7 +370,6 @@ function applyURLs(content) {
         var urlRegex = /(https?:\/\/[^\s]+)/g;
         content = content.replace(urlRegex, function(url) {
             return '<a href="' + url + '"target="_blank">' + url + '</a>'})
-        }
         for (word of dict) {
             if (!(window.location.href.indexOf("zeroschool.org/word?"))){
                 let pos = content.indexOf(word);
@@ -378,10 +377,11 @@ function applyURLs(content) {
                     let tWord = content.substring(pos, pos + word.length);
                     if (!(content.match(urlRegex)){
                     content = content.replace(tWord,`<a href="https://zeroschool.org/word?${word}">${tWord}</a>`)}
+                }   
             }
         }
-        return content
     }
+    return content
 }
 
 if ('serviceWorker' in navigator) {

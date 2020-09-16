@@ -371,7 +371,7 @@ function applyURLs(content) {
         content = content.replace(urlRegex, function(url) {
             return '<a href="' + url + '"target="_blank">' + url + '</a>'})
         for (word of dict) {
-            if (!(window.location.href.indexOf("zeroschool.org/word?"))){
+            if (!(window.location.href.indexOf(`zeroschool.org/word?${word}`)>= 0)){
                 let pos = content.indexOf(word);
                 if (pos){
                     let tWord = content.substring(pos, pos + word.length);

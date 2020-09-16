@@ -221,7 +221,7 @@ async function postsQuery(){
     } else {filter = getTwetchSuffix()}
     
     let response = await sdk.query(`{
-                allPosts(filter: {bContent: {includes: "${filter}"}}, ${selOrder === '3' ? "" : "first: 100,"} ${orderBy}) {
+                allPosts(filter: {bContent: {includesInsensitive: "${filter}"}}, ${selOrder === '3' ? "" : "first: 100,"} ${orderBy}) {
                     nodes {bContent transaction numLikes userId youLiked userByUserId {name icon}}
                 }
             }`);

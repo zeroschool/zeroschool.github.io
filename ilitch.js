@@ -363,7 +363,7 @@ function applyURLs(content) {
     } else if (content.indexOf("streamanity.com") >= 0) {
         return streamanity(content) 
     } else {
-        for (word in dict) {
+        for (word of dict) {
                 let pos = content.indexOf(word);
                 if (pos){ 
                     return content.replace(word,`<a href="https://zeroschool.org/word?${word}">${word}</a>`)}

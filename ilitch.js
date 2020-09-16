@@ -369,7 +369,7 @@ function applyURLs(content) {
     } else {
         for (word of dict) {
                 let pos = content.indexOf(word);
-                let tWord = content.substring(pos,content.length + word.length);
+                let tWord = content.substring(pos, pos + word.length);
                 if (pos){ 
                     return content.replace(word,`<a href="https://zeroschool.org/word?${word}">${tWord}</a>`)}
                 else {

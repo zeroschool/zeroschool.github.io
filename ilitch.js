@@ -255,7 +255,7 @@ async function postsQuery(){
             let branch = response.postByTransaction;
             content = branch.bContent.replace(getTwetchSuffix(),'');
             boostValue = diffSum(branch.transaction); branch.boostValue = boostValue;
-            profiles[i].src = branch.userByUserId.icon;userLinks[i].innerHTML = ` ${branch.userByUserId.name} u/${branch.userId}`;userLinks[i].href = `https://twetch.app/u/${branch.userId}`;
+            profiles[i].src = branch.userByUserId.icon;userLinks[i].innerHTML = ` ${branch.userByUserId.name} u/${branch.userId}`;userLinks[i].href = `https://twetch.app/u/${branch.userId}`;userLinks[i].class = "insideLink";
             contents[i].innerHTML = applyURLs(content);likes[i].innerHTML = branch.numLikes;likes[i].id = `${branch.transaction}_count`;
             hearts[i].id = `${branch.transaction}_heart`;
             twetches[i].id = branch.transaction;
@@ -263,7 +263,7 @@ async function postsQuery(){
             txids[i].href = "https://search.matterpool.io/tx/" + branch.transaction;
             stars[i].setAttribute("name", branch.transaction);}
         else {
-            profiles[i].src = posts[i].userByUserId.icon;userLinks[i].innerHTML = ` ${posts[i].userByUserId.name} u/${posts[i].userId}`;userLinks[i].href = `https://twetch.app/u/${posts[i].userId}`;
+            profiles[i].src = posts[i].userByUserId.icon;userLinks[i].innerHTML = ` ${posts[i].userByUserId.name} u/${posts[i].userId}`;userLinks[i].href = `https://twetch.app/u/${posts[i].userId}`;userLinks[i].class = "insideLink";
             contents[i].innerHTML = applyURLs(content);likes[i].innerHTML = posts[i].numLikes;likes[i].id = `${posts[i].transaction}_count`;
             hearts[i].id = `${posts[i].transaction}_heart`;
             twetches[i].id = posts[i].transaction;
@@ -271,7 +271,7 @@ async function postsQuery(){
             txids[i].href = "https://search.matterpool.io/tx/" + posts[i].transaction;
             stars[i].setAttribute("name", posts[i].transaction);}
         if (boostValue > 0){stars[i].className = 'nes-icon star is-large'};boostValues[i].innerHTML = parseInt(boostValue);
-        twetches[i].addEventListener('click', goToTwetch);
+        if (!(document.getElementsByClassName("insideLink").onClick())){twetches[i].addEventListener('click', goToTwetch)};
         hearts[i].addEventListener('click', like);
         stars[i].addEventListener('click', boost);
     }
@@ -369,14 +369,14 @@ function applyURLs(content) {
     } else {
         var urlRegex = /(https?:\/\/[^\s]+)/g;
         content = content.replace(urlRegex, function(url) {
-            return '<a href="' + url + '"target="_blank">' + url + '</a>'})
+            return '<a href="' + url + '"target="_blank" class="insideLink">' + url + '</a>'})
         for (word of dict) {
             if (!(window.location.href.indexOf(`zeroschool.org/word?${word}`)>= 0)){
                 let pos = content.indexOf(word);
                 if (pos > 0){
                     let tWord = content.substring(pos, pos + word.length);
                     if (!(content.match(urlRegex))){
-                    content = content.replace(tWord,`<a href="https://zeroschool.org/word?${word}">${tWord}</a>`)}
+                    content = content.replace(tWord,`<a href="https://zeroschool.org/word?${word}" class="insideLink">${tWord}</a>`)}
                 }   
             }
         }

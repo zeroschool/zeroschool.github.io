@@ -209,10 +209,6 @@ async function postsQuery(){
     let filter = "";
     let url = window.location.href;
     if (url.includes("zeroschool.org/jobs")){ filter = "/job "} 
-    else if (url.includes("zeroschool.org/book?")){
-        let arrURL = url.split('?');
-        filter = arrURL[arrURL.length -1];
-    }
     else {filter = getTwetchSuffix()}
     
     let response = await sdk.query(`{
@@ -248,7 +244,7 @@ async function postsQuery(){
               }
             }`);
             let branch = response.postByTransaction;
-            if (url.includes("zeroschool.org/book")){content = branch.bContent} else {content = branch.bContent.replace(getTwetchSuffix(),'');} 
+            content = branch.bContent.replace(getTwetchSuffix(),'');
             boostValue = diffSum(branch.transaction); branch.boostValue = boostValue;
             profiles[i].src = branch.userByUserId.icon;userLinks[i].innerHTML = ` ${branch.userByUserId.name} u/${branch.userId}`;userLinks[i].href = `https://twetch.app/u/${branch.userId}`;
             contents[i].innerHTML = applyURLs(content);likes[i].innerHTML = branch.numLikes;likes[i].id = `${branch.transaction}_count`;
@@ -266,18 +262,14 @@ async function postsQuery(){
             txids[i].href = "https://search.matterpool.io/tx/" + posts[i].transaction;
             stars[i].setAttribute("name", posts[i].transaction);}
         if (boostValue > 0){stars[i].className = 'nes-icon star is-large'};boostValues[i].innerHTML = parseInt(boostValue);
-        twetches[i].addEventListener('click', getDetails);
+        twetches[i].addEventListener('click', goToTwetch);
         hearts[i].addEventListener('click', like);
         stars[i].addEventListener('click', boost);
     }
 }
 
-
-function getDetails() {
-    if (this.id == "1fc35da044f890551b384e0774fd9576ab92f377385c1d7eb18dfba41d167482"){
-        window.location.href = "https://zeroschool.org/book?" + "Xanadu";}
-    else {
-        window.open("https://twetch.app/t/" + this.id);}
+function goToTwetch() {
+     window.open("https://twetch.app/t/" + this.id);
 }
 
 function getTwetchSuffix() {

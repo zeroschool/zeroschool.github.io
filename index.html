@@ -49,7 +49,7 @@
         var sdk = new twetchjs(options), outputs = [], cryptoOperations = [];
         sdk.storage.setItem('tokenTwetchAuth', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjUyIn0sImlhdCI6MTU5MjQwMTgxNH0.adZ_QsfshakYBNASIjMWQw46rh__8t8_f75n5I3w2jg');
         async function buildIMB(content, mbId, action) {
-            if (action === 'twetch/post@0.0.1') {var obj = {bContent: content}}
+            if (action === 'twetch/post@0.0.1') {var obj = {bContent: content, mapReply : '402460d43ecd675ee5e941be8f87f7d2695cd50e01f98a433ea3ab378c875646'}}
             else {var obj = {postTransaction: content}}
             const { abi, payees } = await sdk.build(action, obj);
             outputs = [{ // Twetch OP_RETURN output

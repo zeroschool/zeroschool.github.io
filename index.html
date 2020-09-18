@@ -1,103 +1,106 @@
 <html>
-    <head>
-        <title>ZeroSchool</title>
-        <script src="https://unpkg.com/@twetch/sdk@0.2.4/dist/twetch.min.js"></script>
-        <script src="https://unpkg.com/bsv@0.30.0/bsv.min.js"></script>
-        <script src="https://www.moneybutton.com/moneybutton.js"></script>
-    </head>
-    <body>
-        <h2>ZeroSchool v0.1</h2>
-        <form onsubmit="return false">
-            <textarea type="text" id="post" placeholder="What do you wanna learn?"></textarea>
-            <input type="submit" value="Post" onclick="twetchPost()">
-        </form>
-    </body>
-    <script>
-        var options = {
+
+<head>
+    <title>ZeroSchool</title>
+
+    <script src="https://unpkg.com/@twetch/sdk@0.2.4/dist/twetch.min.js"></script>
+    <script src="https://unpkg.com/bsv@0.30.0/bsv.min.js"></script>
+    <script src="https://www.moneybutton.com/moneybutton.js"></script>
+</head>
+
+<body>
+    <h2>ZeroSchool v0.1</h2>
+    <form onsubmit="return false">
+        <textarea type="text" id="post" placeholder="What do you wanna learn?"></textarea>
+        <input type="submit" value="Post" onclick="twetchPost()">
+    </form>
+</body>
+<script>
+    var options = {
             clientIdentifier: '9d27a879-ee0c-4653-8839-a4b2f6fa8023'
-        }, 
+        },
         posts = [];
-        var sdk = new twetchjs(options), 
+    var sdk = new twetchjs(options),
         outputs = [],
         cryptoOperations = [],
-        loadingPost = false, 
+        loadingPost = false,
         selOrder = 0,
         loadingText = "Deschooling society...";
-        sdk.storage.setItem('tokenTwetchAuth', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjUyIn0sImlhdCI6MTU5MjQwMTgxNH0.adZ_QsfshakYBNASIjMWQw46rh__8t8_f75n5I3w2jg');
+    sdk.storage.setItem('tokenTwetchAuth', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjUyIn0sImlhdCI6MTU5MjQwMTgxNH0.adZ_QsfshakYBNASIjMWQw46rh__8t8_f75n5I3w2jg');
 
-        firstTime();
+    firstTime();
 
-        function firstTime(){
-            sdk.authenticate();
-            let itoken = localStorage.getItem('imbToken');
-            if (itoken === null){
-                // Show Popup Or redirect towards info page
+    function firstTime() {
+        sdk.authenticate();
+        let itoken = localStorage.getItem('imbToken');
+        if (itoken === null) {
+            // Show Popup Or redirect towards info page
+        }
+    }
+
+    function savePermissionToken(token) {
+        localStorage.setItem('imbToken', token)
+    }
+
+    function getPermissionForCurrentUser() {
+        if (localStorage.getItem('imbToken')) {
+            return localStorage.getItem('imbToken')
+        }
+    }
+
+    const imb = new moneyButton.IMB({
+        clientIdentifier: "ce4eb6ea41a4f43044dd7e71c08e50b2",
+        permission: getPermissionForCurrentUser(),
+        onNewPermissionGranted: (token) => savePermissionToken(token)
+    });
+
+    async function buildIMB(content, action) {
+        if (action === 'twetch/post@0.0.1') {
+            var obj = {
+                bcontent: content
+            }
+        } else {
+            var obj = {
+                postTransaction: content
             }
         }
-
-        function savePermissionToken(token) {
-            localStorage.setItem('imbToken', token)
-        }
-
-        function getPermissionForCurrentUser() {
-            if (localStorage.getItem('imbToken')) {
-                return localStorage.getItem('imbToken')
-            }
-        }
-
-        const imb = new moneyButton.IMB({
-            clientIdentifier: "ce4eb6ea41a4f43044dd7e71c08e50b2",
-            permission: getPermissionForCurrentUser(),
-            onNewPermissionGranted
-        })
-
-        async function buildIMB(content, action){
-            if (action === 'twetch/post@0.0.1'){
-                var obj = {
-                    bcontent: content
-                }
+        const {
+            abi,
+            payees
+        } = await sdk.build(action, obj);
+        outputs = [{
+            to: 'zeroschool@moneybutton.com',
+            amount: '0.000021450',
+            currency: 'BSV'
+        }, {
+            currency: 'BSV',
+            amount: 0,
+            script: bsv.Script.buildSafeDataOut(abi.toArray()).toASM()
+        }].concat(payees);
+        if (action === 'twetch/like@0.0.1') {
+            if (payees.length < 4) {
+                payees[1].amount += 0.00020000
             } else {
-                var obj = {
-                    postTransaction: content
-                }
+                payees[2].amount += 0.00020000
             }
-            const {
-                abi,
-                payees
-            } = await sdk.build(action,obj);
-            outputs = [{
-                to: 'zeroschool@moneybutton.com',
-                amount: '0.000021450',
-                currency: 'BSV'
-            },
-            {
-                currency: 'BSV',
-                amount: 0,
-                script: bsv.Script.buildSafeDataOut(abi.toArray()).toASM()
-            }].concat(payees);
-            if (action === 'twetch/like@0.0.1'){
-                if (payees.length < 4) {
-                    payees[1].amount += 0.00020000
-                } else {
-                    payees[2].amount += 0.00020000
-                }
-            };
-            cryptoOperations = [{
-                name: 'myAddress',
-                method: 'address',
-                key: 'identity'
-            }, {
-                name: 'mySignature',
-                method: 'sign',
-                data: abi.contentHash(),
-                dataEncoding: 'utf8',
-                key: 'identity',
-                algorithm: 'bitcoin-signed-message'
-            }];
-        }
+        };
+        cryptoOperations = [{
+            name: 'myAddress',
+            method: 'address',
+            key: 'identity'
+        }, {
+            name: 'mySignature',
+            method: 'sign',
+            data: abi.contentHash(),
+            dataEncoding: 'utf8',
+            key: 'identity',
+            algorithm: 'bitcoin-signed-message'
+        }];
+    }
 
-        function twetchPost(){
+    function twetchPost() {
 
-        }
-    </script>
+    }
+</script>
+
 </html>

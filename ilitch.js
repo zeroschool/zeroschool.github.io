@@ -100,7 +100,7 @@ async function buildIMB(content, action) {
     }
     ].concat(payees);
     if (action === 'twetch/like@0.0.1') {
-        if (payees.length < 3) {
+        if (payees.length < 4) {
             payees[1].amount += 0.00020000
         } else {
             payees[2].amount += 0.00020000

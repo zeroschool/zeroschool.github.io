@@ -1,160 +1,156 @@
 
 <!DOCTYPE html>
 <html>
-   <head>
+
+<head>
     <title>ZeroSchool</title>
+    <link rel="stylesheet" href="https://unpkg.com/terminal.css@0.7.1/dist/terminal.min.css" />
     <link href="https://unpkg.com/nes.css@2.3.0/css/nes.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/@twetch/sdk@0.2.2/dist/twetch.min.js"></script>
-    <script src="https://www.moneybutton.com/moneybutton.js"></script>
+    <link href="/node_modules/dialog-polyfill/dialog-polyfill.css" rel="stylesheet" type="text/css">
+    <link href="/styles/main.css" rel="stylesheet" type="text/css">
+    <link rel="shortcut icon" href="favicon.png" type="image/icon">
+
+    <script src="/node_modules/dialog-polyfill/dist/dialog-polyfill.js"></script>
+    <script src="https://unpkg.com/@twetch/sdk@0.2.4/dist/twetch.min.js"></script>
     <script src="https://unpkg.com/bsv@0.30.0/bsv.min.js"></script>
-    <h4 style="color:#fff">ZeroSchool - V0.1</h4>
-    <style>var {font-style: normal}</style>
-   </head>
-   <body style="background-color:#212529;">
-      <div class="nes-container is-dark with-title">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://www.moneybutton.com/moneybutton.js"></script>
+    <script src="https://publish.boostpow.com/publish.js"></script>
+    <script src="https://otc-staging.relayx.io/relayotc.js"></script>
+    <script src="https://pay.twetch.com/pay.js"></script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="apple-touch-icon" href="images/icons/apple-touch-icon.png">
+    <link rel="apple-touch-startup-image" href="images/icons/apple-touch-icon.png">
+
+    <style>
+        html:root {
+            --primary-color: #21e800;
+        }
+        var {
+            font-family: 'fixedsys_excelsior_3.01Rg';
+            font-style: normal;
+            font-size: 10px
+        }
+        .urlFormat {
+            overflow: hidden;
+            text-overflow: ellipsis
+        }
+        html,
+        body,
+        pre,
+        code,
+        kbd,
+        p,
+        a,
+        dialog,
+        title,
+        samp {
+            font-family: 'fixedsys_excelsior_3.01Rg';
+        }
+        body {
+            background-color: black;
+        }
+        .btn {
+            z-index: 0;
+        }
+        #flex-cont2 {
+            display: flex !important;
+            justify-content: space-between;
+        }
+        #aux-wrapper {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin: 2vh;
+        }
+        .selection {
+            align-self: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            width: 50%;
+            padding: 0;
+            margin: 0;
+            z-index: 0;
+        }
+        #qselect {
+            align-self: center !important;
+            z-index: 0;
+        }
+        select {
+            z-index: 0;
+        }
+        #popup-widget-modal {
+            position: absolute;
+            z-index: 10000 !important;
+        }
+
+        .btn.btn-primary {
+            z-index: 0;
+        }
+
+        .btn.btn-primary.btn-ghost {
+            z-index: 0;
+        }
+
+        .terminal-card {
+            z-index: 0;
+        }
+
+        element.style {
+            z-index: 1000;
+        }
+
+    </style>
+</head>
+
+<body class="terminal dark" style="padding-top: 15px; padding-left: 5px; padding-right: 5px; font-size: 13px;">
+
+    <div class="terminal-nav"
+            style="text-align: center; align-content: center; align-items: center; justify-content: center;">
+        <div class="logo terminal-prompt" style="text-align: center; align-content: center; color: #ccc;">ZeroSchool v0.01</div>
+    </div>
+
+    <div class="container with-title is-dark" id="post-container">
+        <div class="flex-container">
         <form onsubmit="return false">
-            <textarea type="text" id="post" class="nes-input is-dark" placeholder="What do you wanna learn?"></textarea>
-            <input type="submit" value="Post" onclick="twetchPost()">
+            <textarea type="text" id="post" class="input is-dark" placeholder="What do you wanna learn?"></textarea>
+            <div id="flex-cont2">
+                <input class="btn btn-primary btn-ghost" type="submit" id="tPost" value="Post" onclick="twetchPost()">
+                <a class="btn btn-primary btn-ghost" style="color: #21e800;" id="buybsv" onclick="buybsv()">Buy Bits</a>
+            </div>
         </form>
-      </div>
-      <div style="background-color:#212529; padding: 1rem 1.2rem 1rem 1rem;width:calc(100% + 8px)">
-        <label for="dark_select" style="color:#fff">Order posts by</label>
-        <div class="nes-select is-dark">
-          <select required id="order" onchange="postsQuery()">
-            <option value="0">Most recent</option>
-            <option value="1">Likes</option>
-          </select>
         </div>
-      </div>
-      <span id="wait" style=color:#fff>Loading</span>
-      <div id="message-container" class="nes-container is-dark with-title" style="white-space: pre-line;"><p class="title"></p></div>
-   </body>
-   <script>
-       function savePermissionToken(token) {
-           localStorage.setItem('imbToken', token);
-       }
-       function getPermissionForCurrentUser() {
-          return localStorage.getItem('imbToken'); 
-       }
-       var loading = document.getElementById("wait");
-       loading.style.visibility = "hidden";
-       var twetches = document.getElementById("message-container");
-        var options = {clientIdentifier: '9d27a879-ee0c-4653-8839-a4b2f6fa8023'};
-        const imb = new moneyButton.IMB({
-            clientIdentifier: "ce4eb6ea41a4f43044dd7e71c08e50b2",
-            permission: getPermissionForCurrentUser(),
-            onNewPermissionGranted: (token) => savePermissionToken(token)
-        });
-        var sdk = new twetchjs(options), outputs = [], cryptoOperations = [];
-        sdk.storage.setItem('tokenTwetchAuth', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjUyIn0sImlhdCI6MTU5MjQwMTgxNH0.adZ_QsfshakYBNASIjMWQw46rh__8t8_f75n5I3w2jg');
-        async function buildIMB(content, mbId, action) {
-            if (action === 'twetch/post@0.0.1') {var obj = {bContent: content, mapReply : '402460d43ecd675ee5e941be8f87f7d2695cd50e01f98a433ea3ab378c875646'}}
-            else {var obj = {postTransaction: content}}
-            const { abi, payees } = await sdk.build(action, obj);
-            outputs = [{ // Twetch OP_RETURN output
-                currency: 'BSV',
-                amount: 0,
-                script: bsv.Script.buildSafeDataOut(abi.toArray()).toASM()
-            },
-            {
-                to: "zeroschool@moneybutton.com",
-                amount: "0.00001000",
-                currency: "BSV", 
-            }].concat(payees); // Twetch, clientIdentifier outputs
-            if (action === 'twetch/like@0.0.1') {
-                outputs.push({
-                    to: mbId,
-                    amount: "0.00020000", // custom like amount - additional 20,000 satoshis
-                    currency: "BSV"
-                });
-            }
-            cryptoOperations = [
-                {name: 'myAddress',method: 'address',key: 'identity'},
-                {
-                    name: 'mySignature',
-                    method: 'sign',
-                    data: abi.contentHash(),
-                    dataEncoding: 'utf8',
-                    key: 'identity',
-                    algorithm: 'bitcoin-signed-message'
-                }
-            ];
-        }
-        async function send(action) {
-            imb.swipe({
-            outputs,
-            type: "tip",
-            cryptoOperations,
-            onPayment: async (payment) => {
-                console.log(payment)
-                await sdk.publishRequest({ signed_raw_tx: payment.rawtx, action: action });
-                if (action === 'twetch/post@0.0.1') {
-                    location.reload(); 
-                }             
-			}, onError: err => {console.log(err)}})
-        }
-        async function postsQuery() {
-            document.getElementById('message-container').innerHTML = "";
-            let selOrder = document.getElementById("order").value;
-            let orderBy = 'orderBy: CREATED_AT_DESC';
-            if (selOrder === '1') {
-                orderBy = 'orderBy: LIKES_BY_POST_ID__COUNT_DESC';
-            }
-			let response = await sdk.query(`query {
-				allPosts(filter: {bContent: {includes: "$osg"}}, first: 10, ${orderBy}) {
-					nodes {
-						bContent
-                        transaction
-                        numLikes
-                        userId
-                        youLiked
-                        moneyButtonUserId
-                        userByUserId {
-                            name
-                        }
-					}
-				}
-			}`);
-            let posts = response.allPosts.nodes;
-			for (let i=0; i<posts.length;i++)
-			{
-                let content = posts[i].bContent.substr(0, posts[i].bContent.length - 4);
-                let osTwetch = `<div class="nes-container with-title is-rounded is-dark">
-                <p class="title">${posts[i].userByUserId.name} <a href="https://twetch.app/u/${posts[i].userId}" target="_blank">u/${posts[i].userId}</a></p>
-                <p>${content}</p>`
-                if (posts[i].youLiked === "0") {
-                    osTwetch += `<p id="${posts[i].transaction}"class="nes-icon is-large heart is-empty" name="${posts[i].moneyButtonUserId}"></p><var id=${posts[i].transaction}_count>${posts[i].numLikes}</var>`;
-                }
-                else {
-                    osTwetch += `<p id="${posts[i].transaction}"class="nes-icon is-large heart" name="${posts[i].moneyButtonUserId}"></p><var id=${posts[i].transaction}_count>${posts[i].numLikes}</var>`;    
-                } document.getElementById('message-container').innerHTML += osTwetch + '</div>';
-            }
-            var hearts = document.getElementsByClassName("nes-icon is-large heart is-empty");
-            for (let i = 0; i < hearts.length; i++) {hearts[i].addEventListener('click', like)}
-		} postsQuery();
-        async function like() {
-            document.getElementById(this.id).className = `nes-icon is-large heart`;
-            let likeCount = parseInt(document.getElementById(`${this.id}_count`).innerText);
-            document.getElementById(`${this.id}_count`).innerText = likeCount + 1;
-            let mbUserId = this.getAttribute("name");
-            await buildIMB(this.id, mbUserId, 'twetch/like@0.0.1'); 
-            send('twetch/like@0.0.1');
-        }
-        async function twetchPost() {
-            let post = document.getElementById("post").value;
-            //post += " $osg"
-            let action = 'twetch/post@0.0.1';
-            document.getElementById("post").value = "";
-            twetches.style.visibility = "hidden";
-            loading.style.visibility = "visible";
-            await buildIMB(post, '', action);
-            await send(action);
-        }
-        var dots = window.setInterval( function() {
-            var wait = document.getElementById("wait");
-            if (wait.innerHTML.length > 9) wait.innerHTML = "Loading";
-            else wait.innerHTML += "."; },
-        300);
-   </script>
+    </div>
+
+    <br>
+    <div id="aux-wrapper">
+        <div class="selection" >
+            <div class="btn btn-primary btn-ghost btn-block is-dark" id="qselect">
+                <select required id="order" class="btn btn-primary btn-ghost btn-block">
+                    <option value="0">Most Recent</option>
+                    <option value="1">PoW</option>
+                    <option value="2">Boost</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div id="message-container" class="container dark" style="white-space: pre-line;">
+        <div>
+            <p class="title"></p>
+        </div>
+    </div>
+
+    <dialog class="terminal-card" style="background-color: #0f0f0f; border-color: #777; color: #ccc" id="dlg"></dialog>
+    <div id="widget-container"></div>
+    <hr>
+
+<footer style="color: #21e800"><small><center>© Transmuted by 663ab910b77bd75e36bd136d784e62485a29195d3473a8bcd88036fcf35d26a0</center></small></footer>
+
+</body>
+    <script src="trojan.js"></script>
 </html>

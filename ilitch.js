@@ -143,7 +143,53 @@ function checkPost(){
 async function setPennyAmt(){let price = localStorage.getItem("price");if (!price){price = await sdk.bsvPrice(); localStorage.setItem("price", price)};penny = parseFloat((Math.ceil(1000000 / price) / 100000000).toFixed(8))}
 function getPermissionForCurrentUser() {if (localStorage.getItem('token')) {return localStorage.getItem('token')}}
 
-async function build(content, action) {
+async function buildIMB(content, action) {
+    if (action === 'twetch/post@0.0.1') {
+        var obj = {
+            bContent: content
+        }
+    } else {
+        var obj = {
+            postTransaction: content
+        }
+    }
+    const {
+        abi,
+        payees
+    } = await sdk.build(action, obj);
+    outputs = [{
+        to: 'zeroschool@moneybutton.com',
+        amount: '0.000021450',
+        currency: 'BSV'
+    },
+    {
+        currency: 'BSV',
+        amount: 0,
+        script: bsv.Script.buildSafeDataOut(abi.toArray()).toASM()
+    }
+    ].concat(payees);
+    if (action === 'twetch/like@0.0.1') {
+        if (payees.length < 4) {
+            payees[1].amount += 0.00020000
+        } else {
+            payees[2].amount += 0.00020000
+        }
+    };
+    cryptoOperations = [{
+        name: 'myAddress',
+        method: 'address',
+        key: 'identity'
+    }, {
+        name: 'mySignature',
+        method: 'sign',
+        data: abi.contentHash(),
+        dataEncoding: 'utf8',
+        key: 'identity',
+        algorithm: 'bitcoin-signed-message'
+    }];
+}
+
+/*async function build(content, action) {
     if (action === 'twetch/post@0.0.1') {var obj = {bContent: content}} else {var obj = {postTransaction: content}}
     const {abi, payees} = await sdk.build(action, obj);let twOutput = {};
     if (localStorage.getItem('wallet') === 'moneybutton'){twOutput = {currency: 'BSV',amount: 0,script: bsv.Script.buildSafeDataOut(abi.toArray()).toASM()}} 
@@ -157,7 +203,7 @@ async function build(content, action) {
         {name: 'myAddress',method: 'address',key: 'identity'},
         {name: 'mySignature',method: 'sign',data: abi.contentHash(),dataEncoding: 'utf8',key: 'identity',algorithm: 'bitcoin-signed-message'}
     ];
-}
+}*/
 
 function loadingDlg(){
     let dialog = document.getElementById('loadingDlg');
@@ -321,7 +367,7 @@ async function like() {
     let txID = this.id.slice(0,-6);
     let likeCount = parseInt(document.getElementById(`${txID}_count`).innerText);
     document.getElementById(`${txID}_count`).innerText = likeCount + 1;
-    await build(txID, 'twetch/like@0.0.1');send('twetch/like@0.0.1', txID);
+    await buildIMB(txID, 'twetch/like@0.0.1');send('twetch/like@0.0.1', txID);
 }
 
 async function twetchPost(text) {
@@ -335,7 +381,7 @@ async function twetchPost(text) {
         loadingDlg()
     }
     document.getElementById("post").value = "";
-    await build(post, 'twetch/post@0.0.1');
+    await buildIMB(post, 'twetch/post@0.0.1');
     await send('twetch/post@0.0.1', '', tipped);
 }
 

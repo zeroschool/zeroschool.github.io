@@ -1,22 +1,31 @@
 <!DOCTYPE html>
 <html>
 
-<head>
-    <title>ZeroSchool</title>
-    <link href="https://unpkg.com/nes.css@2.3.0/css/nes.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/@twetch/sdk@0.2.2/dist/twetch.min.js"></script>
-    <script src="https://www.moneybutton.com/moneybutton.js"></script>
-    <script src="https://unpkg.com/bsv@0.30.0/bsv.min.js"></script>
-    <h4 style="color:#fff">ZeroSchool - Ceci n'est pas une école.</h4>
-    <style>
-        var {
-            font-style: normal
-        }
-    </style>
-</head>
+    <head>
+        <title>ZeroSchool</title>
+        <link rel="stylesheet" href="https://unpkg.com/terminal.css@0.7.1/dist/terminal.min.css" />
+        <link href="https://unpkg.com/nes.css@2.3.0/css/nes.min.css" rel="stylesheet">
+        <link href="https://unpkg.com/dialog-polyfill@0.5.1/dist/dialog-polyfill.css" rel="stylesheet" type="text/css">
+        <link href="/styles/main.css" rel="stylesheet" type="text/css">
+        <link rel="shortcut icon" href="favicon.png" type="image/png">
+    
+        <script src="https://unpkg.com/dialog-polyfill@0.5.1/dist/dialog-polyfill.js"></script>
+        <script src="https://unpkg.com/@twetch/sdk@0.2.4/dist/twetch.min.js"></script>
+        <script src="https://unpkg.com/bsv@0.30.0/bsv.min.js"></script>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <script src="https://www.moneybutton.com/moneybutton.js"></script>
+        <script src="https://publish.boostpow.com/publish.js"></script>
+        <script src="https://pay.twetch.com/pay.js"></script>
+    
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="manifest" href="manifest.webmanifest">
+        <link rel="apple-touch-icon" href="images/icons/apple-touch-icon.png">
+        <link rel="apple-touch-startup-image" href="images/icons/apple-touch-icon.png">
+    </head>
 
 <body style="background-color:#212529;">
+    <h4 style="text-align: center;">ZeroSchool - Ceci n'est pas une école.</h4>
     <div class="nes-container is-dark with-title">
         <form onsubmit="return false">
             <textarea type="text" id="post" class="nes-input is-dark" placeholder="What do you *really* wanna learn?"></textarea>

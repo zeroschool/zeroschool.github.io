@@ -58,7 +58,9 @@ sdk.storage.setItem('tokenTwetchAuth',
 var dict =["Xanadu"];
 
 async function twgin(){
-    if (localStorage.getItem('token')){
+    sdk.authenticate();
+    let itoken = localStorage.getItem('imbToken');
+    /*if (localStorage.getItem('token')){
         if (sdk.storage.getItem('tokenTwetchAuth')){sdk.authenticated = true}
         else {
             let r = axios.post('https://auth.twetch.app/api/v1/authenticate', {
@@ -72,7 +74,7 @@ async function twgin(){
         document.getElementById("btnLogin").style.display = "none";
         document.getElementById("btnLogout").style.display = "inline";} else {
         document.getElementById("btnLogin").style.display = "inline";
-        document.getElementById("btnLogout").style.display = "none"}
+        document.getElementById("btnLogout").style.display = "none"}*/
     setPennyAmt();
     postsQuery();
 }

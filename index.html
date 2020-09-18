@@ -8,7 +8,7 @@
     <script src="https://unpkg.com/@twetch/sdk@0.2.2/dist/twetch.min.js"></script>
     <script src="https://www.moneybutton.com/moneybutton.js"></script>
     <script src="https://unpkg.com/bsv@0.30.0/bsv.min.js"></script>
-    <h4 style="color:#fff">ZeroSchool - V0.0</h4>
+    <h4 style="color:#fff">ZeroSchool - V0.1</h4>
     <style>var {font-style: normal}</style>
    </head>
    <body style="background-color:#212529;">
@@ -143,7 +143,7 @@
         }
         async function twetchPost() {
             let post = document.getElementById("post").value;
-            post += " $osg"
+            //post += " $osg"
             let action = 'twetch/post@0.0.1';
             document.getElementById("post").value = "";
             twetches.style.visibility = "hidden";

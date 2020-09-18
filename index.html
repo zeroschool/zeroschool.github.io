@@ -1,7 +1,7 @@
 <html>
 
 <head>
-    <title>ZeroSchool - 100p</title>
+    <title>ZeroSchool</title>
     <link href="https://unpkg.com/nes.css@2.3.0/css/nes.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/@twetch/sdk@0.2.2/dist/twetch.min.js"></script>
@@ -211,7 +211,7 @@
     <h1><a href="https://zeroschool.org">ZeroSchool - 100p</a></h1>
     <div class="nes-container is-dark with-title" id="post-container">
         <form onsubmit="return false">
-            <textarea type="text" id="post" class="nes-input is-dark" placeholder="What problem are you trying to solve? How?"></textarea>
+            <textarea type="text" id="post" class="nes-input is-dark" placeholder="What do you *really* wanna learn?"></textarea>
             <input type="submit" id="tPost" value="Post" onclick="twetchPost()">
         </form>
     </div>
@@ -358,7 +358,7 @@
             orderBy = 'orderBy: LIKES_BY_POST_ID__COUNT_DESC';
         }
         let response = await sdk.query(`query {
-				allPosts(filter: {bContent: {includes: "$osg"}}, first: 100, ${orderBy}) {
+				allPosts(filter: {bContent: {includes: "$zeroschool"}}, first: 100, ${orderBy}) {
 					nodes {
 						bContent
                         transaction
@@ -385,7 +385,7 @@
             likes = document.getElementsByClassName("numLikes"),
             txids = document.getElementsByClassName("txid");
         for (let i = 0; i < posts.length; i++) {
-            let content = posts[i].bContent.replace('$osg', '');
+            let content = posts[i].bContent.replace('$zeroschool', '');
             profiles[i].src = posts[i].userByUserId.icon;
             userLinks[i].innerHTML = ` ${posts[i].userByUserId.name} u/${posts[i].userId}`;
             userLinks[i].href = `https://twetch.app/u/${posts[i].userId}`;

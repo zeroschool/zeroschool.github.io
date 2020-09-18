@@ -77,6 +77,13 @@
     function firstTime() {
         sdk.authenticate();
         let itoken = localStorage.getItem('imbToken');
+        if (itoken === null){
+            const imb = new moneyButton.IMB({
+                clientIdentifier: "ce4eb6ea41a4f43044dd7e71c08e50b2",
+                permission: getPermissionForCurrentUser(),
+                onNewPermissionGranted: (token) => savePermissionToken(token)
+            });
+        }
         /*if (itoken === null) {
             showPopup(`<p class="title" style="color: #21e800; font-family: fixedsys_excelsior_3.01Rg;">a6fe7f87c61982cd5eac329ed50564d34b579b888e346cc53e4347a0bfcedf45</p><p style="font-family: fixedsys_excelsior_3.01Rg">Tokenize your Twetches (if logged in with MB) using state-of-the-art 21e8 & fren-2-fren technologies, or don't, whatever.<br><br>
                 Posts, likes, tipping, & Boost are currently supported along with Bitcoinfiles & Relay OTC integration.<br><br>
@@ -112,11 +119,6 @@
         }
     }
     var twetches = document.getElementById("message-container");
-    const imb = new moneyButton.IMB({
-        clientIdentifier: "ce4eb6ea41a4f43044dd7e71c08e50b2",
-        permission: getPermissionForCurrentUser(),
-        onNewPermissionGranted: (token) => savePermissionToken(token)
-    });
 
     async function buildIMB(content, action) {
         if (action === 'twetch/post@0.0.1') {

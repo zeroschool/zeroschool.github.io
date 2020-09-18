@@ -1,106 +1,170 @@
+
+<!DOCTYPE html>
 <html>
-
-<head>
+   <head>
     <title>ZeroSchool</title>
-
-    <script src="https://unpkg.com/@twetch/sdk@0.2.4/dist/twetch.min.js"></script>
-    <script src="https://unpkg.com/bsv@0.30.0/bsv.min.js"></script>
+    <link href="https://unpkg.com/nes.css@2.3.0/css/nes.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@twetch/sdk@0.2.2/dist/twetch.min.js"></script>
     <script src="https://www.moneybutton.com/moneybutton.js"></script>
-</head>
-
-<body>
-    <h2>ZeroSchool v0.1</h2>
-    <form onsubmit="return false">
-        <textarea type="text" id="post" placeholder="What do you wanna learn?"></textarea>
-        <input type="submit" value="Post" onclick="twetchPost()">
-    </form>
-</body>
-<script>
-    var options = {
-            clientIdentifier: '9d27a879-ee0c-4653-8839-a4b2f6fa8023'
-        },
-        posts = [];
-    var sdk = new twetchjs(options),
-        outputs = [],
-        cryptoOperations = [],
-        loadingPost = false,
-        selOrder = 0,
-        loadingText = "Deschooling society...";
-    sdk.storage.setItem('tokenTwetchAuth', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjUyIn0sImlhdCI6MTU5MjQwMTgxNH0.adZ_QsfshakYBNASIjMWQw46rh__8t8_f75n5I3w2jg');
-
-    firstTime();
-
-    function firstTime() {
-        sdk.authenticate();
-        let itoken = localStorage.getItem('imbToken');
-        if (itoken === null) {
-            // Show Popup Or redirect towards info page
-        }
-    }
-
-    function savePermissionToken(token) {
-        localStorage.setItem('imbToken', token)
-    }
-
-    function getPermissionForCurrentUser() {
-        if (localStorage.getItem('imbToken')) {
-            return localStorage.getItem('imbToken')
-        }
-    }
-
-    const imb = new moneyButton.IMB({
-    clientIdentifier: "ce4eb6ea41a4f43044dd7e71c08e50b2",
-    permission: getPermissionForCurrentUser(),
-    onNewPermissionGranted: (token) => savePermissionToken(token)
-});
-
-    async function buildIMB(content, action) {
-        if (action === 'twetch/post@0.0.1') {
-            var obj = {
-                bcontent: content
+    <script src="https://unpkg.com/bsv@0.30.0/bsv.min.js"></script>
+    <h4 style="color:#fff">ZeroSchool - Ceci n'est pas une école.</h4>
+    <style>var {font-style: normal}</style>
+   </head>
+   <body style="background-color:#212529;">
+      <div class="nes-container is-dark with-title">
+        <form onsubmit="return false">
+            <textarea type="text" id="post" class="nes-input is-dark" placeholder="What do you *really* wanna learn?"></textarea>
+            <input type="submit" value="Post" onclick="twetchPost()">
+        </form>
+      </div>
+      <div style="background-color:#212529; padding: 1rem 1.2rem 1rem 1rem;width:calc(100% + 8px)">
+        <label for="dark_select" style="color:#fff">Order posts by</label>
+        <div class="nes-select is-dark">
+          <select required id="order" onchange="postsQuery()">
+            <option value="0">Most recent</option>
+            <option value="1">Likes</option>
+          </select>
+        </div>
+      </div>
+      <span id="wait" style=color:#fff>Deschooling Society</span>
+      <div id="message-container" class="nes-container is-dark with-title" style="white-space: pre-line;"><p class="title"></p></div>
+   </body>
+   <script>
+       function savePermissionToken(token) {
+           localStorage.setItem('imbToken', token);
+       }
+       function getPermissionForCurrentUser() {
+          return localStorage.getItem('imbToken'); 
+       }
+       var loading = document.getElementById("wait");
+       loading.style.visibility = "hidden";
+       var twetches = document.getElementById("message-container");
+        var options = {clientIdentifier: '9d27a879-ee0c-4653-8839-a4b2f6fa8023'};
+        const imb = new moneyButton.IMB({
+            clientIdentifier: "ce4eb6ea41a4f43044dd7e71c08e50b2",
+            permission: getPermissionForCurrentUser(),
+            onNewPermissionGranted: (token) => savePermissionToken(token)
+        });
+        var sdk = new twetchjs(options), outputs = [], cryptoOperations = [];
+        sdk.storage.setItem('tokenTwetchAuth', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjUyIn0sImlhdCI6MTU5MjQwMTgxNH0.adZ_QsfshakYBNASIjMWQw46rh__8t8_f75n5I3w2jg');
+        async function buildIMB(content, mbId, action) {
+            if (action === 'twetch/post@0.0.1') {var obj = {bContent: content}}
+            else {var obj = {postTransaction: content}}
+            const { abi, payees } = await sdk.build(action, obj);
+            outputs = [{ // Twetch OP_RETURN output
+                currency: 'BSV',
+                amount: 0,
+                script: bsv.Script.buildSafeDataOut(abi.toArray()).toASM()
+            },
+            {
+                to: "zeroschool@moneybutton.com",
+                amount: "0.218",
+                currency: "EUR", 
+            }/*,
+            {
+                to: "cryptoacorns@moneybutton.com", # for foundation 
+                amount: "0.0218",
+                currency: "EUR,",
+            },
+            {
+            to: "272a00x0d791a0a6f01100118b48ef924ee40b6911da8348f0e7bad36cf70b4df1c4a64@21e8.dev", # for inspiration
+            amount: "0.0109",
+            currency: "EUR"
+            }*/].concat(payees); // Twetch, clientIdentifier outputs
+            if (action === 'twetch/like@0.0.1') {
+                outputs.push({
+                    to: mbId,
+                    amount: "0.00020000", // custom like amount - additional 20,000 satoshis
+                    currency: "BSV"
+                });
             }
-        } else {
-            var obj = {
-                postTransaction: content
-            }
+            cryptoOperations = [
+                {name: 'myAddress',method: 'address',key: 'identity'},
+                {
+                    name: 'mySignature',
+                    method: 'sign',
+                    data: abi.contentHash(),
+                    dataEncoding: 'utf8',
+                    key: 'identity',
+                    algorithm: 'bitcoin-signed-message'
+                }
+            ];
         }
-        const {
-            abi,
-            payees
-        } = await sdk.build(action, obj);
-        outputs = [{
-            to: 'zeroschool@moneybutton.com',
-            amount: '0.000021450',
-            currency: 'BSV'
-        }, {
-            currency: 'BSV',
-            amount: 0,
-            script: bsv.Script.buildSafeDataOut(abi.toArray()).toASM()
-        }].concat(payees);
-        if (action === 'twetch/like@0.0.1') {
-            if (payees.length < 4) {
-                payees[1].amount += 0.00020000
-            } else {
-                payees[2].amount += 0.00020000
+        async function send(action) {
+            imb.swipe({
+            outputs,
+            type: "tip",
+            cryptoOperations,
+            onPayment: async (payment) => {
+                console.log(payment)
+                await sdk.publishRequest({ signed_raw_tx: payment.rawtx, action: action });
+                if (action === 'twetch/post@0.0.1') {
+                    location.reload(); 
+                }             
+			}, onError: err => {console.log(err)}})
+        }
+        async function postsQuery() {
+            document.getElementById('message-container').innerHTML = "";
+            let selOrder = document.getElementById("order").value;
+            let orderBy = 'orderBy: CREATED_AT_DESC';
+            if (selOrder === '1') {
+                orderBy = 'orderBy: LIKES_BY_POST_ID__COUNT_DESC';
             }
-        };
-        cryptoOperations = [{
-            name: 'myAddress',
-            method: 'address',
-            key: 'identity'
-        }, {
-            name: 'mySignature',
-            method: 'sign',
-            data: abi.contentHash(),
-            dataEncoding: 'utf8',
-            key: 'identity',
-            algorithm: 'bitcoin-signed-message'
-        }];
-    }
-
-    function twetchPost() {
-
-    }
-</script>
-
+			let response = await sdk.query(`query {
+				allPosts(filter: {bContent: {includes: "$zeroschool"}}, first: 10, ${orderBy}) {
+					nodes {
+						bContent
+                        transaction
+                        numLikes
+                        userId
+                        youLiked
+                        moneyButtonUserId
+                        userByUserId {
+                            name
+                        }
+					}
+				}
+			}`);
+            let posts = response.allPosts.nodes;
+			for (let i=0; i<posts.length;i++)
+			{
+                let content = posts[i].bContent.substr(0, posts[i].bContent.length - 4);
+                let osTwetch = `<div class="nes-container with-title is-rounded is-dark">
+                <p class="title">${posts[i].userByUserId.name} <a href="https://twetch.app/u/${posts[i].userId}" target="_blank">u/${posts[i].userId}</a></p>
+                <p>${content}</p>`
+                if (posts[i].youLiked === "0") {
+                    osTwetch += `<p id="${posts[i].transaction}"class="nes-icon is-large heart is-empty" name="${posts[i].moneyButtonUserId}"></p><var id=${posts[i].transaction}_count>${posts[i].numLikes}</var>`;
+                }
+                else {
+                    osTwetch += `<p id="${posts[i].transaction}"class="nes-icon is-large heart" name="${posts[i].moneyButtonUserId}"></p><var id=${posts[i].transaction}_count>${posts[i].numLikes}</var>`;    
+                } document.getElementById('message-container').innerHTML += osTwetch + '</div>';
+            }
+            var hearts = document.getElementsByClassName("nes-icon is-large heart is-empty");
+            for (let i = 0; i < hearts.length; i++) {hearts[i].addEventListener('click', like)}
+		} postsQuery();
+        async function like() {
+            document.getElementById(this.id).className = `nes-icon is-large heart`;
+            let likeCount = parseInt(document.getElementById(`${this.id}_count`).innerText);
+            document.getElementById(`${this.id}_count`).innerText = likeCount + 1;
+            let mbUserId = this.getAttribute("name");
+            await buildIMB(this.id, mbUserId, 'twetch/like@0.0.1'); 
+            send('twetch/like@0.0.1');
+        }
+        async function twetchPost() {
+            let post = document.getElementById("post").value;
+            post += " $zeroschool"
+            let action = 'twetch/post@0.0.1';
+            document.getElementById("post").value = "";
+            twetches.style.visibility = "hidden";
+            loading.style.visibility = "visible";
+            await buildIMB(post, '', action);
+            await send(action);
+        }
+        var dots = window.setInterval( function() {
+            var wait = document.getElementById("wait");
+            if (wait.innerHTML.length > 9) wait.innerHTML = "Loading";
+            else wait.innerHTML += "."; },
+        300);
+   </script>
 </html>

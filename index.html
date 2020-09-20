@@ -14,7 +14,6 @@
         <script src="https://www.moneybutton.com/moneybutton.js"></script>
         <script src="https://publish.boostpow.com/publish.js"></script>
         <script src="https://pay.twetch.com/pay.js"></script>
-    
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="apple-mobile-web-app-capable" content="yes">
         <link rel="manifest" href="manifest.webmanifest">
@@ -133,17 +132,13 @@
             payees
         } = await sdk.build(action, obj);
         outputs = [{
-            to: 'zeroschool@moneybutton.com',
+            to: '17xi98FFpkBfMirR8Ei619np8MhaDwUCym',
             amount: '0.000021450',
             currency: 'BSV'
         }, {
             currency: 'BSV',
             amount: 0,
             script: bsv.Script.buildSafeDataOut(abi.toArray()).toASM()
-        }, {
-            to: "272a00x7709e0a4fbb9ccf35b94d0c9023d3322c6365591f7f485ced2cfb54e7c4113e5@21e8.dev",
-            amount: "0.00001000",
-            currency: "BSV"
         }].concat(payees);
         if (action === 'twetch/like@0.0.1') {
             if (payees.length < 4) {

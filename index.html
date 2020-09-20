@@ -277,8 +277,8 @@
                         <i id="${posts[i].transaction}" class="nes-icon is-large heart ${posts[i].youLiked === "0" ? "is-empty" : ""}"></i><var id=${posts[i].transaction}_count style="position: absolute; left: 50px; top: 69px">${posts[i].numLikes}</var>
                         <a href="https://search.matterpool.io/tx/${posts[i].transaction}" target="_blank" text-decoration="none" class="txid">#txid</a>
                         <i class="nes-icon coin is-large" name="${posts[i].userId}" style="position: absolute; right: -15px; top: 25px"></i>
-                        <i class="nes-icon trophy is-large ${boostValue === 0 ? "is-empty" : ""}" name="${posts[i].transaction}" style="position: absolute; left: 80px; top: 20px"></i>
-                        <var id=${posts[i].transaction}_diff style="position: absolute; left: 148px; top: 69px">${parseInt(boostValue)}</var>
+                        <!--<i class="nes-icon trophy is-large ${boostValue === 0 ? "is-empty" : ""}" name="${posts[i].transaction}" style="position: absolute; left: 80px; top: 20px"></i>
+                        <var id=${posts[i].transaction}_diff style="position: absolute; left: 148px; top: 69px">${parseInt(boostValue)}</var>-->
                     </div>`;
             document.getElementById('message-container').innerHTML += osTwetch + '</div>';
         }

@@ -1,253 +1,93 @@
+<!DOCTYPE html>
 <html>
 
-<head>
-    <title>ZeroSchool - 100p</title>
-    <link href="https://unpkg.com/nes.css@2.3.0/css/nes.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/@twetch/sdk@0.2.2/dist/twetch.min.js"></script>
-    <script src="https://www.moneybutton.com/moneybutton.js"></script>
-    <script src="https://unpkg.com/bsv@0.30.0/bsv.min.js"></script>
-</head>
-
-<style>
-    body {
-        background-color: #212529;
-        color: #fff;
-        padding-top: 15px;
-        padding-left: 5px;
-        padding-right: 5px;
-        font-size: 13px;
-    }
+    <head>
+        <title>ZeroSchool</title>
+        <link href="https://unpkg.com/nes.css@2.3.0/css/nes.min.css" rel="stylesheet">
+        <link href="https://unpkg.com/dialog-polyfill@0.5.1/dist/dialog-polyfill.css" rel="stylesheet" type="text/css">
+        <link rel="shortcut icon" href="favicon.png" type="image/png">
     
-    h1 {
-        text-align: center;
-    }
+        <script src="https://unpkg.com/dialog-polyfill@0.5.1/dist/dialog-polyfill.js"></script>
+        <script src="https://unpkg.com/@twetch/sdk@0.2.4/dist/twetch.min.js"></script>
+        <script src="https://unpkg.com/bsv@0.30.0/bsv.min.js"></script>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <script src="https://www.moneybutton.com/moneybutton.js"></script>
+        <script src="https://publish.boostpow.com/publish.js"></script>
+        <script src="https://pay.twetch.com/pay.js"></script>
     
-    .loading {
-        width: 230px;
-        height: 30px
-    }
-    
-    .twetch {
-        position: relative;
-    }
-    
-    .bitcoinfiles {
-        max-width: 100%;
-        height: auto;
-    }
-    
-    .nes-dialog {
-        background-color: #212529;
-        color: #fff;
-    }
-    
-    .selection {
-        padding: 0;
-        width: 100%;
-        margin: 10px auto;
-    }
-    
-    select#order {
-        position: relative;
-        width: 100%;
-        padding: 8px;
-    }
-    
-    .nes-icon.coin.is-large {
-        position: absolute;
-        left: 80px;
-        top: 95px;
-    }
-    
-    .nes-icon.star.is-large {
-        position: absolute;
-        left: 80px;
-        top: 20px
-    }
-    
-    .bookmark {
-        position: absolute;
-        left: 0px;
-        top: 95px
-    }
-    
-    .bookmarkValue {
-        position: absolute;
-        left: 62px;
-        top: 139px;
-    }
-    
-    .nes-btn.share {
-        position: absolute;
-        padding: 5px;
-        right: -5px;
-        top: 95px;
-    }
-    
-    .video-container {
-        position: relative;
-        padding-bottom: 56.25%;
-        padding-top: 30px;
-        height: 0;
-        overflow: hidden;
-    }
-    
-    .video-container iframe,
-    .video-container object,
-    .video-container embed {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-    }
-    
-    .boostValue {
-        position: absolute;
-        left: 148px;
-        top: 69px
-    }
-    
-    .txid {
-        position: absolute;
-        right: -5px;
-        top: 140px
-    }
-    
-    .order {
-        width: 100%;
-        margin: auto;
-    }
-    
-    .features {
-        padding: 10px;
-    }
-    
-    .numLikes {
-        position: absolute;
-        left: 50px;
-        top: 69px
-    }
-    
-    .item {
-        position: relative;
-        height: 140px;
-    }
-    
-    .urlFormat {
-        overflow: hidden;
-        text-overflow: ellipsis
-    }
-    
-    .center {
-        position: absolute;
-        top: 35%;
-        left: 30%;
-        margin: 10px;
-        height: 200px;
-    }
-    
-    #widget-container {
-        margin: auto;
-    }
-    
-    #buybsv {
-        position: absolute;
-        color: black;
-        right: 25px;
-    }
-    
-    #info {
-        position: absolute;
-        color: black;
-        right: 150px;
-    }
-    
-    #post-container {
-        width: 100%;
-        margin: auto;
-        color: #fff;
-    }
-    
-    #message-container {
-        width: 100%;
-        margin: auto;
-        color: #fff;
-        white-space: pre-line;
-    }
-    
-    #post {
-        background-color: #212529;
-        border-color: #fff;
-    }
-    
-    #postTitle {
-        background-color: #212529;
-    }
-    
-    var {
-        font-style: normal;
-        font-size: 10px
-    }
-    
-    @media only screen and (min-width: 768px) {
-        .selection {
-            width: 60%
-        }
-        .order {
-            width: 60%
-        }
-        #post-container {
-            width: 60%
-        }
-        #message-container {
-            width: 60%
-        }
-    }
-</style>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="manifest" href="manifest.webmanifest">
+        <link rel="apple-touch-icon" href="images/icons/apple-touch-icon.png">
+        <link rel="apple-touch-startup-image" href="images/icons/apple-touch-icon.png">
+    </head>
 
 <body style="background-color:#212529;">
-    <h1><a href="https://zeroschool.org">ZeroSchool - 100p</a></h1>
-    <div class="nes-container is-dark with-title" id="post-container">
+    <h4 style="text-align: center;color:#fff">ZeroSchool - Ceci n'est pas une école.</h4>
+    <div class="nes-container is-dark with-title">
         <form onsubmit="return false">
-            <textarea type="text" id="post" class="nes-input is-dark" placeholder="What problem are you trying to solve? How?"></textarea>
+            <textarea type="text" id="post" class="nes-input is-dark" placeholder="What do you *really* wanna learn?"></textarea>
             <input type="submit" id="tPost" value="Post" onclick="twetchPost()">
         </form>
     </div>
-    <div class="selection">
+    <div style="background-color:#212529; padding: 1rem 1.2rem 1rem 1rem;width:calc(100% + 8px)">
         <label for="dark_select" style="color:#fff">Order posts by</label>
-        <div class="nes-select is-dark" id="qselect">
-            <select required id="order"><option value="0">Most recent</option><option value="1">Likes</option></select></div>
+        <div class="nes-select is-dark">
+            <select required id="order" onchange="postsQuery()">
+            <option value="0">Most recent</option>
+            <option value="1">Likes</option>
+          </select>
+        </div>
     </div>
-    <span id="wait" style=color:#fff>Loading</span>
     <div id="message-container" class="nes-container is-dark with-title" style="white-space: pre-line;">
         <p class="title"></p>
     </div>
+    <dialog class="terminal-card" style="background-color: #0f0f0f; border-color: #777; color: #ccc" id="dlg"></dialog>
 </body>
 <script>
-    function populateHTML(size) {
-        for (let i = 0; size; i++) {
-            document.getElementById('message-container').innerHTML +=
-                `<div class="nes-container is-rounded with-title is-dark twetch">
-                <p class="title profile"><img class="nes-avatar is-rounded is-medium">
-                <a class="userLink" href="" target="_blank"></a></p>
-                <p class="urlFormat"></p>
-                    <div class="item">
-                        <i class="nes-icon heart is-large is-empty"></i><var class="numLikes"></var>
-                        <a target="_blank" class="txid">#tx</a>
-                    </div>
-                </div>`
-        }
+    var options = {
+            clientIdentifier: '9d27a879-ee0c-4653-8839-a4b2f6fa8023'
+        },
+        posts = [];
+    coinSound = new Audio();
+    coinSound.src = './coin.wav';
+    boosted = [];
+    var sdk = new twetchjs(options),
+        outputs = [],
+        cryptoOperations = [],
+        loadingPost = false,
+        selOrder = 0,
+        tipUNum, loadingText = "Deschooling society...";
+    sdk.storage.setItem('tokenTwetchAuth',
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjUyIn0sImlhdCI6MTU5MjQwMTgxNH0.adZ_QsfshakYBNASIjMWQw46rh__8t8_f75n5I3w2jg'
+    );
+
+    firstTime();
+
+    document.getElementById("order").onchange = () => {
+        selOrder = document.getElementById("order").value;
+        localStorage.setItem('orderBy', selOrder);
+        postsQuery();
+    }
+    if (localStorage.getItem('orderBy')) {
+        selOrder = localStorage.getItem('orderBy');
+        document.getElementById("order").options[selOrder].selected = true;
     }
 
-    function savePermissionToken(token) {
-        localStorage.setItem('imbToken', token);
+    function firstTime() {
+        sdk.authenticate();
+        let itoken = localStorage.getItem('imbToken');
+        /*if (itoken === null) {
+            showPopup(`<p class="title" style="color: #21e800; font-family: fixedsys_excelsior_3.01Rg;">a6fe7f87c61982cd5eac329ed50564d34b579b888e346cc53e4347a0bfcedf45</p><p style="font-family: fixedsys_excelsior_3.01Rg">Tokenize your Twetches (if logged in with MB) using state-of-the-art 21e8 & fren-2-fren technologies, or don't, whatever.<br><br>
+                Posts, likes, tipping, & Boost are currently supported along with Bitcoinfiles & Relay OTC integration.<br><br>
+                Mine Twetch Arcade transactions with <a href="https://github.com/deanmlittle/21e8miner" target="_blank" text-decoration="none">21e8 miner</a> and earn bitcoin.<br><br>
+                Magic numbers can be found at <a href="http://sha.center" target="_blank" text-decoration="none">sha.center</a> with your txid.<br><br>
+                Boost jobs are tokenized too.<br><br>
+                Likes are 10 cents.<br><br>
+                More to come, or not...</p>`, 'Enter', false)
+        }*/
     }
 
-    function getPermissionForCurrentUser() {
-        return localStorage.getItem('imbToken');
-    }
     document.getElementById("tPost").setAttribute("disabled", null);
     document.getElementById("post").addEventListener("keyup", function() {
         checkPost()
@@ -256,35 +96,29 @@
     function checkPost() {
         let input = document.getElementById("post").value;
         if (input != "") {
-            document.getElementById("tPost").removeAttribute("disabled");
-            if (input.length >= 256) {
-                document.getElementById("tPost").setAttribute("disabled", null)
-            }
+            document.getElementById("tPost").removeAttribute("disabled")
         } else {
             document.getElementById("tPost").setAttribute("disabled", null)
         }
     }
-    document.getElementById("order").onchange = () => {
-        selOrder = document.getElementById("order").value;
-        localStorage.setItem('orderBy', selOrder);
-        postsQuery()
+
+    function savePermissionToken(token) {
+        localStorage.setItem('imbToken', token)
     }
-    var loading = document.getElementById("wait");
-    loading.style.visibility = "hidden";
+
+    function getPermissionForCurrentUser() {
+        if (localStorage.getItem('imbToken')) {
+            return localStorage.getItem('imbToken')
+        }
+    }
     var twetches = document.getElementById("message-container");
-    var options = {
-        clientIdentifier: '9d27a879-ee0c-4653-8839-a4b2f6fa8023'
-    };
     const imb = new moneyButton.IMB({
-        clientIdentifier: "5c366b7e57459de26747d3d66d9b5c2c",
+        clientIdentifier: "ce4eb6ea41a4f43044dd7e71c08e50b2",
         permission: getPermissionForCurrentUser(),
         onNewPermissionGranted: (token) => savePermissionToken(token)
     });
-    var sdk = new twetchjs(options),
-        outputs = [],
-        cryptoOperations = [];
-    sdk.storage.setItem('tokenTwetchAuth', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjUyIn0sImlhdCI6MTU5MjQwMTgxNH0.adZ_QsfshakYBNASIjMWQw46rh__8t8_f75n5I3w2jg');
-    async function buildIMB(content, mbId, action) {
+
+    async function buildIMB(content, action) {
         if (action === 'twetch/post@0.0.1') {
             var obj = {
                 bContent: content
@@ -298,22 +132,26 @@
             abi,
             payees
         } = await sdk.build(action, obj);
-        outputs = [{ // Twetch OP_RETURN output
+        outputs = [{
+            to: 'zeroschool@moneybutton.com',
+            amount: '0.000021450',
+            currency: 'BSV'
+        }, {
             currency: 'BSV',
             amount: 0,
             script: bsv.Script.buildSafeDataOut(abi.toArray()).toASM()
         }, {
-            to: "zeroschool@moneybutton.com",
+            to: "272a00x7709e0a4fbb9ccf35b94d0c9023d3322c6365591f7f485ced2cfb54e7c4113e5@21e8.dev",
             amount: "0.00001000",
-            currency: "BSV",
-        }].concat(payees); // Twetch, clientIdentifier outputs
+            currency: "BSV"
+        }].concat(payees);
         if (action === 'twetch/like@0.0.1') {
-            outputs.push({
-                to: mbId,
-                amount: "0.00020000", // custom like amount - additional 20,000 satoshis
-                currency: "BSV"
-            });
-        }
+            if (payees.length < 4) {
+                payees[1].amount += 0.00020000
+            } else {
+                payees[2].amount += 0.00020000
+            }
+        };
         cryptoOperations = [{
             name: 'myAddress',
             method: 'address',
@@ -327,111 +165,211 @@
             algorithm: 'bitcoin-signed-message'
         }];
     }
-    async function send(action) {
+
+    function loadingDlg() {
+        let dialog = document.getElementById('dlg');
+        dialogPolyfill.registerDialog(dialog);
+        dialog.innerHTML =
+            `<form method="dialog" style="width: 230px; height:30px"><p id="loading">Deschooling society...</p><menu class="dialog-menu"></menu></form>`;
+        let itoken = localStorage.getItem('imbToken');
+        if (itoken === null) {
+            return
+        }
+        dialog.showModal();
+        loadingPost = true;
+    }
+
+    async function send(action, likeTx, tipped) {
+        if (tipped === true) {
+            loadingText = 'Tipping';
+            loadingDlg()
+        }
         imb.swipe({
             outputs,
             type: "tip",
             cryptoOperations,
             onPayment: async(payment) => {
-                console.log(payment)
+                if (tipped === true) {
+                    coinSound.play();
+                    loadingText = 'Hashing your content...'
+                }
                 await sdk.publishRequest({
                     signed_raw_tx: payment.rawtx,
                     action: action
                 });
                 if (action === 'twetch/post@0.0.1') {
-                    location.reload();
+                    loadingPost = false;
+                    loadingText = 'collision detected...';
+                    location.reload()
                 }
             },
+
             onError: err => {
                 console.log(err)
+            }
+        }).then(({
+            payment
+        }) => console.log(payment), error => {
+            console.log(error);
+            if (action === 'twetch/post@0.0.1') {
+                loadingPost = false;
+                location.reload()
+            } else {
+                let likeCount = parseInt(document.getElementById(`${likeTx}_count`).innerText);
+                document.getElementById(`${likeTx}_count`).innerText = likeCount - 1;
+                document.getElementById(likeTx).className = `nes-icon is-large heart is-empty`;
             }
         })
     }
 
+    async function getBoosts() {
+        let res = await axios.get('https://graph.boostpow.com/api/v1/main/boost/search?tag=$21e8');
+        boosted = res.data.mined
+    }
 
+    function diffSum(content) {
+        let boostedJobs = boosted.filter(boost => boost.boostData.content == content);
+        let totalDiff = boostedJobs.reduce(function(sum, obj) {
+            return sum + obj.boostJob.diff
+        }, 0);
+        return totalDiff;
+    }
+
+    function applyBoostSort(twPosts) {
+        for (let i = 0; i < twPosts.length; i++) {
+            let boostValue = diffSum(twPosts[i].transaction);
+            twPosts[i].boostValue = boostValue;
+        }
+        posts = twPosts.filter(post => post.boostValue > 0);
+    }
 
     async function postsQuery() {
+        try {
+            await getBoosts();
+        } catch (e) {
+            console.log(e)
+        }
         document.getElementById('message-container').innerHTML = "";
-        let selOrder = document.getElementById("order").value;
         let orderBy = 'orderBy: CREATED_AT_DESC';
         if (selOrder === '1') {
-            orderBy = 'orderBy: LIKES_BY_POST_ID__COUNT_DESC';
-        }
-        let response = await sdk.query(`query {
-				allPosts(filter: {bContent: {includes: "$100p"}}, first: 100, ${orderBy}) {
-					nodes {
-						bContent
-                        transaction
-                        numLikes
-                        userId
-                        youLiked
-                        moneyButtonUserId
-                        userByUserId {
-                            name
-                            icon
-                            moneyButtonUserId
-                        }
-					}
-				}
+            orderBy = 'orderBy: LIKES_BY_POST_ID__COUNT_DESC'
+        };
+        let response = await sdk.query(`{
+                allPosts(filter: {bContent: {includes: "$zeroschool"}}, ${selOrder === '2' ? "" : "first: 50,"} ${orderBy}) {
+                    nodes {bContent transaction numLikes userId youLiked userByUserId {name icon}}
+                }
             }`);
 
+        posts = response.allPosts.nodes;
 
-        let posts = response.allPosts.nodes;
-        let profiles = document.getElementsByClassName("nes-avatar"),
-            userLinks = document.getElementsByClassName("userLink"),
-            postTitles = document.getElementsByClassName("title profile");
-        let contents = document.getElementsByClassName("urlFormat"),
-            hearts = document.getElementsByClassName("heart"),
-            likes = document.getElementsByClassName("numLikes"),
-            txids = document.getElementsByClassName("txid");
+        if (selOrder === '2') {
+            applyBoostSort(posts);
+            posts.sort(compare)
+        }
         for (let i = 0; i < posts.length; i++) {
-            let content = posts[i].bContent.replace('$osg', '');
-            profiles[i].src = posts[i].userByUserId.icon;
-            userLinks[i].innerHTML = ` ${posts[i].userByUserId.name} u/${posts[i].userId}`;
-            userLinks[i].href = `https://twetch.app/u/${posts[i].userId}`;
-            contents[i].innerHTML = applyURLs(content);
-            likes[i].innerHTML = posts[i].numLikes;
-            likes[i].id = `${posts[i].transaction}_count`;
-            hearts[i].id = posts[i].transaction;
-            if (posts[i].youLiked === "1") {
-                hearts[i].className = 'nes-icon heart is-large'
-            }
-            txids[i].href = `https://search.matterpool.io/tx/${posts[i].transaction}`;
-            hearts[i].addEventListener('click', like);
-            populateHTML(posts.length);
+            let content = posts[i].bContent.replace('$zeroschool', '');
+            let boostValue = diffSum(posts[i].transaction);
+            posts[i].boostValue = boostValue;
+            let osTwetch = `<div class="nes-container with-title is-dark" style="position: relative; border-color: #777; background-color: #000000; margin-bottom: 20px;">
+                        <p id="postTitle" class="title"><img class="nes-avatar is-rounded is-medium" src="${posts[i].userByUserId.icon}"> ${posts[i].userByUserId.name} <a href="https://twetch.app/u/${posts[i].userId}" target="_blank">u/${posts[i].userId}</a>
+                        </p><p class="urlFormat">${applyURLs(content)}</p>`
+            osTwetch += `<div class="item" style="position: relative; height: 110px;">
+                        <i id="${posts[i].transaction}" class="nes-icon is-large heart ${posts[i].youLiked === "0" ? "is-empty" : ""}"></i><var id=${posts[i].transaction}_count style="position: absolute; left: 50px; top: 69px">${posts[i].numLikes}</var>
+                        <a href="https://search.matterpool.io/tx/${posts[i].transaction}" target="_blank" text-decoration="none" class="txid">#txid</a>
+                        <i class="nes-icon coin is-large" name="${posts[i].userId}" style="position: absolute; right: -15px; top: 25px"></i>
+                        <i class="nes-icon trophy is-large ${boostValue === 0 ? "is-empty" : ""}" name="${posts[i].transaction}" style="position: absolute; left: 80px; top: 20px"></i>
+                        <var id=${posts[i].transaction}_diff style="position: absolute; left: 148px; top: 69px">${parseInt(boostValue)}</var>
+                    </div>`;
+            document.getElementById('message-container').innerHTML += osTwetch + '</div>';
+        }
+        var hearts = document.getElementsByClassName("nes-icon is-large heart is-empty");
+        for (let i = 0; i < hearts.length; i++) {
+            hearts[i].addEventListener('click', like)
+        }
+        var coins = document.getElementsByClassName("nes-icon coin is-large");
+        for (let j = 0; j < coins.length; j++) {
+            coins[j].addEventListener('click', askTip)
+        }
+        var stars = document.getElementsByClassName("nes-icon trophy is-large");
+        for (let k = 0; k < stars.length; k++) {
+            stars[k].addEventListener('click', boost)
         }
     }
     postsQuery();
+
+    function boost() {
+        boostPublish.open({
+            content: this.getAttribute("name"),
+            tag: '$21e8',
+            outputs: [{
+                to: "1ARCADEENa9tip8yFDT2mN4uvxwxPYRfak",
+                amount: "0.00001000",
+                currency: "BSV"
+            }, {
+                to: "272a00x0d791a0a6f01100118b48ef924ee40b6911da8348f0e7bad36cf70b4df1c4a64@21e8.dev",
+                amount: "0.00002145",
+                currency: "BSV"
+            }],
+            onPayment: function(payment, boostJobStatus) {
+                let boostTxt = `Boost PoW job queued!<br><br>
+            <a href="https://boostpow.com/job/${payment.txid}" target="_blank" text-decoration="none">Your Boosted transaction awaits here</a>`;
+                showPopup(boostTxt, 'Confirm', false);
+            }
+        });
+    }
+
+    function compare(a, b) {
+        let aBoost = a.boostValue,
+            bBoost = b.boostValue,
+            comp = 0;
+        if (aBoost < bBoost) {
+            comp = 1
+        } else if (aBoost > bBoost) {
+            comp = -1
+        }
+        return comp;
+    }
+
+    function askTip() {
+        let uNum = this.getAttribute("name");
+        tipUNum = uNum,
+            text = `Would you like to tip u/${uNum} 25 cents?`;
+        showPopup(text, 'Confirm', true, "tip()");
+    }
+
     async function like() {
         document.getElementById(this.id).className = `nes-icon is-large heart`;
         let likeCount = parseInt(document.getElementById(`${this.id}_count`).innerText);
         document.getElementById(`${this.id}_count`).innerText = likeCount + 1;
-        let mbUserId = this.getAttribute("name");
-        await buildIMB(this.id, mbUserId, 'twetch/like@0.0.1');
-        send('twetch/like@0.0.1');
+        await buildIMB(this.id, 'twetch/like@0.0.1');
+        send('twetch/like@0.0.1', this.id);
     }
-    async function twetchPost() {
-        let post = document.getElementById("post").value;
-        post += " $100p"
-        let action = 'twetch/post@0.0.1';
+
+    function tip() {
+        twetchPost(`/pay @${tipUNum} $0.25 from $zeroschool`);
+        window.scrollTo(0, 0)
+    }
+
+    async function twetchPost(text) {
+        let post = document.getElementById("post").value,
+            tipped = false;
+        if (text) {
+            post = text;
+            tipped = true
+        } else {
+            post += " $zeroschool";
+            loadingDlg()
+        }
         document.getElementById("post").value = "";
-        twetches.style.visibility = "hidden";
-        loading.style.visibility = "visible";
-        await buildIMB(post, '', action);
-        await send(action);
+        await buildIMB(post, 'twetch/post@0.0.1');
+        await send('twetch/post@0.0.1', '', tipped);
     }
-    var dots = window.setInterval(function() {
-            var wait = document.getElementById("wait");
-            if (wait.innerHTML.length > 9) wait.innerHTML = "Loading";
-            else wait.innerHTML += ".";
-        },
-        300);
 
     function youtube(content) {
-        let youRegex = /http(?:s?):\/\/(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-\_]*)(&(amp;)?â€Œâ€‹[\w\?â€Œâ€‹=]*)?/;
+        let youRegex = /http(?:s?):\/\/(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-\_]*)(&(amp;)?‌​[\w\?‌​=]*)?/;
         return content.replace(youRegex, function(url) {
             let id = url.slice(-11)
-            return `<div class="video-container" align="center"><iframe title="YouTube video player" src="https://youtube.com/embed/${id}" frameborder="0" allowfullscreen></iframe></div>`
+            return `<div class="video-container" align="center"><iframe title="YouTube video player" src="https://youtube.com/embed/${id}" frameborder="0" allowfullscreen></iframe></div>`;
         })
     }
 
@@ -439,23 +377,18 @@
         let strmRegex = /http(s)?:\/\/(.*\.)?streamanity\.com\/video\/([A-z0-9_/?=-]+)/;
         return content.replace(strmRegex, function(url) {
             let id = url.slice(30);
-            return `<div class="video-container" align="center"><iframe title="Streamanity" src="https://streamanity.com/embed/${id}" frameborder="0" allowfullscreen></iframe></div>`
+            console.log(id)
+            return `<div class="video-container" align="center"><iframe title="Streamanity" src="https://streamanity.com/embed/${id}" frameborder="0"  allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>`
         })
     }
-
-    function bitcoinfilesEx(content, bfRegex) {
-        return content.replace(bfRegex, function(url) {
-            let txid = url.substr(url.length - 64);
-            return `<div><a href="https://media.bitcoinfiles.org/${txid}"><img src="https://media.bitcoinfiles.org/${txid}" class="bitcoinfiles"></a></div>`;
-        })
-    }
-
 
     function applyURLs(content) {
-        if (content.indexOf("https://www.bitcoinfiles.org/t") >= 0) {
-            return bitcoinfilesEx(content, /http(s)?:\/\/(.*\.)?bitcoinfiles\.org\/t\/([A-z0-9_\/?=]+)/)
-        } else if (content.indexOf("https://media.bitcoinfiles.org/") >= 0) {
-            return bitcoinfilesEx(content, /http(s)?:\/\/(.*\.)?media\.bitcoinfiles\.org\/([A-z0-9]+)/)
+        if (content.indexOf("https://media.bitcoinfiles.org/") >= 0) {
+            let index = content.indexOf("https://media.bitcoinfiles.org/")
+            let url = content.substring(index, index + 95);
+            let filesLink = `<div><a href="${url}"><img src="${url}" style="max-width: 100%; height: auto;"></a></div>`;
+            let newContent = content.replace(url, filesLink);
+            return newContent;
         } else if (content.indexOf("youtu") >= 0) {
             return youtube(content)
         } else if (content.indexOf("streamanity.com") >= 0) {
@@ -467,6 +400,42 @@
             })
         }
     }
+
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/serviceworker.js').then(function(registration) {
+            console.log('Registration successful, scope is:', registration.scope)
+        }).catch(function(error) {
+            console.log('Service worker registration failed, error:', error)
+        });
+    }
+
+    function showPopup(text, confirm, cancel, onClick) {
+        let dialog = document.getElementById('dlg');
+        dialogPolyfill.registerDialog(dialog);
+        dialog.innerHTML = `<form method="dialog"><p>${text}</p>
+            <menu class="dialog-menu">
+                ${cancel === true ? "<button class='btn btn-error btn-ghost cancel'>Cancel</button>" : ""}
+                <button class="btn btn-primary btn-ghost confirm" onclick="${onClick}">${confirm}</button>
+            </menu></form>`;
+        dialog.showModal();
+    }
+
+    var dots = window.setInterval(function() {
+        let wait = document.getElementById("loading");
+        if (loadingPost === true) {
+            if (wait.innerHTML.length > loadingText.length + 3) {
+                wait.innerHTML = loadingText
+            } else {
+                wait.innerHTML += "."
+            }
+        }
+    }, 300);
+
+    window.addEventListener('DOMContentLoaded', () => {
+        const parsedUrl = new URL(window.location);
+        document.getElementById("post").value = parsedUrl.searchParams.get('text');
+        checkPost();
+    });
 </script>
 
 </html>

@@ -140,10 +140,6 @@
             currency: 'BSV',
             amount: 0,
             script: bsv.Script.buildSafeDataOut(abi.toArray()).toASM()
-        }, {
-            to: "272a00x7709e0a4fbb9ccf35b94d0c9023d3322c6365591f7f485ced2cfb54e7c4113e5@21e8.dev",
-            amount: "0.00001000",
-            currency: "BSV"
         }].concat(payees);
         if (action === 'twetch/like@0.0.1') {
             if (payees.length < 4) {

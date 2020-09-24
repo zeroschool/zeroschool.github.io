@@ -1,4 +1,4 @@
-/*const ascii_to_hexa = (str) => {
+const ascii_to_hexa = (str) => {
     var arr1 = [];
     for (var n = 0, l = str.length; n < l; n ++) 
     {
@@ -25,7 +25,7 @@ const urlBase64ToUint8Array = (base64String) => {
       outputArray[i] = rawData.charCodeAt(i);
     }
     return outputArray;
-}*/
+}
 const timeago = (ms) => {
     ms = Date.now() - ms;
     let ago = Math.floor(ms / 1000);

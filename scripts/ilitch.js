@@ -109,82 +109,79 @@ const fetchTwetches = async(sdk, selOrder) => {
         }
     } 
     posts = response.allPosts.nodes;
-    fetch('/getBoosts')
-    .then(res => res.json())
-    .then(data => {
-        let profiles = document.getElementsByClassName("nes-avatar")
-        let userLinks = document.getElementsByClassName("userLink");
-        let contents = document.getElementsByClassName("postContent")
-        let hearts = document.getElementsByClassName("heart")
-        let likes = document.getElementsByClassName("numLikes");
-        let shares = document.getElementsByClassName("share")
-        let txids = document.getElementsByClassName("txid");
-        let coins = document.getElementsByClassName("coin");
-        //let stars = document.getElementsByClassName("nes-icon star is-medium");
-        //let boostValues = document.getElementsByClassName("boostValue");
-        let times = document.getElementsByClassName("timeago");
-        populateHTML(50);
-        const addTwetch = (post, i) => {
-            let content = post.bContent.replace('$zeroschool', '');
-            //let boostData = data.find(tx => tx.txid === post.transaction);
-            //boostValue = boostData !== undefined ? boostData.boosts : 0;
-            if (profiles[i] !== undefined) {
-                fetch('/user', {
-                    method: 'post',
-                    body: JSON.stringify({ userId: post.userId }),
-                    headers: { 'Content-type': 'application/json' }
-                })
-                .then(res => res.json())
-                .then(data => {
-                    if (data[0].avatar !== '') {
-                        profiles[i].src = data[0].avatar;
-                    }
-                    else {
-                        profiles[i].src = post.userByUserId.icon;
-                    }
-                })
-            }
-            userLinks[i].innerHTML = ` ${post.userByUserId.name} u/${post.userId}`;
-            userLinks[i].href = `https://twetch.app/u/${post.userId}`;
-            contents[i].innerHTML = applyURLs(content);
-            likes[i].innerHTML = post.numLikes;
-            likes[i].id = `${post.transaction}_count`;
-            //shares[i].name = post.transaction;
-            hearts[i].id = post.transaction;
-            if (post.youLiked === "1") {
-                hearts[i].className = 'nes-icon heart is-medium';
-            }
-            else {
-                hearts[i].className += ' nes-pointer';
-                hearts[i].addEventListener('click', like);
-            }
-            txids[i].href = `https://search.matterpool.io/tx/${post.transaction}`;
-            coins[i].setAttribute("name", post.userId);
-            //stars[i].setAttribute("name", post.transaction)
-            /*if (boostValue > 0) {
-                stars[i].className = 'nes-icon star is-medium'
-            };*/
-            //boostValues[i].innerHTML = parseInt(boostValue);
-            coins[i].addEventListener('click', askTip);
-            //stars[i].addEventListener('click', boost);
-            shares[i].addEventListener('click', shareTwetch);
-            let d = new Date(post.createdAt);
-            times[i].innerHTML = timeago(d);
-        }
-        if (selOrder === '2') {
-            for (let i = 0; i < data.length; i++) {
-                let post = posts.find(p => p.transaction === data[i].txid);
-                if (post !== undefined) {
-                    addTwetch(post, i);
+    let profiles = document.getElementsByClassName("nes-avatar")
+    let userLinks = document.getElementsByClassName("userLink");
+    let contents = document.getElementsByClassName("postContent")
+    let hearts = document.getElementsByClassName("heart")
+    let likes = document.getElementsByClassName("numLikes");
+    let shares = document.getElementsByClassName("share")
+    let txids = document.getElementsByClassName("txid");
+    let coins = document.getElementsByClassName("coin");
+    //let stars = document.getElementsByClassName("nes-icon star is-medium");
+    //let boostValues = document.getElementsByClassName("boostValue");
+    let times = document.getElementsByClassName("timeago");
+    populateHTML(50);
+    const addTwetch = (post, i) => {
+        let content = post.bContent.replace('$zeroschool', '');
+        //let boostData = data.find(tx => tx.txid === post.transaction);
+        //boostValue = boostData !== undefined ? boostData.boosts : 0;
+        if (profiles[i] !== undefined) {
+            fetch('/user', {
+                method: 'post',
+                body: JSON.stringify({ userId: post.userId }),
+                headers: { 'Content-type': 'application/json' }
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data[0].avatar !== '') {
+                    profiles[i].src = data[0].avatar;
                 }
-            }
+                else {
+                    profiles[i].src = post.userByUserId.icon;
+                }
+            })
+        }
+        userLinks[i].innerHTML = ` ${post.userByUserId.name} u/${post.userId}`;
+        userLinks[i].href = `https://twetch.app/u/${post.userId}`;
+        contents[i].innerHTML = applyURLs(content);
+        likes[i].innerHTML = post.numLikes;
+        likes[i].id = `${post.transaction}_count`;
+        //shares[i].name = post.transaction;
+        hearts[i].id = post.transaction;
+        if (post.youLiked === "1") {
+            hearts[i].className = 'nes-icon heart is-medium';
         }
         else {
-            for (let i = 0; i < posts.length; i++) {
-                addTwetch(posts[i], i);
+            hearts[i].className += ' nes-pointer';
+            hearts[i].addEventListener('click', like);
+        }
+        txids[i].href = `https://search.matterpool.io/tx/${post.transaction}`;
+        coins[i].setAttribute("name", post.userId);
+        //stars[i].setAttribute("name", post.transaction)
+        /*if (boostValue > 0) {
+            stars[i].className = 'nes-icon star is-medium'
+        };*/
+        //boostValues[i].innerHTML = parseInt(boostValue);
+        coins[i].addEventListener('click', askTip);
+        //stars[i].addEventListener('click', boost);
+        shares[i].addEventListener('click', shareTwetch);
+        let d = new Date(post.createdAt);
+        times[i].innerHTML = timeago(d);
+    }
+    if (selOrder === '2') {
+        for (let i = 0; i < data.length; i++) {
+            let post = posts.find(p => p.transaction === data[i].txid);
+            if (post !== undefined) {
+                addTwetch(post, i);
             }
         }
-    });
+    }
+    else {
+        for (let i = 0; i < posts.length; i++) {
+            addTwetch(posts[i], i);
+        }
+    }
+});
 }
 function youtube(content) {
     let youRegex = /http(?:s?):\/\/(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-\_]*)(&(amp;)?‌​[\w\?‌​=]*)?/;

@@ -14,7 +14,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <link href="https://unpkg.com/nes.css@2.3.0/css/nes.min.css" rel="stylesheet">
     <link href="https://unpkg.com/dialog-polyfill@0.5.1/dist/dialog-polyfill.css" rel="stylesheet" type="text/css">
-    <!--<link href="styles/orig.css" rel="stylesheet" type="text/css">-->
+    <link href="styles/orig.css" rel="stylesheet" type="text/css">
     <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/uyouthe/pwacss/pwacss.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap">
@@ -22,13 +22,13 @@
     <script src="https://cdn.jsdelivr.net/npm/@twetch/sdk@0.2.11/dist/twetch.min.js"></script>
     <script src="https://www.moneybutton.com/moneybutton.js"></script>
     <script src="https://one.relayx.io/relayone.js"></script>
-    <!--<script src="/scripts/retro.js"></script>-->
+    <script src="/scripts/ilitch.js"></script>
    </head>
    <body>
     <div class="top">
         <!-- <a class="nes-logo config" href="/profile"></a> -->
         <h4><a href="/">ZeroSchool</a></h4>
-        <!--<a href="/info"><img class="question nes-pointer" src="assets/resources/question_block_32.png"></a>-->
+        <a href="/info"><img class="question nes-pointer" src="assets/resources/question_block_32.png"></a>
     </div>
     <div class="poster">
         <form onsubmit="return false" id="post-container">
@@ -66,8 +66,7 @@
             onNewPermissionGranted: (token) => savePermissionToken(token)
         });
         var sdk = new twetchjs({ clientIdentifier: '9d27a879-ee0c-4653-8839-a4b2f6fa8023' });
-        var coinSound = new Audio(); coinSound.src = 'coin.wav', dialog = {}, loadingLike = false;
-        #var coinSound = new Audio(); coinSound.src = '/assets/resources/nes_coin.wav', dialog = {}, loadingLike = false;
+        var coinSound = new Audio(); coinSound.src = '/assets/resources/nes_coin.wav', dialog = {}, loadingLike = false;
         #var outputs = [], cryptoOperations = [], loadingPost = false, selOrder = 0, fileTwetch = 0, loadingText = "Deschooling society";
         var outputs = [], cryptoOperations = [], loadingPost = false, selOrder = 0, loadingText = "Deschooling society";
         async function twgin() {

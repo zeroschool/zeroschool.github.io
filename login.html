@@ -1,0 +1,62 @@
+
+<html>
+    <head>
+        <link href="https://unpkg.com/nes.css@2.3.0/css/nes.min.css" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap" rel="stylesheet">
+        <link href="https://unpkg.com/dialog-polyfill@0.5.1/dist/dialog-polyfill.css" rel="stylesheet" type="text/css">
+        <!--<link href="/styles/login.css" rel="stylesheet" type="text/css">-->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <!--<link rel="apple-touch-icon" href="../assets/icons/icon-192x192.png">-->
+        <meta name="apple-mobile-web-app-title" content="ZeroSchool">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <!--<link rel="manifest" href="../manifest.json">-->
+    </head>
+    <body onload="">
+        <div class="login center">
+            <div class="nes-container is-rounded with-title is-dark loginbox">
+                <p>Login with:</p>
+                <a class="nes-btn is-primary" id="relayX" onclick="relayXLogin()">RelayX</a>
+                <a class="nes-btn is-success" id="MB" onclick="imbLogin()">MoneyButton</a>
+                <!-- <a class="nes-btn is-error" id="logout" onclick="">Single Key</a> -->
+            </div>
+        </div>
+    </body>
+    <script src="https://www.moneybutton.com/moneybutton.js"></script>
+    <script src="https://one.relayx.io/relayone.js"></script>
+    <!--<script src="/scripts/login.js"></script>-->
+    <!--<script src="/scripts/invmb.js"></script>-->
+    <!--<script src="/scripts/crypto.js"></script>-->
+    <script>
+        const relayXLogin = async() => {
+            if (!localStorage.getItem('tokenTwetchAuth')) {
+                let token = await relayone.authBeta({withGrant:true}), res;
+                localStorage.setItem('token', token);
+                let [payload, signature] = token.split(".");
+                const data = JSON.parse(atob(payload));
+                fetch('https://auth.twetch.app/api/v1/challenge', {method: 'get'})
+                .then(function (res){return res.json()})
+                .then(async(resp) => {
+                    try {
+                        res = await relayone.sign(resp.message);
+                        let signAddr = await getAddress(data.pubkey);
+                        if (res) {
+                            saveWallet(data.paymail, 'relayx');
+                            if (localStorage.getItem('paymail')) {
+                                twLogin(signAddr, resp.message, res.value, () => {
+                                    window.location.href = window.location.origin;
+                                });
+                            }
+                        }
+                    }
+                    catch(e){
+                        alert(e);
+                    }
+                });
+            }
+            else {
+                window.location.href = window.location.origin;
+            }
+        }
+    </script>
+</html>

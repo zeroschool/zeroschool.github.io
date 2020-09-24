@@ -1,0 +1,61 @@
+
+<!DOCTYPE html>
+<html>
+   <head>
+    <title>ZeroSchool</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-title" content="ZeroSchool">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link href="https://unpkg.com/nes.css@2.3.0/css/nes.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/dialog-polyfill@0.5.1/dist/dialog-polyfill.css" rel="stylesheet" type="text/css">
+    <link href="../styles/info.css" rel="stylesheet" type="text/css">
+    <link rel="manifest" href="../manifest.json">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/uyouthe/pwacss/pwacss.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap">
+    <link rel="apple-touch-icon" href="../assets/icons/icon-192x192.png">
+    <script src="https://unpkg.com/dialog-polyfill@0.5.1/dist/dialog-polyfill.js"></script>
+   </head>
+   <body>
+    <div class="top">
+        <h4><a href="/info">Information</a></h4>
+        <a href="/"><img class="back" src="../assets/resources/back.png"></a>
+    </div>
+    <div class="info center">
+        <div class="nes-container is-rounded is-dark">
+            <p class="title is-dark">Welcome!</p>
+            <p>This is a Twetch client where users can discuss gaming.</p>
+            <p>Invisible Money Button & RelayX are supported.</p>
+            <p>Posts, Likes, BoostPOW and tipping are currently supported.</p>
+            <p>Likes are 10 cents.</p>
+            <p>The News feed is a collection of the most recent gaming articles published.</p>
+            <p>Enjoy!</p>
+        </div>
+        <a class="nes-btn is-success" id="buybsv" onclick="buybsv()">Buy BSV</a>
+        <a class="nes-btn" id="logout" onclick="logout()">Logout</a>
+        <dialog class="nes-dialog center" id="dlg"></dialog>
+    </div>
+    <div id="widget-container"></div>
+    </body>
+    <script>
+        var dialog = document.getElementById('dlg');
+        function buybsv() {
+            relayotc.buy('widget-container', { referrer: "zeroschool@moneybutton.org" })
+        }
+        function logout() {
+            localStorage.clear();
+            dialogPolyfill.registerDialog(dialog);
+            dialog.innerHTML = `<form method="dialog"><p>Logged out!</p></form>`;
+            dialog.showModal();
+            setTimeout(() => {
+                window.location.href = '/login';
+            }, 1000);
+        }
+        window.onclick = function(event) {
+            if (event.target == dialog) {
+                dialog.close();
+            }
+        }
+    </script>
+    <script src="https://otc-staging.relayx.io/relayotc.js" defer></script>
+</html>

@@ -181,8 +181,8 @@ const fetchTwetches = async(sdk, selOrder) => {
             addTwetch(posts[i], i);
         }
     }
-});
-}
+};
+
 function youtube(content) {
     let youRegex = /http(?:s?):\/\/(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-\_]*)(&(amp;)?‌​[\w\?‌​=]*)?/;
     return content.replace(youRegex, function(url) {let id = url.slice(-11)

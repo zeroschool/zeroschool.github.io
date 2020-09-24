@@ -164,7 +164,7 @@ const fetchTwetches = async(sdk, selOrder) => {
             /*if (boostValue > 0) {
                 stars[i].className = 'nes-icon star is-medium'
             };*/
-            /boostValues[i].innerHTML = parseInt(boostValue);
+            //boostValues[i].innerHTML = parseInt(boostValue);
             coins[i].addEventListener('click', askTip);
             //stars[i].addEventListener('click', boost);
             shares[i].addEventListener('click', shareTwetch);

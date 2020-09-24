@@ -120,14 +120,14 @@ const fetchTwetches = async(sdk, selOrder) => {
         let shares = document.getElementsByClassName("share")
         let txids = document.getElementsByClassName("txid");
         let coins = document.getElementsByClassName("coin");
-        #let stars = document.getElementsByClassName("nes-icon star is-medium");
-        #let boostValues = document.getElementsByClassName("boostValue");
+        //let stars = document.getElementsByClassName("nes-icon star is-medium");
+        //let boostValues = document.getElementsByClassName("boostValue");
         let times = document.getElementsByClassName("timeago");
         populateHTML(50);
         const addTwetch = (post, i) => {
             let content = post.bContent.replace('$zeroschool', '');
-            #let boostData = data.find(tx => tx.txid === post.transaction);
-            #boostValue = boostData !== undefined ? boostData.boosts : 0;
+            //let boostData = data.find(tx => tx.txid === post.transaction);
+            //boostValue = boostData !== undefined ? boostData.boosts : 0;
             if (profiles[i] !== undefined) {
                 fetch('/user', {
                     method: 'post',
@@ -149,7 +149,7 @@ const fetchTwetches = async(sdk, selOrder) => {
             contents[i].innerHTML = applyURLs(content);
             likes[i].innerHTML = post.numLikes;
             likes[i].id = `${post.transaction}_count`;
-            #shares[i].name = post.transaction;
+            //shares[i].name = post.transaction;
             hearts[i].id = post.transaction;
             if (post.youLiked === "1") {
                 hearts[i].className = 'nes-icon heart is-medium';
@@ -160,13 +160,13 @@ const fetchTwetches = async(sdk, selOrder) => {
             }
             txids[i].href = `https://search.matterpool.io/tx/${post.transaction}`;
             coins[i].setAttribute("name", post.userId);
-            #stars[i].setAttribute("name", post.transaction)
-            """if (boostValue > 0) {
+            //stars[i].setAttribute("name", post.transaction)
+            /*if (boostValue > 0) {
                 stars[i].className = 'nes-icon star is-medium'
-            };"""
-            #boostValues[i].innerHTML = parseInt(boostValue);
+            };*/
+            /boostValues[i].innerHTML = parseInt(boostValue);
             coins[i].addEventListener('click', askTip);
-            #stars[i].addEventListener('click', boost);
+            //stars[i].addEventListener('click', boost);
             shares[i].addEventListener('click', shareTwetch);
             let d = new Date(post.createdAt);
             times[i].innerHTML = timeago(d);

@@ -75,7 +75,7 @@
                 await sdk.authenticate();
                 await fetchTwetches(sdk, localStorage.getItem('orderBy') !== undefined ? localStorage.getItem('orderBy') : 0);
             } else {
-                #window.location.href = "/login";
+                window.location.href = "/login";
             }
         }
         twgin();

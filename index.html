@@ -40,6 +40,7 @@
         <select required id="order"><option value="0">Most recent</option><option value="1">Likes</option></select</div>
     </div>
     <div id="message-container" class=""></div>
+    
     <dialog class="nes-dialog" id="tipDlg">
     <form method="dialog"><menu class="dialog-menu">
         <label for="tipAmt" id="tipLabel" style="color:#fff;"></label>
@@ -72,7 +73,8 @@
             if (localStorage.getItem('tokenTwetchAuth')) {
                 sdk.authenticated = true;
                 await sdk.authenticate();
-                await fetchTwetches(sdk, localStorage.getItem('orderBy') !== undefined ? localStorage.getItem('orderBy') : 0);
+                await fetchTwetches(sdk, 0);
+                //await fetchTwetches(sdk, localStorage.getItem('orderBy') !== undefined ? localStorage.getItem('orderBy') : 0);
             } else {
                 window.location.href = "/login";
             }

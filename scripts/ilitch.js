@@ -88,9 +88,13 @@ const compare = (a,b) => {
     return comp;
 }
 const fetchTwetches = async(sdk, selOrder) => {
-    //document.getElementById('message-container').innerHTML = "";
-    message_container = document.createElement("div");
-    message_container.setAttribute("id","message-container");
+    let $container = document.getElementById(id);
+    if ($container == null) {
+        $container = document.createElement("div");
+        $container.setAttribute("id", id);
+        document.body.appendChild($container);
+    }
+
     let orderBy = 'orderBy: CREATED_AT_DESC', response = '';
     if (selOrder === '1') {
         orderBy = 'orderBy: LIKES_BY_POST_ID__COUNT_DESC';

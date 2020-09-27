@@ -89,11 +89,10 @@ const compare = (a,b) => {
 }
 const fetchTwetches = async(sdk, selOrder) => {
     // Make sure #zs-message-container exists
-    let $container = document.getElementById("zs-message-container");
+    let $container = document.getElementById("message-container");
     if ($container == null) {
-        console.log("div#zs-message-container does not exists, creating...");
         $container = document.createElement("div");
-        $container.setAttribute("id", "zs-message-container");
+        $container.setAttribute("id", "message-container");
         document.body.appendChild($container);
     }
 

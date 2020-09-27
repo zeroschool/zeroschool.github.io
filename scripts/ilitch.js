@@ -64,7 +64,7 @@ const timeago = (ms) => {
 }
 const populateHTML = (count) => {
     for (let i = 0; i < count; i++){
-        document.getElementById('zs-message-container').innerHTML +=
+        document.getElementById('message-container').innerHTML +=
         `<div class="nes-container is-rounded with-title is-dark twetch">
         <p class="profile"><img class="nes-avatar is-rounded is-medium"></p>
         <p><a class="userLink" href="" target="_blank"></a></p>

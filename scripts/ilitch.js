@@ -89,9 +89,8 @@ const compare = (a,b) => {
 }
 const fetchTwetches = async(sdk, selOrder) => {
     //document.getElementById('message-container').innerHTML = "";
-    message-container = document.createElement("div");
-    message-container.setAttribute("id","message-container");
-    document.get
+    message_container = document.createElement("div");
+    message_container.setAttribute("id","message-container");
     let orderBy = 'orderBy: CREATED_AT_DESC', response = '';
     if (selOrder === '1') {
         orderBy = 'orderBy: LIKES_BY_POST_ID__COUNT_DESC';

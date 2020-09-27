@@ -143,7 +143,7 @@ const fetchTwetches = async(sdk, selOrder) => {
     //let stars = document.getElementsByClassName("nes-icon star is-medium");
     //let boostValues = document.getElementsByClassName("boostValue");
     let times = document.getElementsByClassName("timeago");
-    populateHTML(50);
+    populateHTML(posts.length);
     const addTwetch = (post, i) => {
         let content = post.bContent.replace('$zeroschool', '');
         //let boostData = data.find(tx => tx.txid === post.transaction);

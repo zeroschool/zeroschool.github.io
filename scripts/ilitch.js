@@ -106,15 +106,31 @@ const fetchTwetches = async(sdk, selOrder) => {
         nodes {bContent numLikes userId youLiked transaction createdAt userByUserId {icon name moneyButtonUserId}}}}`);
     } 
     else {
-        response = await sdk.query(`{
+        /*response = await sdk.query(`{
             allPosts(filter: {bContent: {includes: "$zeroschool"}}, ${selOrder === '2' ? "" : "first: 50,"} ${orderBy}) {
                 nodes {bContent transaction createdAt numLikes userId youLiked userByUserId {name icon moneyButtonUserId}}
             } me {name id}
+        }`);*/
+        response = await sdk.query(`{
+            allPosts(filter: {bContent: {includes: "$zeroschool"}}, orderBy: CREATED_AT_ASC) {
+            nodes {
+              bContent
+              numLikes
+              replyCount
+              transaction
+              youLiked
+              userId
+              userByUserId {
+                icon
+                name
+              }
+            }
+          }
         }`);
-        if (!localStorage.getItem('uid')){
+        /*if (!localStorage.getItem('uid')){
             localStorage.setItem('uname', response.me.name);
             localStorage.setItem('uId', response.me.id);
-        }
+        }*/
     } 
     posts = response.allPosts.nodes;
     let profiles = document.getElementsByClassName("nes-avatar")

@@ -148,7 +148,7 @@ const fetchTwetches = async(sdk, selOrder) => {
         let content = post.bContent.replace('$zeroschool', '');
         //let boostData = data.find(tx => tx.txid === post.transaction);
         //boostValue = boostData !== undefined ? boostData.boosts : 0;
-        if (profiles[i] !== undefined) {
+        /*if (profiles[i] !== undefined) {
             fetch('/user', {
                 method: 'post',
                 body: JSON.stringify({ userId: post.userId }),
@@ -163,7 +163,8 @@ const fetchTwetches = async(sdk, selOrder) => {
                     profiles[i].src = post.userByUserId.icon;
                 }
             })
-        }
+        }*/
+        profiles[i].src = post.userByUserId.icon;
         userLinks[i].innerHTML = ` ${post.userByUserId.name} u/${post.userId}`;
         userLinks[i].href = `https://twetch.app/u/${post.userId}`;
         contents[i].innerHTML = applyURLs(content);

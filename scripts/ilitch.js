@@ -88,10 +88,11 @@ const compare = (a,b) => {
     return comp;
 }
 const fetchTwetches = async(sdk, selOrder) => {
-    let $container = document.getElementById(id);
+    // Make sure #message-container exists
+    let $container = document.getElementById("message-container);
     if ($container == null) {
         $container = document.createElement("div");
-        $container.setAttribute("id", id);
+        $container.setAttribute("id", "message-container");
         document.body.appendChild($container);
     }
 

@@ -240,6 +240,17 @@
         function askTip() {
             let uNum = this.getAttribute("name");
             dialog = document.getElementById('tipDlg');
+            if (dialog == null){
+               dialog = document.createElement("div");
+               dialog.setAttribute("id", "tipDlg");
+               dialog.setAttribute("class", "nes-dialog");
+               dialog.innerHTML += `<form method="dialog"><menu class="dialog-menu">
+                    <label for="tipAmt" id="tipLabel" style="color:#fff;"></label>
+                    <input type="text" id="tipAmt" class="nes-input is-dark" placeholder="$ + Tip amount in USD" value="$0.25">
+                    <button class='nes-btn is-error'>Cancel</button><button class="nes-btn is-success" id="tipConfirm">Confirm</button>
+               </menu></form>`;
+               document.body.appendChild(dialog);
+            }
             document.getElementById("tipLabel").innerHTML = `How much would you like to tip u/${uNum}?`;
             document.getElementById('tipConfirm').onclick = () => {
                 tip(uNum);

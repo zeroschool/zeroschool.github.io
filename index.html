@@ -233,7 +233,7 @@
             let uNum = this.getAttribute("name");
             dialog = document.getElementById('tipDlg');
             if (dialog == null){
-               dialog = document.createElement("div");
+               dialog = document.createElement("dialog");
                dialog.setAttribute("id", "tipDlg");
                dialog.setAttribute("class", "nes-dialog");
                dialog.innerHTML += `<form method="dialog"><menu class="dialog-menu">
@@ -242,8 +242,8 @@
                     <button id="tipCancel" class='nes-btn is-error'>Cancel</button><button class="nes-btn is-success" id="tipConfirm">Confirm</button>
                </menu></form>`;
                document.body.appendChild(dialog);
-               dialogPolyfill.registerDialog(dialog);
             }
+            dialogPolyfill.registerDialog(dialog);
             document.getElementById("tipLabel").innerHTML = `How much would you like to tip u/${uNum}?`;
             document.getElementById('tipConfirm').onclick = () => {
                 tip(uNum);

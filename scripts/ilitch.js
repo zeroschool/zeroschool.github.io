@@ -64,7 +64,7 @@ const timeago = (ms) => {
 }
 const populateHTML = (count) => {
     for (let i = 0; i < count; i++){
-        document.getElementById('message-container').innerHTML +=
+        document.getElementById('zs-message-container').innerHTML +=
         `<div class="nes-container is-rounded with-title is-dark twetch">
         <p class="profile"><img class="nes-avatar is-rounded is-medium"></p>
         <p><a class="userLink" href="" target="_blank"></a></p>
@@ -88,11 +88,12 @@ const compare = (a,b) => {
     return comp;
 }
 const fetchTwetches = async(sdk, selOrder) => {
-    // Make sure #message-container exists
-    let $container = document.getElementById("message-container");
+    // Make sure #zs-message-container exists
+    let $container = document.getElementById("zs-message-container");
     if ($container == null) {
+        console.log("div#zs-message-container does not exists, creating...");
         $container = document.createElement("div");
-        $container.setAttribute("id", "message-container");
+        $container.setAttribute("id", "zs-message-container");
         document.body.appendChild($container);
     }
 

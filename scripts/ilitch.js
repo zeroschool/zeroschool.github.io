@@ -138,7 +138,7 @@ const fetchTwetches = async(sdk, selOrder) => {
     let contents = document.getElementsByClassName("postContent")
     let hearts = document.getElementsByClassName("heart")
     let likes = document.getElementsByClassName("numLikes");
-    let shares = document.getElementsByClassName("share")
+    //let shares = document.getElementsByClassName("share")
     let txids = document.getElementsByClassName("txid");
     let coins = document.getElementsByClassName("coin");
     //let stars = document.getElementsByClassName("nes-icon star is-medium");
@@ -188,7 +188,7 @@ const fetchTwetches = async(sdk, selOrder) => {
         //boostValues[i].innerHTML = parseInt(boostValue);
         coins[i].addEventListener('click', askTip);
         //stars[i].addEventListener('click', boost);
-        shares[i].addEventListener('click', shareTwetch);
+        //shares[i].addEventListener('click', shareTwetch);
         let d = new Date(post.createdAt);
         times[i].innerHTML = timeago(d);
     }

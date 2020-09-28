@@ -111,9 +111,10 @@ const fetchTwetches = async(sdk, selOrder) => {
             } me {name id}
         }`);*/
         response = await sdk.query(`{
-            allPosts(filter: {bContent: {includes: "$zeroschool"}}, orderBy: CREATED_AT_ASC) {
+            allPosts(filter: {bContent: {includes: "$zeroschool"}}, orderBy: CREATED_AT_DESC) {
             nodes {
               bContent
+              createdAt  
               numLikes
               replyCount
               transaction

@@ -202,8 +202,7 @@ const fetchTwetches = async(sdk, selOrder, rootTx) => {
 };
 
 function goToTwetch() {
-    if (!(event.target.className.contains("Link"))){
-        window.open("https://twetch.app/t/" + this.id)}
+        window.open("https://twetch.app/t/" + this.id);
 }
 
 function youtube(content) {

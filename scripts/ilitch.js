@@ -132,7 +132,7 @@ const fetchTwetches = async(sdk, selOrder) => {
           }
         }`);
 
-    posts = response.allPosts.nodes.children.nodes;
+    posts = response.allPosts.nodes[0].children.nodes;
     let profiles = document.getElementsByClassName("nes-avatar")
     let userLinks = document.getElementsByClassName("userLink");
     let contents = document.getElementsByClassName("postContent")

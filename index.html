@@ -104,7 +104,7 @@
         async function build(content, action, tipped) {
             let obj, twOutput;
             if (action === 'twetch/post@0.0.1') {
-               if (tipped){
+               if (!tipped){
                   obj = {bContent: content}
                } else {
                 obj = {bContent: content,

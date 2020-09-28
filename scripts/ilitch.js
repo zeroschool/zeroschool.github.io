@@ -88,7 +88,7 @@ const compare = (a,b) => {
     return comp;
 }
 const fetchTwetches = async(sdk, selOrder, rootTx) => {
-    // Make sure #zs-message-container exists
+    // Make sure #message-container exists
     let $container = document.getElementById("message-container");
     if ($container == null) {
         $container = document.createElement("div");
@@ -144,6 +144,7 @@ const fetchTwetches = async(sdk, selOrder, rootTx) => {
     //let stars = document.getElementsByClassName("nes-icon star is-medium");
     //let boostValues = document.getElementsByClassName("boostValue");
     let times = document.getElementsByClassName("timeago");
+    let twetches = document.getElementsByClassName("twetch");
     populateHTML(posts.length);
     const addTwetch = (post, i) => {
         let content = post.bContent.replace('$zeroschool', '');
@@ -171,6 +172,7 @@ const fetchTwetches = async(sdk, selOrder, rootTx) => {
         contents[i].innerHTML = applyURLs(content);
         likes[i].innerHTML = post.numLikes;
         likes[i].id = `${post.transaction}_count`;
+        twetches[i].id = post.transaction;
         //shares[i].name = post.transaction;
         hearts[i].id = post.transaction;
         if (post.youLiked === "1") {
@@ -190,6 +192,7 @@ const fetchTwetches = async(sdk, selOrder, rootTx) => {
         coins[i].addEventListener('click', askTip);
         //stars[i].addEventListener('click', boost);
         //shares[i].addEventListener('click', shareTwetch);
+        twetches[i].addEventListener('click', goToTwetch);
         let d = new Date(post.createdAt);
         times[i].innerHTML = timeago(d);
     }
@@ -197,6 +200,11 @@ const fetchTwetches = async(sdk, selOrder, rootTx) => {
             addTwetch(posts[i], i);
         }
 };
+
+function goToTwetch() {
+    if (!(event.target.className.contains("Link"))){
+        window.open("https://twetch.app/t/" + this.id)}
+}
 
 function youtube(content) {
     let youRegex = /http(?:s?):\/\/(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-\_]*)(&(amp;)?‌​[\w\?‌​=]*)?/;

@@ -99,12 +99,7 @@
             let penny = parseFloat((Math.ceil(1000000 / price) / 100000000).toFixed(8));
             return penny;
         }
-        function loadingDlg() {
-            dialog = document.getElementById('dlg');
-            dialogPolyfill.registerDialog(dialog);
-            dialog.innerHTML = `<form method="dialog" class="loading"><p id="loading">Deschooling society</p><menu class="dialog-menu"></menu></form>`;
-            dialog.showModal(); loadingPost = true;
-        }
+        
         async function build(content, action) {
             let obj, twOutput;
             if (action === 'twetch/post@0.0.1') {
@@ -229,6 +224,20 @@
                 }
             });
         }
+       
+        function loadingDlg() {
+            dialog = document.getElementById('dlg');
+            if (dialog == null){
+               dialog = document.createElement("dialog");
+               dialog.setAttribute("id", "dlg");
+               dialog.setAttribute("class", "nes-dialog");
+               dialog.innerHTML = `<form method="dialog" class="loading"><p id="loading">Deschooling society</p><menu class="dialog-menu"></menu></form>`;
+               document.body.appendChild(dialog);
+            }
+            dialogPolyfill.registerDialog(dialog);
+            dialog.showModal(); loadingPost = true;
+        }
+       
         function askTip() {
             let uNum = this.getAttribute("name");
             dialog = document.getElementById('tipDlg');

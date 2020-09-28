@@ -87,7 +87,7 @@ const compare = (a,b) => {
     else if (aBoost > bBoost) {comp = -1} 
     return comp;
 }
-const fetchTwetches = async(sdk, selOrder) => {
+const fetchTwetches = async(sdk, selOrder, rootTx) => {
     // Make sure #zs-message-container exists
     let $container = document.getElementById("message-container");
     if ($container == null) {
@@ -102,7 +102,7 @@ const fetchTwetches = async(sdk, selOrder) => {
     };
         
     response = await sdk.query(`{
-          allPosts(condition: {transaction: "48b3602f887d4b538522c284912918f8294b2040a4dfc62a10d724205ffea510"}, ${orderBy}) {
+          allPosts(condition: {transaction: "${rootTx}"}, ${orderBy}) {
             nodes {
               bContent
               createdAt
@@ -114,7 +114,7 @@ const fetchTwetches = async(sdk, selOrder) => {
                 icon
                 name
               }
-              children(filter: {postByReplyPostId: {transaction: {equalTo: "48b3602f887d4b538522c284912918f8294b2040a4dfc62a10d724205ffea510"}}}) {
+              children(filter: {postByReplyPostId: {transaction: {equalTo: "${rootTx}"}}}) {
                 nodes {
                   bContent
                   createdAt
@@ -193,19 +193,9 @@ const fetchTwetches = async(sdk, selOrder) => {
         let d = new Date(post.createdAt);
         times[i].innerHTML = timeago(d);
     }
-    if (selOrder === '2') {
-        for (let i = 0; i < data.length; i++) {
-            let post = posts.find(p => p.transaction === data[i].txid);
-            if (post !== undefined) {
-                addTwetch(post, i);
-            }
-        }
-    }
-    else {
         for (let i = 0; i < posts.length; i++) {
             addTwetch(posts[i], i);
         }
-    }
 };
 
 function youtube(content) {

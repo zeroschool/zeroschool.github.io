@@ -100,39 +100,39 @@ const fetchTwetches = async(sdk, selOrder) => {
     if (selOrder === '1') {
         orderBy = 'orderBy: LIKES_BY_POST_ID__COUNT_DESC';
     };
-    if (selOrder === '3') {
-        response = await sdk.query(`{allPosts(filter: {userId: {equalTo: "4603"}}, first: 50, orderBy: CREATED_AT_DESC) {
-        nodes {bContent numLikes userId youLiked transaction createdAt userByUserId {icon name moneyButtonUserId}}}}`);
-    } 
-    else {
-        /*response = await sdk.query(`{
-            allPosts(filter: {bContent: {includes: "$zeroschool"}}, ${selOrder === '2' ? "" : "first: 50,"} ${orderBy}) {
-                nodes {bContent transaction createdAt numLikes userId youLiked userByUserId {name icon moneyButtonUserId}}
-            } me {name id}
-        }`);*/
-        response = await sdk.query(`{
-            allPosts(filter: {bContent: {includes: "$zeroschool"}}, orderBy: CREATED_AT_DESC) {
+        
+    response = await sdk.query(`{
+          allPosts(condition: {transaction: "48b3602f887d4b538522c284912918f8294b2040a4dfc62a10d724205ffea510"}, ${orderBy}) {
             nodes {
               bContent
-              createdAt  
+              createdAt
               numLikes
-              replyCount
               transaction
-              youLiked
               userId
+              youLiked
               userByUserId {
                 icon
                 name
               }
+              children(filter: {postByReplyPostId: {transaction: {equalTo: "48b3602f887d4b538522c284912918f8294b2040a4dfc62a10d724205ffea510"}}}) {
+                nodes {
+                  bContent
+                  createdAt
+                  numLikes
+                  transaction
+                  userId
+                  youLiked
+                  userByUserId {
+                    icon
+                    name
+                  }
+                }
+              }
             }
           }
         }`);
-        /*if (!localStorage.getItem('uid')){
-            localStorage.setItem('uname', response.me.name);
-            localStorage.setItem('uId', response.me.id);
-        }*/
-    } 
-    posts = response.allPosts.nodes;
+
+    posts = response.allPosts.nodes.children.nodes;
     let profiles = document.getElementsByClassName("nes-avatar")
     let userLinks = document.getElementsByClassName("userLink");
     let contents = document.getElementsByClassName("postContent")

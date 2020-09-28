@@ -113,7 +113,7 @@
             } else {
                 obj = {postTransaction: content}
             }
-            const {abi, payees} = await sdk.build(action, obj, False);
+            const {abi, payees} = await sdk.build(action, obj);
             if (localStorage.getItem('wallet') === 'moneybutton') {
                 twOutput = {currency: 'BSV',amount: 0,script: arrToScript(abi.toArray())}
             } 

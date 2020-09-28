@@ -42,7 +42,7 @@
     <div id="message-container" class=""></div>
     <dialog class="nes-dialog" id="dlg"></dialog>
     <script>
-        const inReplyTo = 'b3ab98273886ffa0dc2b312514e58b1dc8049a799d9eea47de60531b8eb30b17';
+        const inReplyTo = 'b3ab98273886ffa0dc2b312514e58b1dc8049a799d9eea47de60531b8eb30b17'; // Twetch ZeroSchool: I wanna learn _____
         const publicVapidKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjUyIn0sImlhdCI6MTU5MjQwMTgxNH0.adZ_QsfshakYBNASIjMWQw46rh__8t8_f75n5I3w2jg';
         const savePermissionToken = (token) => {
             localStorage.setItem('token', token);
@@ -201,35 +201,6 @@
                 }
             }
         }
-        function shareTwetch() { 
-            if (navigator.share) {navigator.share({title: 'retrotwetch',url: `https://twetch.app/t/${this.getAttribute("name")}`})
-            .then(() => console.log('Successful share')).catch((error) => console.log('Error sharing', error))}
-            else {
-                let copyTx = document.createElement('textarea');
-                document.body.appendChild(copyTx);
-                copyTx.value = 'https://twetch.app/t/' + this.getAttribute("name");
-                copyTx.select();document.execCommand("copy");
-                document.body.removeChild(copyTx);
-                showPopup(`Copied Twetch URL to clipboard!`,'OK');
-            }
-        }
-        async function boost() {
-            let penny = await getPenny();
-            boostPublish.open({
-                content: this.getAttribute("name"),
-                tag: '$osg',
-                diff: {
-                    min: 1,
-                    max: 100,
-                    initial: 1
-                },
-                outputs: [{to: "18YCy8VDYcXGnekHC4g3vphnJveTskhCLf",amount: penny,currency: "BSV"}],
-                onPayment: function(payment, boostJobStatus) {
-                    let boostTxt = `Boosted job queued!<br><br><a href="https://boostpow.com/job/${payment.txid}" target="_blank">Check the status</a>`;
-                    showPopup(boostTxt, 'OK', false);
-                }
-            });
-        }
        
         function loadingDlg() {
             dialog = document.getElementById('dlg');
@@ -372,7 +343,6 @@
             });
         }
     </script>
-    <script src="https://publish.boostpow.com/publish.js" defer></script>
     <script src="https://unpkg.com/dialog-polyfill@0.5.1/dist/dialog-polyfill.js"></script>
     </body>
 </html>

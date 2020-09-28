@@ -103,7 +103,8 @@
         async function build(content, action) {
             let obj, twOutput;
             if (action === 'twetch/post@0.0.1') {
-                obj = {bContent: content}
+                obj = {bContent: content,
+                      mapReply:"73e09d1645ceb7c8f0980ebce3623d303de3117d0f936603cdceaddcdbdcf020"}
             } else {
                 obj = {postTransaction: content}
             }

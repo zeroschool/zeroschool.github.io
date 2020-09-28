@@ -101,15 +101,19 @@
             return penny;
         }
         
-        async function build(content, action) {
+        async function build(content, action, tipped) {
             let obj, twOutput;
             if (action === 'twetch/post@0.0.1') {
+               if (tipped){
+                  obj = {bContent: content}
+               } else {
                 obj = {bContent: content,
                       mapReply: inReplyTo}
+               }
             } else {
                 obj = {postTransaction: content}
             }
-            const {abi, payees} = await sdk.build(action, obj);
+            const {abi, payees} = await sdk.build(action, obj, False);
             if (localStorage.getItem('wallet') === 'moneybutton') {
                 twOutput = {currency: 'BSV',amount: 0,script: arrToScript(abi.toArray())}
             } 
@@ -285,7 +289,7 @@
                 }
             }, 400);
             let likeCount = parseInt(document.getElementById(`${this.id}_count`).innerText);
-            await build(this.id, 'twetch/like@0.0.1');
+            await build(this.id, 'twetch/like@0.0.1', False);
             await send('twetch/like@0.0.1', this.id, false, likeCount);
         }
         function tip(tipU) {
@@ -306,7 +310,7 @@
                 post += " $zeroschool";
                 loadingDlg();
             }
-            await build(post,'twetch/post@0.0.1');
+            await build(post,'twetch/post@0.0.1', tipped);
             await send('twetch/post@0.0.1', '', tipped);
             document.getElementById("post").value = "";
         }

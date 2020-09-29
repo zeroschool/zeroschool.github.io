@@ -87,8 +87,8 @@ const compare = (a,b) => {
     else if (aBoost > bBoost) {comp = -1} 
     return comp;
 }
-const fetchTwetches = async(sdk, selOrder) => {
-    // Make sure #zs-message-container exists
+const fetchTwetches = async(sdk, selOrder, rootTx) => {
+    // Make sure #message-container exists
     let $container = document.getElementById("message-container");
     if ($container == null) {
         $container = document.createElement("div");
@@ -100,39 +100,39 @@ const fetchTwetches = async(sdk, selOrder) => {
     if (selOrder === '1') {
         orderBy = 'orderBy: LIKES_BY_POST_ID__COUNT_DESC';
     };
-    if (selOrder === '3') {
-        response = await sdk.query(`{allPosts(filter: {userId: {equalTo: "4603"}}, first: 50, orderBy: CREATED_AT_DESC) {
-        nodes {bContent numLikes userId youLiked transaction createdAt userByUserId {icon name moneyButtonUserId}}}}`);
-    } 
-    else {
-        /*response = await sdk.query(`{
-            allPosts(filter: {bContent: {includes: "$zeroschool"}}, ${selOrder === '2' ? "" : "first: 50,"} ${orderBy}) {
-                nodes {bContent transaction createdAt numLikes userId youLiked userByUserId {name icon moneyButtonUserId}}
-            } me {name id}
-        }`);*/
-        response = await sdk.query(`{
-            allPosts(filter: {bContent: {includes: "$zeroschool"}}, orderBy: CREATED_AT_DESC) {
+        
+    response = await sdk.query(`{
+          allPosts(condition: {transaction: "${rootTx}"}, ${orderBy}) {
             nodes {
               bContent
-              createdAt  
+              createdAt
               numLikes
-              replyCount
               transaction
-              youLiked
               userId
+              youLiked
               userByUserId {
                 icon
                 name
               }
+              children(filter: {postByReplyPostId: {transaction: {equalTo: "${rootTx}"}}}) {
+                nodes {
+                  bContent
+                  createdAt
+                  numLikes
+                  transaction
+                  userId
+                  youLiked
+                  userByUserId {
+                    icon
+                    name
+                  }
+                }
+              }
             }
           }
         }`);
-        /*if (!localStorage.getItem('uid')){
-            localStorage.setItem('uname', response.me.name);
-            localStorage.setItem('uId', response.me.id);
-        }*/
-    } 
-    posts = response.allPosts.nodes;
+
+    posts = response.allPosts.nodes[0].children.nodes;
     let profiles = document.getElementsByClassName("nes-avatar")
     let userLinks = document.getElementsByClassName("userLink");
     let contents = document.getElementsByClassName("postContent")
@@ -144,6 +144,7 @@ const fetchTwetches = async(sdk, selOrder) => {
     //let stars = document.getElementsByClassName("nes-icon star is-medium");
     //let boostValues = document.getElementsByClassName("boostValue");
     let times = document.getElementsByClassName("timeago");
+    let twetches = document.getElementsByClassName("twetch");
     populateHTML(posts.length);
     const addTwetch = (post, i) => {
         let content = post.bContent.replace('$zeroschool', '');
@@ -171,6 +172,7 @@ const fetchTwetches = async(sdk, selOrder) => {
         contents[i].innerHTML = applyURLs(content);
         likes[i].innerHTML = post.numLikes;
         likes[i].id = `${post.transaction}_count`;
+        twetches[i].id = post.transaction;
         //shares[i].name = post.transaction;
         hearts[i].id = post.transaction;
         if (post.youLiked === "1") {
@@ -190,23 +192,18 @@ const fetchTwetches = async(sdk, selOrder) => {
         coins[i].addEventListener('click', askTip);
         //stars[i].addEventListener('click', boost);
         //shares[i].addEventListener('click', shareTwetch);
+        twetches[i].addEventListener('click', goToTwetch);
         let d = new Date(post.createdAt);
         times[i].innerHTML = timeago(d);
     }
-    if (selOrder === '2') {
-        for (let i = 0; i < data.length; i++) {
-            let post = posts.find(p => p.transaction === data[i].txid);
-            if (post !== undefined) {
-                addTwetch(post, i);
-            }
-        }
-    }
-    else {
         for (let i = 0; i < posts.length; i++) {
             addTwetch(posts[i], i);
         }
-    }
 };
+
+function goToTwetch() {
+        window.open("https://twetch.app/t/" + this.id);
+}
 
 function youtube(content) {
     let youRegex = /http(?:s?):\/\/(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-\_]*)(&(amp;)?‌​[\w\?‌​=]*)?/;

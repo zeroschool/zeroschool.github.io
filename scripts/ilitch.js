@@ -1,3 +1,304 @@
+const inReplyTo = 'b3ab98273886ffa0dc2b312514e58b1dc8049a799d9eea47de60531b8eb30b17'; // Twetch ZeroSchool: I wanna learn _____
+const publicVapidKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjUyIn0sImlhdCI6MTU5MjQwMTgxNH0.adZ_QsfshakYBNASIjMWQw46rh__8t8_f75n5I3w2jg';
+const savePermissionToken = (token) => {
+    localStorage.setItem('token', token);
+}
+const getPermissionForCurrentUser = () => {
+    if (localStorage.getItem('token')) {
+        return localStorage.getItem('token');
+    }
+}
+const imbCli = window.location.href.includes('localhost') ? 'ee9db2a1a7003d2f2f6798eb4616f2fd' : 'ce4eb6ea41a4f43044dd7e71c08e50b2';
+const imb = new moneyButton.IMB({
+    clientIdentifier: imbCli,
+    permission: getPermissionForCurrentUser(), 
+    onNewPermissionGranted: (token) => savePermissionToken(token)
+});
+var sdk = new twetchjs({ clientIdentifier: '9d27a879-ee0c-4653-8839-a4b2f6fa8023' });
+var coinSound = new Audio(); coinSound.src = '/assets/resources/coin.wav', dialog = {}, loadingLike = false;
+//var outputs = [], cryptoOperations = [], loadingPost = false, selOrder = 0, fileTwetch = 0, loadingText = "Deschooling society";
+var outputs = [], cryptoOperations = [], loadingPost = false, selOrder = 0, loadingText = "Deschooling society";
+async function twgin() {
+    if (localStorage.getItem('tokenTwetchAuth')) {
+        sdk.authenticated = true;
+        await sdk.authenticate();
+        await fetchTwetches(sdk, 0, inReplyTo);
+        //await fetchTwetches(sdk, localStorage.getItem('orderBy') !== undefined ? localStorage.getItem('orderBy') : 0);
+    } else {
+        window.location.href = "/welcome";
+    }
+}
+twgin();
+document.getElementById("order").onchange = () => {
+    selOrder = document.getElementById("order").value;
+    localStorage.setItem('orderBy', selOrder);
+    fetchTwetches(sdk, selOrder, inReplyTo);
+}
+if (localStorage.getItem('orderBy')) {
+    selOrder = localStorage.getItem('orderBy');
+    document.getElementById("order").options[selOrder].selected = true;
+}
+document.getElementById("tPost").setAttribute("disabled", null);
+document.getElementById("post").addEventListener("keyup", () => {checkPost()})
+function checkPost(){
+    let input = document.getElementById("post").value;
+    if (input != "") {
+        document.getElementById("tPost").removeAttribute("disabled");
+        if (input.length >= 256) {
+            document.getElementById("tPost").setAttribute("disabled", null);
+        }
+    } else {
+        document.getElementById("tPost").setAttribute("disabled", null);
+    }
+}
+async function getPenny() {
+    let price = await sdk.bsvPrice();
+    let penny = parseFloat((Math.ceil(1000000 / price) / 100000000).toFixed(8));
+    return penny;
+}
+
+async function build(content, action, tipped) {
+    let obj, twOutput;
+    if (action === 'twetch/post@0.0.1') {
+       if (tipped){
+          obj = {bContent: content}
+       } else {
+        obj = {bContent: content,
+              mapReply: inReplyTo}
+       }
+    } else {
+        obj = {postTransaction: content}
+    }
+    const {abi, payees} = await sdk.build(action, obj);
+    if (localStorage.getItem('wallet') === 'moneybutton') {
+        twOutput = {currency: 'BSV',amount: 0,script: arrToScript(abi.toArray())}
+    } 
+    else if (localStorage.getItem('wallet') === 'relayx') {
+        twOutput = {currency: 'BSV',amount: 0,signatures:['TWETCH-AIP'],script: arrToScript(abi.args.slice(0, abi.args.length-5))}
+    }
+    outputs = [twOutput].concat(payees);
+    if (action === 'twetch/like@0.0.1'){
+        outputs[2].to = '16bKbvsXc279ZTgvjgTQ29JezjQ3sRVA8N';
+        let penny = await getPenny();
+        outputs[2].amount += penny;
+        if (outputs.length < 4) {
+            outputs[2].amount += (penny * 4);
+        } 
+        else {
+            outputs[3].amount += (penny * 4);
+        }
+    } else if (action === 'twetch/post@0.0.1'){
+        outputs[2].to = '16bKbvsXc279ZTgvjgTQ29JezjQ3sRVA8N';
+        outputs[2].amount += 0.00001000
+    }
+    cryptoOperations = [
+        {name: 'myAddress', method: 'address', key: 'identity'},
+        {name: 'mySignature', method: 'sign', data: abi.contentHash(), dataEncoding: 'utf8', key: 'identity', algorithm: 'bitcoin-signed-message'}
+    ];
+}
+async function send(action, likeTx, tipped, count) {
+    if (tipped === true) {
+        loadingText = 'Tipping';
+        loadingDlg();
+    }
+    if (localStorage.getItem('wallet') === 'moneybutton') {
+        imb.swipe({
+            outputs,
+            cryptoOperations,
+            onPayment: async (payment) => {
+                if (tipped === true) {
+                    coinSound.play();
+                    loadingText = 'Loading';
+                }
+                await sdk.publishRequest({signed_raw_tx: payment.rawtx, action: action});
+                if (action === 'twetch/post@0.0.1') {
+                    loadingPost = false;
+                    loadingText = 'Deschooling society';
+                    location.reload();
+                }
+                else if (action === 'twetch/like@0.0.1') {
+                    loadingLike = false;
+                    document.getElementById(likeTx).className = `nes-icon heart is-medium`;
+                    document.getElementById(`${likeTx}_count`).innerText = count + 1;
+                }            
+            }, 
+            onError: err => {
+                console.log(err);
+            }})
+            .then(({ payment }) => console.log(payment), error => { console.log(error);
+            if (action === 'twetch/post@0.0.1') {loadingPost = false; location.reload()}
+            else {
+                if (document.getElementById(`${likeTx}_count`) !== null) {
+                    let likeCount = parseInt(document.getElementById(`${likeTx}_count`).innerText);
+                    document.getElementById(`${likeTx}_count`).innerText = likeCount - 1;
+                    document.getElementById(likeTx).className = `nes-icon heart is-large is-empty`;
+                }
+            }
+        })
+    }
+    else if (localStorage.getItem('wallet') === 'relayx') {
+        let res = await relayone.send({ outputs });
+        if (res.txid) {
+            sdk.publishRequest({signed_raw_tx: res.rawTx, action: action});
+        }
+        if (tipped === true) {
+            coinSound.play();
+            loadingText = 'Loading';
+        }
+        if (action === 'twetch/post@0.0.1') {
+            loadingPost = false;
+            loadingText = 'Deschooling society';
+            location.reload();
+        }
+        else if (action === 'twetch/like@0.0.1') {
+            loadingLike = false;
+            document.getElementById(likeTx).className = `nes-icon heart is-medium`;
+            document.getElementById(`${likeTx}_count`).innerText = count + 1;
+        }
+    }
+}
+
+function loadingDlg() {
+    dialog = document.getElementById('dlg');
+    if (dialog == null){
+       dialog = document.createElement("dialog");
+       dialog.setAttribute("id", "dlg");
+       dialog.setAttribute("class", "nes-dialog");
+       dialog.innerHTML = `<form method="dialog" class="loading"><p id="loading">Deschooling society</p><menu class="dialog-menu"></menu></form>`;
+       document.body.appendChild(dialog);
+    }
+    dialogPolyfill.registerDialog(dialog);
+    dialog.showModal(); loadingPost = true;
+}
+
+function askTip() {
+    let uNum = this.getAttribute("name");
+    dialog = document.getElementById('tipDlg');
+    if (dialog == null){
+       dialog = document.createElement("dialog");
+       dialog.setAttribute("id", "tipDlg");
+       dialog.setAttribute("class", "nes-dialog");
+       dialog.innerHTML += `<form method="dialog"><menu class="dialog-menu">
+            <label for="tipAmt" id="tipLabel" style="color:#fff;"></label>
+            <input type="text" id="tipAmt" class="nes-input is-dark" placeholder="$ + Tip amount in USD" value="$0.25">
+            <button id="tipCancel" class='nes-btn is-error'>Cancel</button><button class="nes-btn is-success" id="tipConfirm">Confirm</button>
+       </menu></form>`;
+       document.body.appendChild(dialog);
+    }
+    dialogPolyfill.registerDialog(dialog);
+    document.getElementById("tipLabel").innerHTML = `How much would you like to tip u/${uNum}?`;
+    document.getElementById('tipConfirm').onclick = () => {
+        tip(uNum);
+    }
+    document.getElementById('tipCancel').onclick = () => {
+        console.log("Closing ask tip dialog");
+        dialog.close();
+    }
+    dialog.showModal();
+}
+async function like() {
+    let heart = document.getElementById(this.id);
+    loadingLike = true;
+    window.setInterval(() => {
+        if (loadingLike) {
+            if (heart.className.includes('is-empty')) {
+                heart.className = 'nes-icon heart is-medium is-half';
+            }
+            else if (heart.className.includes('half')) {
+                heart.className = 'nes-icon heart is-medium';
+            }
+            else {
+                heart.className = 'nes-icon heart is-medium is-empty';
+            }
+        }
+        else {
+            return;
+        }
+    }, 400);
+    let likeCount = parseInt(document.getElementById(`${this.id}_count`).innerText);
+    await build(this.id, 'twetch/like@0.0.1', False);
+    await send('twetch/like@0.0.1', this.id, false, likeCount);
+}
+function tip(tipU) {
+    let amt = document.getElementById('tipAmt').value;
+    if (amt.charAt(0) != '$'){
+        amt = '$'+amt
+    }
+    twetchPost(`/pay @${tipU} ${amt} from $zeroschool`);
+    window.scrollTo(0,0)
+}
+async function twetchPost(text) {
+    let post = document.getElementById("post").value, tipped = false;
+    if (text) {
+        post = text;
+        tipped = true;
+    } 
+    else {
+        loadingDlg();
+    }
+    await build(post,'twetch/post@0.0.1', tipped);
+    await send('twetch/post@0.0.1', '', tipped);
+    document.getElementById("post").value = "";
+}
+function showPopup(text, confirm, cancel, onClick, lock){
+    dialog = document.getElementById('dlg');
+    dialogPolyfill.registerDialog(dialog);
+    if (lock) {
+        dialog.innerHTML = `<form method="dialog"><p>${text}</p><menu class="dialog-menu"></menu></form>`;
+    } 
+    else {
+        dialog.innerHTML = `<form method="dialog"><p>${text}</p><menu class="dialog-menu">
+        ${cancel === true ? "<button class='nes-btn is-error'>Cancel</button>" : ""}
+        <button class="nes-btn is-primary" onclick="${onClick}">${confirm}</button></menu></form>`;
+    }
+    dialog.showModal();
+}
+var dots = window.setInterval(() => {
+    let wait = document.getElementById("loading");
+    if (loadingPost === true) {
+        if (wait.innerHTML.length > loadingText.length + 3) {
+            wait.innerHTML = loadingText;
+        } 
+        else {
+            wait.innerHTML += ".";
+        }
+    }
+}, 300);
+window.addEventListener('DOMContentLoaded', () => {
+    const parsedUrl = new URL(window.location);
+    document.getElementById("post").value = parsedUrl.searchParams.get('text');
+    checkPost();
+});
+window.onclick = function(event) {
+    if (event.target == dialog) {
+        dialog.close();
+    }
+}
+if ('serviceWorker' in navigator) {
+    sendSW().catch(e => {
+        console.log('send service worker error: ', e);
+    })
+}
+async function sendSW() {
+    const register = await navigator.serviceWorker.register('/serviceworker.js', {
+        scope: '/'
+    });
+    console.log('Registration successful, scope is:', register.scope);
+    const subscription = await register.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey: urlBase64ToUint8Array(publicVapidKey)
+    });
+    console.log('Push registered.');
+    fetch('/subscribe', {
+        method: 'post',
+        body: JSON.stringify({
+            userId: localStorage.getItem('uId'),
+            sub: subscription
+        }),
+        headers: { 'content-type': 'application/json' }
+    });
+}
+
 const ascii_to_hexa = (str) => {
     var arr1 = [];
     for (var n = 0, l = str.length; n < l; n ++) 

@@ -3,14 +3,58 @@
     <title>ZeroSchool</title> 
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
     <link href="https://unpkg.com/nes.css@2.3.0/css/nes.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/dialog-polyfill@0.5.1/dist/dialog-polyfill.css" rel="stylesheet" type="text/css">
+    <link href="/styles/login.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" type="text/css" href="styles/welcome.css">
   </head>
   <style>
+    #btnLogin, #btnLogout{
+	    position:absolute;
+      top:0;
+      right:0;
+    }
     p.svelte-x7zat7{text-align:center;margin:0 auto}p.svelte-x7zat7{margin:1em auto}article.svelte-x7zat7{text-align:center;margin:0 auto}#video.svelte-x7zat7{display:block;text-align:center;background:#000;margin:0 auto}video.svelte-x7zat7{margin:0 auto}footer.svelte-x7zat7{text-align:center;font-size:0.8em;font-family:--apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;color:#555;text-shadow:none;margin-top:50px}.muted.svelte-x7zat7{color:#777;text-shadow:none}video.svelte-x7zat7{max-width:100%;max-height:100%;max-height:400px}
   </style>
-  <body> 
+  <body>
+    <a class="nes-btn is-success" id="btnLogin" onclick="login()" style="display:none;">Log In</a>
+    <a class="nes-btn" id="btnLogout" onclick="logout()" style="display:none;">Logout</a>
     <div id=video-container> <div id=video class=svelte-x7zat7> <video autoplay class=svelte-x7zat7 loop muted src="/assets/resources/loop.mp4"></video> </div>
-    <div id="console"></div> 
+    <div id="console"></div>
+    <dialog class="loginDlg center">
+      <div class="nes-container is-rounded with-title is-dark loginbox">
+          <p>Login with:</p>
+          <a class="nes-btn is-primary" id="relayX" onclick="relayXLogin()">RelayX</a>
+          <a class="nes-btn is-success" id="MB" onclick="imbLogin()">MoneyButton</a>
+          <!--<a class="nes-btn is-error" id="logout" onclick="">Single Key</a>-->
+      </dialog>
+    </div>   
   </body>
+  <script src="https://unpkg.com/dialog-polyfill@0.5.1/dist/dialog-polyfill.js"></script>
+  <script src="https://www.moneybutton.com/moneybutton.js"></script>
+  <script src="https://one.relayx.io/relayone.js"></script>
   <script type="text/javascript" src="scripts/welcome.js"></script>
+  <script src="/scripts/login.js"></script>
+  <script src="/scripts/invmb.js"></script>
+  <script src="/scripts/relayxLogin.js"></script>
+  <script>
+    if (sdk.authenticated){
+        document.getElementById("btnLogin").style.display = "none";
+        document.getElementById("btnLogout").style.display = "inline";} else {
+        document.getElementById("btnLogin").style.display = "inline";
+        document.getElementById("btnLogout").style.display = "none"}
+    function logout() {
+            localStorage.clear();
+            dialogPolyfill.registerDialog(dialog);
+            dialog.innerHTML = `<form method="dialog"><p>Logged out!</p></form>`;
+            dialog.showModal();
+            setTimeout(() => {
+                window.location.href = '/login';
+            }, 1000);
+        }
+    function login(){
+    dialog = document.getElementById("loginDlg");
+    dialogPolyfill.registerDialog(dialog);dialog.showModal();
+    }
+    
+  </script>
 </html> 

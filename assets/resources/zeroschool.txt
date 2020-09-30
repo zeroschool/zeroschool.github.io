@@ -34,4 +34,4 @@ email: <a href="mailto:hello@zeroschool.org" target="_blank">hello@zeroschool.or
 
 
 
-<span id="a">~zeroschool:welcome></span><span id="b"></span><span id="c"></span><span id="k"><a href="/login">--> Click here to login <--</a></span> <!-- sjkfhskjf --><!-- laglaglaglaglaglag -->
+<span id="a">~zeroschool:welcome></span><span id="b"></span><span id="c"></span><span id="k"><a href="/login">--> Click here to login <--</a></span><!-- laglaglaglaglaglag -->

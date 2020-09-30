@@ -1,5 +1,5 @@
 <!-- laglaglaglaglaglaglaglaglaglaglaglag --><!-- moredelaymoredelaymoredelaymoredelaymoredelaymoredelay-->  
-<span id="a">~zeroschool:welcome></span><span id="b"></span><span id="c"></span> +<!-- laglaglaglaglaglag -->opening.100p
+<span id="a">~zeroschool:welcome></span><span id="b"></span><span id="c"></span> +<!-- laglaglaglaglaglag -->opening100p
 
 <a href="https://zeroschool.org" target="_blank">ZeroSchool</a>, <span id="k">Ceci n'est pas une école.</span> <!-- sjkfhskjf --><!-- laglaglaglaglaglaglaglaglaglaglaglag --><!-- moredelaymoredelaymoredelaymoredelaymoredelaymoredelaymoredelaymoredelaymoredelaymoredelaymoredelaymoredelay-->
 
@@ -34,4 +34,4 @@ email: <a href="mailto:hello@zeroschool.org" target="_blank">hello@zeroschool.or
 
 
 
-<span id="a">~zeroschool:welcome></span><span id="b"></span><span id="c"></span>
+<span id="a">~zeroschool:welcome></span><span id="b"></span><span id="c"></span><!-- laglaglaglaglaglag --><a class="nes-btn is-success" id="login" onclick="window.location.href = '/login';">Log In</a>

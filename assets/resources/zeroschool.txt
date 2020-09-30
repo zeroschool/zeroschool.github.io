@@ -1,7 +1,7 @@
 <!-- laglaglaglaglaglaglaglaglaglaglaglag --><!-- moredelaymoredelaymoredelaymoredelaymoredelaymoredelay-->  
 <span id="a">~zeroschool:welcome></span><span id="b"></span><span id="c"></span> +<!-- laglaglaglaglaglag -->opening100p
 
-<a href="https://zeroschool.org" target="_blank">ZeroSchool</a>, <span id="k">Ceci n'est pas une école.</span> <!-- sjkfhskjf --><!-- laglaglaglaglaglaglaglaglaglaglaglag --><!-- moredelaymoredelaymoredelaymoredelaymoredelaymoredelaymoredelaymoredelaymoredelaymoredelaymoredelaymoredelay-->
+<span id="k">ZeroSchool, ceci n'est pas une école.</span> <!-- sjkfhskjf --><!-- laglaglaglaglaglaglaglaglaglaglaglag --><!-- moredelaymoredelaymoredelaymoredelaymoredelaymoredelaymoredelaymoredelaymoredelaymoredelaymoredelaymoredelay-->
 
 ...what do you *really* wanna learn?<!-- laglaglaglaglaglaglaglaglaglaglaglag --><!-- moredelaymoredelaymoredelaymoredelaymoredelaymoredelaymoredelaymoredelaymoredelaymoredelaymoredelaymoredelay-->
 ...what do you *really* wanna teach?<!-- laglaglaglaglaglaglaglaglaglaglaglag --><!-- moredelaymoredelaymoredelaymoredelaymoredelaymoredelaymoredelaymoredelaymoredelaymoredelaymoredelaymoredelay-->
@@ -34,4 +34,4 @@ email: <a href="mailto:hello@zeroschool.org" target="_blank">hello@zeroschool.or
 
 
 
-<span id="a">~zeroschool:welcome></span><span id="b"></span><span id="c"></span><span id="k"><a href="/login">--> Click here to login <--</a></span><!-- sjkfhskjf --><!-- laglaglaglaglaglag -->
+<span id="a">~zeroschool:welcome></span><span id="b"></span><span id="c"></span><span id="k"><a href="/login"> --> Click here to login <--</a></span><!-- sjkfhskjf --><!-- laglaglaglaglaglag -->

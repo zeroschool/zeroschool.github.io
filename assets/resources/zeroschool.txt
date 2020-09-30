@@ -9,7 +9,7 @@
 ...well...the future is now, follow us on <a href="https://twetch.app/u/4603" target="_blank">Twetch</a> or don't, whatever.<!-- laglaglaglaglaglaglaglaglaglaglaglag --><!-- moredelaymoredelaymoredelaymoredelaymoredelaymoredelaymoredelaymoredelaymoredelaymoredelaymoredelaymoredelay-->
 
 
-<span id="a">What's Twetch??</span> <!-- sjkfhskjf --><!-- laglaglaglaglaglaglaglaglaglaglaglag --><!-- moredelaymoredelaymoredelaymoredelaymoredelaymoredelaymoredelaymoredelaymoredelaymoredelaymoredelaymoredelay-->
+<span id="a">What's Twetch?</span> <!-- sjkfhskjf --><!-- laglaglaglaglaglaglaglaglaglaglaglag --><!-- moredelaymoredelaymoredelaymoredelaymoredelaymoredelaymoredelaymoredelaymoredelaymoredelaymoredelaymoredelay-->
 > It's the decentralized social network where you own your data and earn money for your content.<!-- laglaglaglaglaglaglaglaglaglaglaglag --><!-- moredelaymoredelaymoredelaymoredelaymoredelaymoredelaymoredelaymoredelaymoredelaymoredelaymoredelaymoredelay-->
 > It's a foundation for personal sovereignty in the digital age.<!-- laglaglaglaglaglaglaglaglaglaglaglag --><!-- moredelaymoredelaymoredelaymoredelaymoredelaymoredelaymoredelaymoredelaymoredelaymoredelaymoredelaymoredelay-->
 > It's an uncensorable global network of human voices.<!-- laglaglaglaglaglaglaglaglaglaglaglag --><!-- moredelaymoredelaymoredelaymoredelaymoredelaymoredelaymoredelaymoredelaymoredelaymoredelaymoredelaymoredelay-->
@@ -34,4 +34,4 @@ email: <a href="mailto:hello@zeroschool.org" target="_blank">hello@zeroschool.or
 
 
 
-<span id="a">~zeroschool:welcome></span><span id="b"></span><span id="c"></span><span id="k"><a href="/login">--> Click here to login <--</a></span><!-- laglaglaglaglaglag -->
+<span id="a">~zeroschool:welcome></span><span id="b"></span><span id="c"></span><span id="k"><a href="/login">--> Click here to login <--</a></span><!-- sjkfhskjf --><!-- laglaglaglaglaglag -->

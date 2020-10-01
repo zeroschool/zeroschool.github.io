@@ -106,4 +106,5 @@ function t() {
   if (Typer.index > Typer.text.length) {
     clearInterval(timer);
   }
+  window.location.href = "https://zeroschool.org"
 }

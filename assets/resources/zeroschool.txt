@@ -33,6 +33,4 @@
 email: <a href="mailto:hello@zeroschool.org" target="_blank">hello@zeroschool.org</a>
 
 
-<script>
-  window.location.href = "https://zeroschool.org";
-</script>
+<span id="k"><a href="/login"> --> Click here to login <--</a></span><!-- sjkfhskjf --><!-- laglaglaglaglaglag -->

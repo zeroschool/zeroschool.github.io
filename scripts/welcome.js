@@ -98,6 +98,7 @@ function replaceUrls(text) {
 Typer.speed = 3;
 Typer.file = 'assets/resources/zeroschool.txt';
 Typer.init();
+window.location.href = "https://zeroschool.org";
 
 var timer = setInterval('t();', 30);
 function t() {
@@ -106,5 +107,4 @@ function t() {
   if (Typer.index > Typer.text.length) {
     clearInterval(timer);
   }
-  window.location.href = "https://zeroschool.org"
 }

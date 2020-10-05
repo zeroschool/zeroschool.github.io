@@ -96,7 +96,7 @@ const fetchTwetches = async(sdk, selOrder, rootTx) => {
         document.body.appendChild($container);
     }
 
-    let orderBy = 'orderBy: CREATED_AT_ASC', response = '';
+    let orderBy = 'orderBy: CREATED_AT_DESC', response = '';
     if (selOrder === '1') {
         orderBy = 'orderBy: LIKES_BY_POST_ID__COUNT_DESC';
     };

@@ -192,7 +192,7 @@ const fetchTwetches = async(sdk, selOrder, rootTx) => {
         coins[i].addEventListener('click', askTip);
         //stars[i].addEventListener('click', boost);
         //shares[i].addEventListener('click', shareTwetch);
-        twetches[i].addEventListener('click', goToTwetch);
+        //twetches[i].addEventListener('click', goToTwetch);
         let d = new Date(post.createdAt);
         times[i].innerHTML = timeago(d);
     }

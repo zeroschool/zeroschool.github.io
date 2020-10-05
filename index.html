@@ -260,7 +260,7 @@
                 }
             }, 400);
             let likeCount = parseInt(document.getElementById(`${this.id}_count`).innerText);
-            await build(this.id, 'twetch/like@0.0.1', False);
+            await build(this.id, 'twetch/like@0.0.1', false);
             await send('twetch/like@0.0.1', this.id, false, likeCount);
         }
         function tip(tipU) {

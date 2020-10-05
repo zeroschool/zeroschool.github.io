@@ -102,7 +102,7 @@ const fetchTwetches = async(sdk, selOrder, rootTx) => {
     };
         
     response = await sdk.query(`{
-          allPosts(condition: {transaction: "${rootTx}"}, ${orderBy}) {
+          allPosts(condition: {transaction: "${rootTx}"}) {
             nodes {
               bContent
               createdAt
@@ -114,7 +114,7 @@ const fetchTwetches = async(sdk, selOrder, rootTx) => {
                 icon
                 name
               }
-              children(filter: {postByReplyPostId: {transaction: {equalTo: "${rootTx}"}}}) {
+              children(filter: {postByReplyPostId: {transaction: {equalTo: "${rootTx}"}}}, ${orderBy}) {
                 nodes {
                   bContent
                   createdAt

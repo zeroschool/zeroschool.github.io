@@ -102,7 +102,7 @@ const fetchTwetches = async(sdk, selOrder, rootTx) => {
     };
         
     response = await sdk.query(`{
-          allPosts(condition: {transaction: "${rootTx}"}, ${orderBy}) {
+          allPosts(condition: {replyPostId: "488271"}, ${orderBy}) {
             nodes {
               bContent
               createdAt
@@ -113,20 +113,6 @@ const fetchTwetches = async(sdk, selOrder, rootTx) => {
               userByUserId {
                 icon
                 name
-              }
-              children(filter: {postByReplyPostId: {transaction: {equalTo: "${rootTx}"}}}) {
-                nodes {
-                  bContent
-                  createdAt
-                  numLikes
-                  transaction
-                  userId
-                  youLiked
-                  userByUserId {
-                    icon
-                    name
-                  }
-                }
               }
             }
           }

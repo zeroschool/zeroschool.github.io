@@ -94,6 +94,8 @@ const fetchTwetches = async(sdk, selOrder, rootTx) => {
         $container = document.createElement("div");
         $container.setAttribute("id", "message-container");
         document.body.appendChild($container);
+    } else {
+        $container = "";
     }
 
     let orderBy = 'orderBy: CREATED_AT_DESC', response = '';

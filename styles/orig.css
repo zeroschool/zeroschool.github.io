@@ -191,9 +191,10 @@ select#order {
 #postTitle {
     background-color: #212529;
 }
-.tipTxt {
-    height: 60px;		
-    margin-bottom: 2px;
+#tipTxt {
+    height: 80px;
+    text-overflow: ellipsis;
+    margin-bottom: 10px;
 }
 #tipDlg {
     letter-spacing: 1.5px;

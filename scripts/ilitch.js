@@ -90,11 +90,12 @@ const compare = (a,b) => {
 const fetchTwetches = async(sdk, selOrder, rootTx) => {
     // Make sure #message-container exists
     let $container = document.getElementById("message-container");
-    if ($container == null) {
-        $container = document.createElement("div");
-        $container.setAttribute("id", "message-container");
-        document.body.appendChild($container);
-    } 
+    if ($container != null) {
+        $container.remove();
+    }
+    $container = document.createElement("div");
+    $container.setAttribute("id", "message-container");
+    document.body.appendChild($container);
 
     let orderBy = 'orderBy: CREATED_AT_DESC', response = '', posts = '';
     if (selOrder === '1') {

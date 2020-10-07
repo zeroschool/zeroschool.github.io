@@ -96,6 +96,8 @@ const fetchTwetches = async(sdk, selOrder, rootTx) => {
         document.body.appendChild($container);
     } else {
         $container = "";
+        userLinks = '';
+        contents='';
     }
 
     let orderBy = 'orderBy: CREATED_AT_DESC', response = '', posts = [];

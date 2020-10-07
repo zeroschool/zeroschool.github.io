@@ -91,7 +91,7 @@ const fetchTwetches = async(sdk, selOrder, rootTx) => {
     // Make sure #message-container exists
     let $container = document.getElementById("message-container");
     if ($container != null) {
-        document.removeChild($container);
+        $container.remove();
     }
     $container = document.createElement("div");
     $container.setAttribute("id", "message-container");

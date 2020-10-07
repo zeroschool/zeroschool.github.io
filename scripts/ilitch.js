@@ -98,7 +98,7 @@ const fetchTwetches = async(sdk, selOrder, rootTx) => {
         $container = "";
     }
 
-    let orderBy = 'orderBy: CREATED_AT_DESC', response = '';
+    let orderBy = 'orderBy: CREATED_AT_DESC', response = '', posts = [];
     if (selOrder === '1') {
         orderBy = 'orderBy: LIKES_BY_POST_ID__COUNT_DESC';
     };

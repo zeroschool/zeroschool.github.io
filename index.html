@@ -223,8 +223,6 @@
                dialog.setAttribute("id", "tipDlg");
                dialog.setAttribute("class", "nes-dialog");
                dialog.innerHTML += `<form method="dialog"><menu class="dialog-menu">
-                    <label for="tipTxt" id="tipTxtLabel style="color:#fff;"></label>
-                    <input type="text" id="tipTxt" class="nes-input is-dark" placeholder="Short custom message (optional)" value="">
                     <label for="tipAmt" id="tipLabel" style="color:#fff;"></label>
                     <input type="text" id="tipAmt" class="nes-input is-dark" placeholder="$ + Tip amount in USD" value="$0.25">
                     <button id="tipCancel" class='nes-btn is-error'>Cancel</button><button class="nes-btn is-success" id="tipConfirm">Confirm</button>
@@ -233,7 +231,6 @@
             }
             dialogPolyfill.registerDialog(dialog);
             document.getElementById("tipLabel").innerHTML = `How much would you like to tip u/${uNum}?`;
-            //document.getElementById("tipTxtLabel").innerHTML = `Add a short custom message to your tip?`;
             document.getElementById('tipConfirm').onclick = () => {
                 tip(uNum);
             }
@@ -268,12 +265,10 @@
         }
         function tip(tipU) {
             let amt = document.getElementById('tipAmt').value;
-            let txt = document.getElementById('tipTxt').value;
             if (amt.charAt(0) != '$'){
                 amt = '$'+amt
             }
-            twetchPost(`${tipTxt}
-/pay @${tipU} ${amt} from $zeroschool`);
+            twetchPost(`/pay @${tipU} ${amt} from $zeroschool`);
             window.scrollTo(0,0)
         }
         async function twetchPost(text) {

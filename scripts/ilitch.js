@@ -73,7 +73,7 @@ const populateHTML = (count) => {
         <p class="postContent urlFormat"></p>
             <div class="item">
                 <i class="nes-icon heart is-medium is-empty"></i><var class="numLikes"></var>
-                <!--<button type="button" class="nes-btn share">Share</button>-->
+                <button type="button" class="nes-btn bridge">Go to Twetch!</button>
                 <a target="_blank" class="txid">#tx</a>
                 <!--<i class="nes-icon star is-medium is-empty nes-pointer"></i>-->
                 <!--<var class="boostValue"></var>-->
@@ -125,7 +125,7 @@ const fetchTwetches = async(sdk, selOrder, rootTx) => {
     let contents = document.getElementsByClassName("postContent")
     let hearts = document.getElementsByClassName("heart")
     let likes = document.getElementsByClassName("numLikes");
-    //let shares = document.getElementsByClassName("share")
+    let bridges = document.getElementsByClassName("bridge")
     let txids = document.getElementsByClassName("txid");
     let coins = document.getElementsByClassName("coin");
     //let stars = document.getElementsByClassName("nes-icon star is-medium");
@@ -160,7 +160,7 @@ const fetchTwetches = async(sdk, selOrder, rootTx) => {
         likes[i].innerHTML = post.numLikes;
         likes[i].id = `${post.transaction}_count`;
         twetches[i].id = post.transaction;
-        //shares[i].name = post.transaction;
+        bridges[i].name = post.transaction;
         hearts[i].id = post.transaction;
         if (post.youLiked === "1") {
             hearts[i].className = 'nes-icon heart is-medium';
@@ -178,7 +178,7 @@ const fetchTwetches = async(sdk, selOrder, rootTx) => {
         //boostValues[i].innerHTML = parseInt(boostValue);
         coins[i].addEventListener('click', askTip);
         //stars[i].addEventListener('click', boost);
-        //shares[i].addEventListener('click', shareTwetch);
+        bridges[i].addEventListener('click', goToTwetch);
         //twetches[i].addEventListener('click', goToTwetch);
         let d = new Date(post.createdAt);
         times[i].innerHTML = timeago(d);
@@ -189,7 +189,7 @@ const fetchTwetches = async(sdk, selOrder, rootTx) => {
 };
 
 function goToTwetch() {
-        window.open("https://twetch.app/t/" + this.id);
+        window.open("https://twetch.app/t/" + this.name);
 }
 
 function youtube(content) {

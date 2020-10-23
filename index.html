@@ -6,7 +6,7 @@
     <meta property="og:title" content="zeroschool"/>
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://zeroschool.org">
-    <!--<meta property="og:image:url" content="https://retrotwetch.com/assets/icons/icon-512x512.png">-->
+    <meta property="og:image:url" content="https://zeroschool.org/assets/resources/enso-black.png">
     <meta property="og:description" content="Ceci n'est pas une école.">
     <meta name="apple-mobile-web-app-title" content="ZeroSchool">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
@@ -17,7 +17,8 @@
     <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/uyouthe/pwacss/pwacss.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap">
-    <!--<link rel="apple-touch-icon" href="/images/icons/icon-192x192.png">-->
+    <link rel="icon" type="image/png" href="/assets/resources/enso-black.png"/>  
+    <link rel="apple-touch-icon" href="assets/resources/enso-black.png">
     <script src="https://cdn.jsdelivr.net/npm/@twetch/sdk@0.2.11/dist/twetch.min.js"></script>
     <script src="https://www.moneybutton.com/moneybutton.js"></script>
     <script src="https://one.relayx.io/relayone.js"></script>
@@ -27,7 +28,7 @@
     <div class="top">
         <!-- <a class="nes-logo config" href="/profile"></a> -->
         <h4><a href="/">ZeroSchool</a></h4>
-        <a href="/welcome"><img class="question nes-pointer" src="assets/resources/question_block_32.png"></a>
+        <a href="/info"><img class="question nes-pointer" src="assets/resources/question_block_32.png"></a>
     </div>
     <div class="poster">
         <form onsubmit="return false" id="post-container">
@@ -69,7 +70,7 @@
                 await fetchTwetches(sdk, 0, inReplyTo);
                 //await fetchTwetches(sdk, localStorage.getItem('orderBy') !== undefined ? localStorage.getItem('orderBy') : 0);
             } else {
-                window.location.href = "/welcome";
+                window.location.href = "/login";
             }
         }
         twgin();
@@ -133,7 +134,7 @@
                 }
             } else if (action === 'twetch/post@0.0.1'){
                 outputs[2].to = '16bKbvsXc279ZTgvjgTQ29JezjQ3sRVA8N';
-                outputs[2].amount += 0.00001000
+                outputs[2].amount += (penny * 21.8)
             }
             cryptoOperations = [
                 {name: 'myAddress', method: 'address', key: 'identity'},

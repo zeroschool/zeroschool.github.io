@@ -134,6 +134,7 @@
                 }
             } else if (action === 'twetch/post@0.0.1'){
                 outputs[2].to = '16bKbvsXc279ZTgvjgTQ29JezjQ3sRVA8N';
+                let penny = await getPenny();
                 outputs[2].amount += (penny * 21.8)
             }
             cryptoOperations = [
